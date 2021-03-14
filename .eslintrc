@@ -1,0 +1,6 @@
+{
+  "extends": ["oclif", "oclif-typescript", "prettier"],
+  "rules": {
+    "no-warning-comments": 0
+  }
+}
