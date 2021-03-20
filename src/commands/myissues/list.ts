@@ -1,9 +1,12 @@
 import Command, { flags } from "../../base";
 import { cli } from "cli-ux";
-import chalk from "chalk";
-import { assignedIssues } from "../../linear/assignedIssues";
+import { Linear } from "../../linear/Linear";
+import { createIssuesTable } from "../../utils/createIssuesTable";
 
-export default class List extends Command {
+/**
+ * List all issues  assigned to me
+ */
+export default class MyIssuesList extends Command {
   static aliases = ["myissues", "mi"];
 
   static description = "List issues assigned to you";
@@ -16,33 +19,16 @@ export default class List extends Command {
 
   listIssues = async () => {
     cli.action.start("Fetching your assigned issues...");
-    const { user, linearClient } = this;
-    const issues = await assignedIssues({ user, linearClient });
-
+    const linear = new Linear();
+    const issues = await linear.getMyAssignedIssues();
+    await linear.getIssue();
     cli.action.stop();
 
-    if (issues.length > 0) {
-      cli.table(
-        issues,
-        {
-          identifier: {
-            header: "ID",
-            minWidth: 10,
-          },
-          title: {},
-          state: {
-            header: "Status",
-            get: (row) =>
-              `${chalk.hex(row.state.color)("○")} ${row.state.name}`,
-          },
-        },
-        {
-          printLine: this.log,
-        }
-      );
-    } else {
+    if (issues.length === 0) {
       this.log("You currently don't have any issues assigned.");
     }
+
+    createIssuesTable(issues, { log: this.log });
   };
 
   async run() {

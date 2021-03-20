@@ -2,6 +2,8 @@
   "extends": ["oclif", "oclif-typescript", "prettier"],
   "rules": {
     "no-warning-comments": 0,
-    "unicorn/filename-case": ["error", { "case": "camelCase" }]
+    "unicorn/filename-case": 0,
+    "unicorn/no-process-exit": 0,
+    "no-process-exit": 0
   }
 }

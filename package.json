@@ -57,7 +57,13 @@
     "bin": "linear",
     "plugins": [
       "@oclif/plugin-help"
-    ]
+    ],
+    "hooks": {
+      "init": "./lib/hooks/init/set-global-config",
+      "prerun": [
+        "./lib/hooks/prerun/validate-config"
+      ]
+    }
   },
   "repository": "egodon/linear-cli",
   "types": "lib/index.d.ts"

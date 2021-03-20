@@ -1,7 +1,7 @@
 import Command, { flags } from "../../base";
 import { cli } from "cli-ux";
-import { getIssues } from "../../linear/issues";
 import { createIssuesTable } from "../../utils/createIssuesTable";
+import { Linear } from "../../linear/Linear";
 
 export default class IssueList extends Command {
   static description = "List issues";
@@ -14,16 +14,15 @@ export default class IssueList extends Command {
 
   listIssues = async () => {
     cli.action.start("Fetching your assigned issues...");
-    const { linearClient, log } = this;
-    const issues = await getIssues(linearClient);
-
+    const linear = new Linear();
+    const issues = await linear.getIssues();
     cli.action.stop();
 
     if (issues.length === 0) {
       this.log("You currently don't have any issues assigned.");
     }
 
-    createIssuesTable(issues, { log });
+    createIssuesTable(issues, { log: this.log });
   };
 
   async run() {
