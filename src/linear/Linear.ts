@@ -1,9 +1,10 @@
 import { LinearClient, Issue } from "@linear/sdk";
 import { issuesQuery } from "./queries/issues";
 import { assignedIssuesQuery } from "./queries/assignedIssues";
+import { issueQuery } from "./queries/issue";
 
 /**
- * Extended Linear client
+ * Custom Linear client
  */
 export class Linear extends LinearClient {
   constructor() {
@@ -11,9 +12,9 @@ export class Linear extends LinearClient {
   }
 
   async getIssues() {
-    const nodes = await this.client.rawRequest(issuesQuery);
+    const { data } = await this.client.rawRequest(issuesQuery);
 
-    const issues: Issue[] = nodes.data.issues.nodes ?? [];
+    const issues: Issue[] = data.issues.nodes ?? [];
 
     return issues;
   }
@@ -21,22 +22,21 @@ export class Linear extends LinearClient {
   async getMyAssignedIssues() {
     const user = await this.viewer;
 
-    const nodes = await this.client.rawRequest(assignedIssuesQuery, {
+    const { data } = await this.client.rawRequest(assignedIssuesQuery, {
       id: user.id,
       first: 20,
     });
 
-    const issues: Issue[] = nodes.data.user.assignedIssues.nodes ?? [];
+    const issues: Issue[] = data.user.assignedIssues.nodes ?? [];
 
     return issues;
   }
 
-  async getIssue() {
-    const issue = await this.issue("LIN-1");
+  async getIssue(issueId: string) {
+    const { data } = await this.client.rawRequest(issueQuery, {
+      id: issueId,
+    });
 
-    const state = await issue?.state;
-
-    console.log(state);
-    return issue;
+    return data.issue;
   }
 }

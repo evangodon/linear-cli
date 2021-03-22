@@ -21,7 +21,6 @@ export default class MyIssuesList extends Command {
     cli.action.start("Fetching your assigned issues...");
     const linear = new Linear();
     const issues = await linear.getMyAssignedIssues();
-    await linear.getIssue();
     cli.action.stop();
 
     if (issues.length === 0) {
