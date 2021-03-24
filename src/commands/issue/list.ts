@@ -1,16 +1,10 @@
-import Command, { flags } from "../../base";
+import Command from "../../base";
 import { cli } from "cli-ux";
 import { createIssuesTable } from "../../utils/createIssuesTable";
 import { Linear } from "../../linear/Linear";
 
 export default class IssueList extends Command {
   static description = "List issues";
-
-  static flags = {
-    help: flags.help({ char: "h" }),
-  };
-
-  static args = [{ name: "file" }];
 
   listIssues = async () => {
     cli.action.start("Fetching your assigned issues...");

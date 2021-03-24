@@ -5,7 +5,7 @@ import terminalLink from "terminal-link";
 /**
  * Reads markdown and renders it for the terminal
  *
- * @TODO: check if terminal can handle links
+ * @TODO: Fix longs links
  */
 
 marked.setOptions({

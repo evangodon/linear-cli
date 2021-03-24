@@ -16,7 +16,6 @@ export const issueQuery = gql`
     cycle {
       id
     }
-    dueDate
     estimate
     description
     title
@@ -36,19 +35,17 @@ export const issueQuery = gql`
       states {
         nodes {
           id
+          name
         }
       }
     }
-    startedAt
     id
     assignee {
       id
     }
-    creator {
-      id
-    }
     state {
       id
+      name
     }
   }
 `;
