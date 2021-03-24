@@ -1,6 +1,6 @@
 import Command, { flags } from "../../base";
 import { cli } from "cli-ux";
-import { Linear } from "../../linear/Linear";
+import { Linear } from "../../lib/Linear";
 import { createIssuesTable } from "../../utils/createIssuesTable";
 
 /**

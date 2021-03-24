@@ -1,0 +1,11 @@
+overwrite: true
+schema: "https://api.linear.app/graphql"
+documents:
+  - "src/lib/queries/*"
+  - "src/lib/mutations/*"
+
+generates:
+  src/generated/_documents.ts:
+    plugins:
+      - typescript
+      - typescript-operations

@@ -1,10 +1,12 @@
-import { Issue } from "@linear/sdk";
 import chalk from "chalk";
 import { cli } from "cli-ux";
+import { IssueFragment } from "../generated/_documents";
 
 type Options = {
   log: (msg: string) => void;
 };
+
+type Issue = Pick<IssueFragment, "identifier" | "title" | "state">;
 
 export const createIssuesTable = (issues: Issue[], { log }: Options) => {
   cli.table(

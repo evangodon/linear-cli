@@ -2,7 +2,7 @@ import { cli } from "cli-ux";
 import chalk from "chalk";
 import * as inquirer from "inquirer";
 import Command, { flags } from "../../base";
-import { Linear } from "../../linear/Linear";
+import { Linear } from "../../lib/Linear";
 
 type Response = {
   stateName: string;

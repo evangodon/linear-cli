@@ -1,5 +1,5 @@
 import Command from "../../base";
-import { Linear } from "../../linear/Linear";
+import { Linear } from "../../lib/Linear";
 import { markdownRender } from "../../utils/markdownRender";
 
 type Response = {

@@ -11,7 +11,8 @@
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "prepack": "rm -rf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
     "test": "echo NO TESTS",
-    "version": "oclif-dev readme && git add README.md"
+    "version": "oclif-dev readme && git add README.md",
+    "generate": "graphql-codegen --config codegen.yml"
   },
   "bugs": "https://github.com/egodon/linear-cli/issues",
   "dependencies": {
@@ -24,6 +25,7 @@
     "ansi-escapes": "^4.3.1",
     "chalk": "^4.1.0",
     "cli-ux": "^5.5.1",
+    "graphql": "^15.5.0",
     "inquirer": "^8.0.0",
     "marked": "^2.0.1",
     "marked-terminal": "^4.1.1",
@@ -31,6 +33,10 @@
     "tslib": "^1"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "1.21.3",
+    "@graphql-codegen/typescript": "1.21.1",
+    "@graphql-codegen/typescript-document-nodes": "^1.17.10",
+    "@graphql-codegen/typescript-operations": "^1.17.15",
     "@oclif/dev-cli": "^1",
     "@types/marked": "^2.0.0",
     "@types/node": "^10",
