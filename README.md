@@ -1,7 +1,7 @@
 linear-cli
 ==========
 
-CLI for Linear
+An unoffical CLI for Linear
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/linear-cli.svg)](https://npmjs.org/package/linear-cli)
@@ -15,49 +15,34 @@ CLI for Linear
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g linear-cli
-$ linear COMMAND
+$ npm install -g @eg/lnr
+$ lnr COMMAND
 running command...
-$ linear (-v|--version|version)
-linear-cli/0.0.0 linux-x64 node-v15.6.0
-$ linear --help [COMMAND]
+$ lnr (-v|--version|version)
+@eg/lnr/0.0.1 linux-x64 node-v15.6.0
+$ lnr --help [COMMAND]
 USAGE
-  $ linear COMMAND
+  $ lnr COMMAND
 ...
 ```
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`linear hello [FILE]`](#linear-hello-file)
-* [`linear help [COMMAND]`](#linear-help-command)
+* [`lnr help [COMMAND]`](#lnr-help-command)
+* [`lnr init`](#lnr-init)
+* [`lnr issue:create`](#lnr-issuecreate)
+* [`lnr issue:info [ISSUEID]`](#lnr-issueinfo-issueid)
+* [`lnr issue:list`](#lnr-issuelist)
+* [`lnr issue:update ISSUEID`](#lnr-issueupdate-issueid)
+* [`lnr myissues:list`](#lnr-myissueslist)
 
-## `linear hello [FILE]`
+## `lnr help [COMMAND]`
 
-describe the command here
-
-```
-USAGE
-  $ linear hello [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-
-EXAMPLE
-  $ linear hello
-  hello world from ./src/hello.ts!
-```
-
-_See code: [src/commands/hello.ts](https://github.com/egodon/linear-cli/blob/v0.0.0/src/commands/hello.ts)_
-
-## `linear help [COMMAND]`
-
-display help for linear
+display help for lnr
 
 ```
 USAGE
-  $ linear help [COMMAND]
+  $ lnr help [COMMAND]
 
 ARGUMENTS
   COMMAND  command to show help for
@@ -67,4 +52,72 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
+
+## `lnr init`
+
+```
+USAGE
+  $ lnr init
+```
+
+_See code: [src/commands/init.ts](https://github.com/egodon/linear-cli/blob/v0.0.1/src/commands/init.ts)_
+
+## `lnr issue:create`
+
+```
+USAGE
+  $ lnr issue:create
+```
+
+_See code: [src/commands/issue/create.ts](https://github.com/egodon/linear-cli/blob/v0.0.1/src/commands/issue/create.ts)_
+
+## `lnr issue:info [ISSUEID]`
+
+```
+USAGE
+  $ lnr issue:info [ISSUEID]
+```
+
+_See code: [src/commands/issue/info.ts](https://github.com/egodon/linear-cli/blob/v0.0.1/src/commands/issue/info.ts)_
+
+## `lnr issue:list`
+
+List issues
+
+```
+USAGE
+  $ lnr issue:list
+```
+
+_See code: [src/commands/issue/list.ts](https://github.com/egodon/linear-cli/blob/v0.0.1/src/commands/issue/list.ts)_
+
+## `lnr issue:update ISSUEID`
+
+```
+USAGE
+  $ lnr issue:update ISSUEID
+
+OPTIONS
+  -s, --status  Update issue status
+```
+
+_See code: [src/commands/issue/update.ts](https://github.com/egodon/linear-cli/blob/v0.0.1/src/commands/issue/update.ts)_
+
+## `lnr myissues:list`
+
+List issues assigned to you
+
+```
+USAGE
+  $ lnr myissues:list
+
+OPTIONS
+  -h, --help  show CLI help
+
+ALIASES
+  $ lnr myissues
+  $ lnr mi
+```
+
+_See code: [src/commands/myissues/list.ts](https://github.com/egodon/linear-cli/blob/v0.0.1/src/commands/myissues/list.ts)_
 <!-- commandsstop -->

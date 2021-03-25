@@ -15,8 +15,6 @@ export default class MyIssuesList extends Command {
     help: flags.help({ char: "h" }),
   };
 
-  static args = [{ name: "file" }];
-
   listIssues = async () => {
     cli.action.start("Fetching your assigned issues...");
     const linear = new Linear();

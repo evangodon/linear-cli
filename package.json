@@ -1,10 +1,10 @@
 {
   "name": "@eg/lnr",
-  "description": "CLI for Linear",
+  "description": "An unofficial CLI for Linear",
   "version": "0.0.1",
   "author": "Evan Godon @egodon",
   "bin": {
-    "linear": "./bin/run"
+    "lnr": "./bin/run"
   },
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",
@@ -65,7 +65,7 @@
   "main": "lib/index.js",
   "oclif": {
     "commands": "./lib/commands",
-    "bin": "linear",
+    "bin": "lnr",
     "plugins": [
       "@oclif/plugin-help"
     ],
