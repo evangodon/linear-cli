@@ -15,11 +15,11 @@ An unoffical CLI for Linear
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g @eg/lnr
+$ npm install -g @egodon/lnr
 $ lnr COMMAND
 running command...
 $ lnr (-v|--version|version)
-@eg/lnr/0.1.0 linux-x64 node-v15.6.0
+@egodon/lnr/0.1.0 linux-x64 node-v15.6.0
 $ lnr --help [COMMAND]
 USAGE
   $ lnr COMMAND
