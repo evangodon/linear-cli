@@ -19,7 +19,7 @@ $ npm install -g @eg/lnr
 $ lnr COMMAND
 running command...
 $ lnr (-v|--version|version)
-@eg/lnr/0.0.1 linux-x64 node-v15.6.0
+@eg/lnr/0.1.0 linux-x64 node-v15.6.0
 $ lnr --help [COMMAND]
 USAGE
   $ lnr COMMAND
@@ -60,7 +60,7 @@ USAGE
   $ lnr init
 ```
 
-_See code: [src/commands/init.ts](https://github.com/egodon/linear-cli/blob/v0.0.1/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/init.ts)_
 
 ## `lnr issue:create`
 
@@ -69,7 +69,7 @@ USAGE
   $ lnr issue:create
 ```
 
-_See code: [src/commands/issue/create.ts](https://github.com/egodon/linear-cli/blob/v0.0.1/src/commands/issue/create.ts)_
+_See code: [src/commands/issue/create.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/issue/create.ts)_
 
 ## `lnr issue:info [ISSUEID]`
 
@@ -78,7 +78,7 @@ USAGE
   $ lnr issue:info [ISSUEID]
 ```
 
-_See code: [src/commands/issue/info.ts](https://github.com/egodon/linear-cli/blob/v0.0.1/src/commands/issue/info.ts)_
+_See code: [src/commands/issue/info.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/issue/info.ts)_
 
 ## `lnr issue:list`
 
@@ -89,7 +89,7 @@ USAGE
   $ lnr issue:list
 ```
 
-_See code: [src/commands/issue/list.ts](https://github.com/egodon/linear-cli/blob/v0.0.1/src/commands/issue/list.ts)_
+_See code: [src/commands/issue/list.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/issue/list.ts)_
 
 ## `lnr issue:update ISSUEID`
 
@@ -101,7 +101,7 @@ OPTIONS
   -s, --status  Update issue status
 ```
 
-_See code: [src/commands/issue/update.ts](https://github.com/egodon/linear-cli/blob/v0.0.1/src/commands/issue/update.ts)_
+_See code: [src/commands/issue/update.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/issue/update.ts)_
 
 ## `lnr myissues:list`
 
@@ -119,5 +119,5 @@ ALIASES
   $ lnr mi
 ```
 
-_See code: [src/commands/myissues/list.ts](https://github.com/egodon/linear-cli/blob/v0.0.1/src/commands/myissues/list.ts)_
+_See code: [src/commands/myissues/list.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/myissues/list.ts)_
 <!-- commandsstop -->
