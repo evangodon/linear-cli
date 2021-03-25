@@ -20,7 +20,8 @@ const hook: Hook<"prerun"> = async function (opt) {
 
     global.linearApiKey = apiKey;
   } catch (error) {
-    console.error(error);
+    // TODO: handle error
+    throw error;
   }
 };
 

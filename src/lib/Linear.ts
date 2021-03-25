@@ -9,8 +9,8 @@ import {
   IssuesQueryVariables,
   User_AssignedIssuesQuery,
   User_AssignedIssuesQueryVariables,
-  IssueQuery,
-  IssueQueryVariables,
+  GetIssueQuery,
+  GetIssueQueryVariables,
 } from "../generated/_documents";
 
 /**
@@ -77,12 +77,12 @@ export class Linear extends LinearClient {
   }
 
   async getIssue(issueId: string) {
-    let issue: IssueQuery["issue"] = null as IssueQuery["issue"];
+    let issue: GetIssueQuery["issue"] = (null as unknown) as GetIssueQuery["issue"];
 
     try {
       const { data } = await this.client.rawRequest<
-        IssueQuery,
-        IssueQueryVariables
+        GetIssueQuery,
+        GetIssueQueryVariables
       >(issueQuery, {
         id: issueId,
       });

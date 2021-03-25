@@ -41,6 +41,10 @@ export default class IssueUpdate extends Command {
       (state) => state.name === response.stateName
     );
 
+    if (!newState) {
+      throw new Error("Did not find that state.");
+    }
+
     await linear.issueUpdate(issueId, { stateId: newState.id });
 
     this.log(
