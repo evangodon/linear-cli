@@ -1,7 +1,7 @@
 {
-  "name": "linear-cli",
+  "name": "@eg/lnr",
   "description": "CLI for Linear",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "Evan Godon @egodon",
   "bin": {
     "linear": "./bin/run"

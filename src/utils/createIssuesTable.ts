@@ -15,11 +15,15 @@ export const createIssuesTable = (issues: Issue[], { log }: Options) => {
       identifier: {
         header: "ID",
         minWidth: 10,
+        get: (issue) => issue.identifier,
       },
-      title: {},
+      title: {
+        get: (issue) => issue.title,
+      },
       state: {
         header: "Status",
-        get: (row) => `${chalk.hex(row.state.color)("○")} ${row.state.name}`,
+        get: (issue) =>
+          `${chalk.hex(issue.state.color)("○")} ${issue.state.name}`,
       },
     },
     {
