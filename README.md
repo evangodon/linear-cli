@@ -1,7 +1,7 @@
 linear-cli
 ==========
 
-An unoffical CLI for Linear
+An unoffical CLI for [Linear](https://linear.app/)
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/linear-cli.svg)](https://npmjs.org/package/linear-cli)
