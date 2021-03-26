@@ -1,5 +1,4 @@
 import Command from "../../base";
-import { Linear } from "../../lib/Linear";
 import { markdownRender } from "../../utils/markdownRender";
 
 type Response = {
@@ -17,8 +16,8 @@ export default class IssueInfo extends Command {
 
   async showIssueInfo() {
     const { args } = this.parse(IssueInfo);
-    const linear = new Linear();
-    const issue = await linear.getIssue(args.issueId);
+
+    const issue = await this.linear.getIssue(args.issueId);
 
     this.log("\n");
     this.log(markdownRender(`# ${issue.title}\n${issue.description ?? ""}`));

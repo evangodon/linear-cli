@@ -1,6 +1,5 @@
 import Command, { flags } from "../../base";
 import { cli } from "cli-ux";
-import { Linear } from "../../lib/Linear";
 import { createIssuesTable } from "../../utils/createIssuesTable";
 
 /**
@@ -17,8 +16,7 @@ export default class MyIssuesList extends Command {
 
   listIssues = async () => {
     cli.action.start("Fetching your assigned issues...");
-    const linear = new Linear();
-    const issues = await linear.getMyAssignedIssues();
+    const issues = await this.linear.getMyAssignedIssues();
     cli.action.stop();
 
     if (issues.length === 0) {

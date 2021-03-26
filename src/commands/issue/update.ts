@@ -2,7 +2,6 @@ import { cli } from "cli-ux";
 import chalk from "chalk";
 import * as inquirer from "inquirer";
 import Command, { flags } from "../../base";
-import { Linear } from "../../lib/Linear";
 
 type Response = {
   stateName: string;
@@ -23,8 +22,7 @@ export default class IssueUpdate extends Command {
 
   async updateStatus(issueId: string) {
     cli.action.start("Getting issue...");
-    const linear = new Linear();
-    const issue = await linear.getIssue(issueId);
+    const issue = await this.linear.getIssue(issueId);
     cli.action.stop();
     const possibleStates = issue.team.states.nodes;
 
@@ -45,7 +43,7 @@ export default class IssueUpdate extends Command {
       throw new Error("Did not find that state.");
     }
 
-    await linear.issueUpdate(issueId, { stateId: newState.id });
+    await this.linear.issueUpdate(issueId, { stateId: newState.id });
 
     this.log(
       `\nUpdated status of issue ${issue.identifier} to ${chalk.bgMagenta(
