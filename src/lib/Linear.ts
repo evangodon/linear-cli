@@ -4,6 +4,7 @@ import { issuesQuery } from "./queries/issues";
 import { assignedIssuesQuery } from "./queries/assignedIssues";
 import { issueQuery } from "./queries/issue";
 import { handleError } from "./handleError";
+import { User } from "./configSchema";
 import {
   IssuesQuery,
   IssuesQueryVariables,
@@ -13,12 +14,21 @@ import {
   GetIssueQueryVariables,
 } from "../generated/_documents";
 
+type UserInfo = {
+  apiKey: string;
+  currentUser: User;
+};
+
 /**
  * Custom Linear client
  */
 export class Linear extends LinearClient {
-  constructor(apiKey: string) {
+  currentUser: User = (null as unknown) as User;
+
+  constructor({ apiKey, currentUser }: UserInfo) {
     super({ apiKey });
+
+    this.currentUser = currentUser;
   }
 
   async getIssues() {
@@ -47,12 +57,6 @@ export class Linear extends LinearClient {
   }
 
   async getMyAssignedIssues() {
-    const user = await this.viewer;
-
-    if (!user?.id) {
-      throw new Error("Failed to get user data from Linear");
-    }
-
     let issues: User_AssignedIssuesQuery["user"]["assignedIssues"]["nodes"] = [];
 
     try {
@@ -60,7 +64,7 @@ export class Linear extends LinearClient {
         User_AssignedIssuesQuery,
         User_AssignedIssuesQueryVariables
       >(assignedIssuesQuery, {
-        id: user.id,
+        id: this.currentUser.id,
         first: 20,
       });
 

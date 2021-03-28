@@ -8,6 +8,8 @@ type Response = {
 /**
  */
 export default class IssueInfo extends Command {
+  static description = "Show description of issue";
+
   static args = [
     {
       name: "issueId",

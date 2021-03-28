@@ -4,12 +4,14 @@ import fs from "fs";
 import chalk from "chalk";
 import { Linear } from "./lib/Linear";
 import Init from "./commands/init";
-import { ConfigSchema } from "./lib/configSchema";
+import { Config, User } from "./lib/configSchema";
 
 export default abstract class extends Command {
   configFilePath = `${this.config.configDir}/config.json`;
 
   linear: Linear = (null as unknown) as Linear;
+
+  user: User = (null as unknown) as User;
 
   async init() {
     const configFilePath = `${this.config.configDir}/config.json`;
@@ -21,7 +23,7 @@ export default abstract class extends Command {
 
       const config = JSON.parse(configJSON);
 
-      if (!ConfigSchema.check(config)) {
+      if (!Config.check(config)) {
         throw new Error(
           `The config file at ${chalk.magentaBright(
             this.configFilePath
@@ -31,7 +33,10 @@ export default abstract class extends Command {
 
       const { workspaces, activeWorkspace } = config;
 
-      this.linear = new Linear(workspaces[activeWorkspace].apiKey);
+      this.linear = new Linear({
+        apiKey: workspaces[activeWorkspace].apiKey,
+        currentUser: workspaces[activeWorkspace].user,
+      });
     } catch (error) {
       /* Config folder doesn't exist */
       if (error.code === "ENOENT") {

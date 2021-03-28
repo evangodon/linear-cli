@@ -12,6 +12,8 @@ type Response = {
 export default class IssueUpdate extends Command {
   static args = [{ name: "issueId", required: true }];
 
+  static description = "Update an issue";
+
   static flags = {
     status: flags.boolean({
       char: "s",
