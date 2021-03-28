@@ -67,7 +67,7 @@
   "oclif": {
     "dirname": "lr",
     "commands": "./lib/commands",
-    "bin": "lnr",
+    "bin": "lr",
     "plugins": [
       "@oclif/plugin-help"
     ],
