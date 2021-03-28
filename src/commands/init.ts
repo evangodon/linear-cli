@@ -1,6 +1,7 @@
-import Command from "../base";
+import chalk from "chalk";
 import * as inquirer from "inquirer";
 import fs from "fs";
+import Command from "@oclif/command";
 
 type Response = {
   apiKey: string;
@@ -8,7 +9,7 @@ type Response = {
 };
 
 /**
- * @todo: Validate key
+ * Write Linear api key and user info to config file
  */
 export default class Init extends Command {
   async saveToConfig(response: Response) {
@@ -29,6 +30,12 @@ export default class Init extends Command {
   }
 
   async run() {
+    this.log(`\nWe'll need your personal Linear api key.`);
+    this.log(
+      `You can create one here ${chalk.magenta(
+        "https://linear.app/joinlane/settings/api"
+      )}.`
+    );
     const response: Response = await inquirer.prompt([
       {
         name: "apiKey",
@@ -36,9 +43,11 @@ export default class Init extends Command {
       },
       {
         name: "label",
-        message: 'What a write label for this key (e.g. "Work", "Home")',
+        message: 'Create a label for this key (e.g. "Work", "Home")',
       },
     ]);
+
+    // TODO: validate key here
 
     await this.saveToConfig(response);
   }

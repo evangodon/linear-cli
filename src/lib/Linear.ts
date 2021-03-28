@@ -3,7 +3,7 @@ import { cli } from "cli-ux";
 import { issuesQuery } from "./queries/issues";
 import { assignedIssuesQuery } from "./queries/assignedIssues";
 import { issueQuery } from "./queries/issue";
-import { handleError } from "./errors";
+import { handleError } from "./handleError";
 import {
   IssuesQuery,
   IssuesQueryVariables,
@@ -17,8 +17,8 @@ import {
  * Custom Linear client
  */
 export class Linear extends LinearClient {
-  constructor() {
-    super({ apiKey: global.linearApiKey });
+  constructor(apiKey: string) {
+    super({ apiKey });
   }
 
   async getIssues() {

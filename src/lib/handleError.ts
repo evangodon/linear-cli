@@ -11,6 +11,6 @@ export const handleError = (error: Error) => {
     process.exit(1);
   }
 
-  process.stderr.write(error.message);
+  process.stderr.write(JSON.stringify(error));
   process.exit(1);
 };
