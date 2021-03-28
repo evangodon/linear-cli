@@ -1,10 +1,10 @@
 {
-  "name": "@egodon/lr",
-  "description": "An unofficial CLI for Linear",
-  "version": "0.1.0",
+  "name": "@evangodon/lr",
+  "description": "A CLI for Linear",
+  "version": "0.2.0",
   "author": "Evan Godon @egodon",
   "bin": {
-    "lnr": "bin/run"
+    "lr": "bin/run"
   },
   "scripts": {
     "postpack": "rm -f oclif.manifest.json",

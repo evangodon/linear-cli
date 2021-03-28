@@ -8,6 +8,9 @@ type PromptResponse = {
   workspace: string;
 };
 
+/**
+ * @todo: Highlight the current workspace
+ */
 export default class WorkspaceSwitch extends Command {
   static description = 'Switch to another workspace';
 

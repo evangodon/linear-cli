@@ -15,11 +15,11 @@ An unoffical CLI for [Linear](https://linear.app/)
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g @egodon/lr
+$ npm install -g @evangodon/lr
 $ lr COMMAND
 running command...
 $ lr (-v|--version|version)
-@egodon/lr/0.1.0 linux-x64 node-v15.6.0
+@evangodon/lr/0.2.0 linux-x64 node-v15.6.0
 $ lr --help [COMMAND]
 USAGE
   $ lr COMMAND
@@ -36,7 +36,6 @@ USAGE
 * [`lr issue:info [ISSUEID]`](#lr-issueinfo-issueid)
 * [`lr issue:list`](#lr-issuelist)
 * [`lr issue:update ISSUEID`](#lr-issueupdate-issueid)
-* [`lr myissues:list`](#lr-myissueslist)
 * [`lr workspace:add`](#lr-workspaceadd)
 * [`lr workspace:switch`](#lr-workspaceswitch)
 
@@ -47,7 +46,7 @@ USAGE
   $ lr config:delete
 ```
 
-_See code: [src/commands/config/delete.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/config/delete.ts)_
+_See code: [src/commands/config/delete.ts](https://github.com/egodon/linear-cli/blob/v0.2.0/src/commands/config/delete.ts)_
 
 ## `lr config:show`
 
@@ -56,7 +55,7 @@ USAGE
   $ lr config:show
 ```
 
-_See code: [src/commands/config/show.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/config/show.ts)_
+_See code: [src/commands/config/show.ts](https://github.com/egodon/linear-cli/blob/v0.2.0/src/commands/config/show.ts)_
 
 ## `lr help [COMMAND]`
 
@@ -82,7 +81,7 @@ USAGE
   $ lr init
 ```
 
-_See code: [src/commands/init.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/egodon/linear-cli/blob/v0.2.0/src/commands/init.ts)_
 
 ## `lr issue:create`
 
@@ -93,7 +92,7 @@ USAGE
   $ lr issue:create
 ```
 
-_See code: [src/commands/issue/create.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/issue/create.ts)_
+_See code: [src/commands/issue/create.ts](https://github.com/egodon/linear-cli/blob/v0.2.0/src/commands/issue/create.ts)_
 
 ## `lr issue:info [ISSUEID]`
 
@@ -104,7 +103,7 @@ USAGE
   $ lr issue:info [ISSUEID]
 ```
 
-_See code: [src/commands/issue/info.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/issue/info.ts)_
+_See code: [src/commands/issue/info.ts](https://github.com/egodon/linear-cli/blob/v0.2.0/src/commands/issue/info.ts)_
 
 ## `lr issue:list`
 
@@ -113,9 +112,12 @@ List issues
 ```
 USAGE
   $ lr issue:list
+
+OPTIONS
+  -m, --mine
 ```
 
-_See code: [src/commands/issue/list.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/issue/list.ts)_
+_See code: [src/commands/issue/list.ts](https://github.com/egodon/linear-cli/blob/v0.2.0/src/commands/issue/list.ts)_
 
 ## `lr issue:update ISSUEID`
 
@@ -129,25 +131,7 @@ OPTIONS
   -s, --status  Update issue status
 ```
 
-_See code: [src/commands/issue/update.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/issue/update.ts)_
-
-## `lr myissues:list`
-
-List issues assigned to you
-
-```
-USAGE
-  $ lr myissues:list
-
-OPTIONS
-  -h, --help  show CLI help
-
-ALIASES
-  $ lr myissues
-  $ lr mi
-```
-
-_See code: [src/commands/myissues/list.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/myissues/list.ts)_
+_See code: [src/commands/issue/update.ts](https://github.com/egodon/linear-cli/blob/v0.2.0/src/commands/issue/update.ts)_
 
 ## `lr workspace:add`
 
@@ -158,7 +142,7 @@ USAGE
   $ lr workspace:add
 ```
 
-_See code: [src/commands/workspace/add.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/workspace/add.ts)_
+_See code: [src/commands/workspace/add.ts](https://github.com/egodon/linear-cli/blob/v0.2.0/src/commands/workspace/add.ts)_
 
 ## `lr workspace:switch`
 
@@ -169,5 +153,5 @@ USAGE
   $ lr workspace:switch
 ```
 
-_See code: [src/commands/workspace/switch.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/workspace/switch.ts)_
+_See code: [src/commands/workspace/switch.ts](https://github.com/egodon/linear-cli/blob/v0.2.0/src/commands/workspace/switch.ts)_
 <!-- commandsstop -->
