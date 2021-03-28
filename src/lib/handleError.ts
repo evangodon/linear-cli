@@ -1,4 +1,4 @@
-import { InvalidInputLinearError } from "@linear/sdk";
+import { InvalidInputLinearError } from '@linear/sdk';
 
 /**
  * @todo: handle linear errors and other types

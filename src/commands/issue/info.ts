@@ -1,5 +1,5 @@
-import Command from "../../base";
-import { markdownRender } from "../../utils/markdownRender";
+import Command from '../../base';
+import { markdownRender } from '../../utils/markdownRender';
 
 type Response = {
   title: string;
@@ -8,11 +8,12 @@ type Response = {
 /**
  */
 export default class IssueInfo extends Command {
-  static description = "Show description of issue";
+  static description = 'Show description of issue';
 
   static args = [
     {
-      name: "issueId",
+      name: 'issueId',
+      required: true,
     },
   ];
 
@@ -21,8 +22,8 @@ export default class IssueInfo extends Command {
 
     const issue = await this.linear.getIssue(args.issueId);
 
-    this.log("\n");
-    this.log(markdownRender(`# ${issue.title}\n${issue.description ?? ""}`));
+    this.log('\n');
+    this.log(markdownRender(`# ${issue.title}\n${issue.description ?? ''}`));
   }
 
   async run() {

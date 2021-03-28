@@ -83,6 +83,7 @@ export class Linear extends LinearClient {
 
   async getIssue(issueId: string) {
     let issue: GetIssueQuery['issue'] = (null as unknown) as GetIssueQuery['issue'];
+    cli.action.start(`Fetching issue ${issueId}...`);
 
     try {
       const { data } = await this.client.rawRequest<
@@ -99,6 +100,8 @@ export class Linear extends LinearClient {
       issue = data.issue;
     } catch (error) {
       handleError(error);
+    } finally {
+      cli.action.stop();
     }
 
     return issue;
