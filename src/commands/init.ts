@@ -10,6 +10,8 @@ type Response = {
 
 /**
  * Write Linear api key and user info to config file
+ *
+ * @TODO: check if config file exists before running
  */
 export default class Init extends Command {
   async saveToConfig(response: Response) {
@@ -30,7 +32,8 @@ export default class Init extends Command {
   }
 
   async run() {
-    this.log(`\nWe'll need your personal Linear api key.`);
+    this.log("");
+    this.log(`We'll need your personal Linear api key.`);
     this.log(
       `You can create one here ${chalk.magenta(
         "https://linear.app/joinlane/settings/api"

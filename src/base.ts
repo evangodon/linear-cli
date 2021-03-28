@@ -6,10 +6,12 @@ import Init from "../lib/commands/init";
 import chalk from "chalk";
 
 export default abstract class extends Command {
+  configFilePath = `${this.config.configDir}/config.json`;
+
   linear: Linear = (null as unknown) as Linear;
 
   async init() {
-    const configFilePath = `${this.config.configDir}/config1.json`;
+    const configFilePath = `${this.config.configDir}/config.json`;
 
     try {
       const config = fs.readFileSync(configFilePath, {
