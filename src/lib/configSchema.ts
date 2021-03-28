@@ -1,4 +1,4 @@
-import * as z from "zod";
+import * as z from 'zod';
 
 const User = z.object({
   id: z.string(),
@@ -13,10 +13,14 @@ const Workspaces = z.record(
   })
 );
 
-export const Config = z.object({
-  activeWorkspace: z.string(),
-  workspaces: Workspaces,
-});
+export const Config = z
+  .object({
+    activeWorkspace: z.string(),
+    workspaces: Workspaces,
+  })
+  .refine((config) => Object.keys(config.workspaces).includes(config.activeWorkspace), {
+    message: 'The current active workspace was not found in your config file.',
+  });
 
 export type Config = z.infer<typeof Config>;
 export type User = z.infer<typeof User>;
