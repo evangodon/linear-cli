@@ -15,11 +15,11 @@ An unoffical CLI for [Linear](https://linear.app/)
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g @egodon/lnr
+$ npm install -g @egodon/lr
 $ lnr COMMAND
 running command...
 $ lnr (-v|--version|version)
-@egodon/lnr/0.1.0 linux-x64 node-v15.6.0
+@egodon/lr/0.1.0 linux-x64 node-v15.6.0
 $ lnr --help [COMMAND]
 USAGE
   $ lnr COMMAND
@@ -28,6 +28,8 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`lnr config:delete`](#lnr-configdelete)
+* [`lnr config:show`](#lnr-configshow)
 * [`lnr help [COMMAND]`](#lnr-help-command)
 * [`lnr init`](#lnr-init)
 * [`lnr issue:create`](#lnr-issuecreate)
@@ -35,6 +37,26 @@ USAGE
 * [`lnr issue:list`](#lnr-issuelist)
 * [`lnr issue:update ISSUEID`](#lnr-issueupdate-issueid)
 * [`lnr myissues:list`](#lnr-myissueslist)
+* [`lnr workspace:add`](#lnr-workspaceadd)
+* [`lnr workspace:switch [FILE]`](#lnr-workspaceswitch-file)
+
+## `lnr config:delete`
+
+```
+USAGE
+  $ lnr config:delete
+```
+
+_See code: [src/commands/config/delete.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/config/delete.ts)_
+
+## `lnr config:show`
+
+```
+USAGE
+  $ lnr config:show
+```
+
+_See code: [src/commands/config/show.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/config/show.ts)_
 
 ## `lnr help [COMMAND]`
 
@@ -64,6 +86,8 @@ _See code: [src/commands/init.ts](https://github.com/egodon/linear-cli/blob/v0.1
 
 ## `lnr issue:create`
 
+Create a new issue
+
 ```
 USAGE
   $ lnr issue:create
@@ -72,6 +96,8 @@ USAGE
 _See code: [src/commands/issue/create.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/issue/create.ts)_
 
 ## `lnr issue:info [ISSUEID]`
+
+Show description of issue
 
 ```
 USAGE
@@ -92,6 +118,8 @@ USAGE
 _See code: [src/commands/issue/list.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/issue/list.ts)_
 
 ## `lnr issue:update ISSUEID`
+
+Update an issue
 
 ```
 USAGE
@@ -120,4 +148,31 @@ ALIASES
 ```
 
 _See code: [src/commands/myissues/list.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/myissues/list.ts)_
+
+## `lnr workspace:add`
+
+Add a new workplace
+
+```
+USAGE
+  $ lnr workspace:add
+```
+
+_See code: [src/commands/workspace/add.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/workspace/add.ts)_
+
+## `lnr workspace:switch [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ lnr workspace:switch [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/workspace/switch.ts](https://github.com/egodon/linear-cli/blob/v0.1.0/src/commands/workspace/switch.ts)_
 <!-- commandsstop -->

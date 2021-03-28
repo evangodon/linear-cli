@@ -6,12 +6,12 @@ const User = z.object({
   email: z.string(),
 });
 
-const Workspaces = z.record(
-  z.object({
-    apiKey: z.string(),
-    user: User,
-  })
-);
+const Workplace = z.object({
+  apiKey: z.string(),
+  user: User,
+});
+
+const Workspaces = z.record(Workplace);
 
 export const Config = z
   .object({
@@ -24,3 +24,4 @@ export const Config = z
 
 export type Config = z.infer<typeof Config>;
 export type User = z.infer<typeof User>;
+export type Workplace = z.infer<typeof Workplace>;

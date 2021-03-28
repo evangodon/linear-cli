@@ -13,6 +13,8 @@ export default abstract class extends Command {
 
   user: User = (null as unknown) as User;
 
+  configData: Config = (null as unknown) as Config;
+
   async init() {
     const configFilePath = `${this.config.configDir}/config.json`;
 
@@ -22,9 +24,10 @@ export default abstract class extends Command {
       });
 
       const configUnknown: unknown = JSON.parse(configJSON);
+      const config = Config.parse(configUnknown);
+      const { workspaces, activeWorkspace } = config;
 
-      const { workspaces, activeWorkspace } = Config.parse(configUnknown);
-
+      this.configData = config;
       this.linear = new Linear({
         apiKey: workspaces[activeWorkspace].apiKey,
         currentUser: workspaces[activeWorkspace].user,
@@ -35,8 +38,8 @@ export default abstract class extends Command {
         await this.promptForInit();
       }
 
-      /* Error when parsing config file */
-      /* Invalid config file */
+      /*  Error when parsing config file or
+          invalid config file */
       this.error(error);
     }
   }
