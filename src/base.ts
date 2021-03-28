@@ -1,9 +1,10 @@
 import Command, { flags } from "@oclif/command";
 import inquirer from "inquirer";
 import fs from "fs";
-import { Linear } from "./lib/Linear";
-import Init from "../lib/commands/init";
 import chalk from "chalk";
+import { Linear } from "./lib/Linear";
+import Init from "./commands/init";
+import { ConfigSchema } from "./lib/configSchema";
 
 export default abstract class extends Command {
   configFilePath = `${this.config.configDir}/config.json`;
@@ -14,27 +15,39 @@ export default abstract class extends Command {
     const configFilePath = `${this.config.configDir}/config.json`;
 
     try {
-      const config = fs.readFileSync(configFilePath, {
+      const configJSON = fs.readFileSync(configFilePath, {
         encoding: "utf8",
       });
 
-      // TODO: validate config shape here
+      const config = JSON.parse(configJSON);
 
-      const { apiKey } = JSON.parse(config);
+      if (!ConfigSchema.check(config)) {
+        throw new Error(
+          `The config file at ${chalk.magentaBright(
+            this.configFilePath
+          )} is in an invalid state`
+        );
+      }
 
-      this.linear = new Linear(apiKey);
+      const { workspaces, activeWorkspace } = config;
+
+      this.linear = new Linear(workspaces[activeWorkspace].apiKey);
     } catch (error) {
+      /* Config folder doesn't exist */
       if (error.code === "ENOENT") {
         await this.promptForInit();
       }
 
-      // TODO: handle other errors
+      /* Error when parsing config file */
+
+      /* Invalid config file */
+      this.error(error);
     }
   }
 
   async promptForInit() {
     this.log(
-      `\nLooks like ${chalk.magenta(
+      `\nLooks like ${chalk.magentaBright(
         this.config.bin
       )} hasn't been initialized yet!`
     );

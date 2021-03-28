@@ -1,7 +1,9 @@
+import { LinearClient } from "@linear/sdk";
 import chalk from "chalk";
 import * as inquirer from "inquirer";
 import fs from "fs";
 import Command from "@oclif/command";
+import { Config } from "../lib/configSchema";
 
 type Response = {
   apiKey: string;
@@ -12,24 +14,10 @@ type Response = {
  * Write Linear api key and user info to config file
  *
  * @TODO: check if config file exists before running
+ * @TODO: split out run() into multiple functions
  */
 export default class Init extends Command {
-  async saveToConfig(response: Response) {
-    const { configDir } = this.config;
-    try {
-      if (!fs.existsSync(configDir)) {
-        fs.mkdirSync(configDir);
-      }
-
-      await fs.promises.writeFile(
-        `${this.config.configDir}/config.json`,
-        JSON.stringify(response),
-        { flag: "w" }
-      );
-    } catch (error) {
-      this.error(error);
-    }
-  }
+  configFilePath = `${this.config.configDir}/config.json`;
 
   async run() {
     this.log("");
@@ -39,7 +27,7 @@ export default class Init extends Command {
         "https://linear.app/joinlane/settings/api"
       )}.`
     );
-    const response: Response = await inquirer.prompt([
+    const response = await inquirer.prompt<Response>([
       {
         name: "apiKey",
         message: "Paste your Linear api key here:",
@@ -50,8 +38,49 @@ export default class Init extends Command {
       },
     ]);
 
-    // TODO: validate key here
+    const linearClient = new LinearClient({ apiKey: response.apiKey });
 
-    await this.saveToConfig(response);
+    const user = await linearClient.viewer;
+
+    if (!user) {
+      throw new Error("invalid api key");
+    }
+
+    if (!user.id) {
+      throw new Error("Failed to get user id");
+    }
+
+    const { configDir } = this.config;
+    try {
+      if (!fs.existsSync(configDir)) {
+        fs.mkdirSync(configDir);
+      }
+
+      const config: Config = {
+        activeWorkspace: response.label,
+        workspaces: {
+          [response.label]: {
+            apiKey: response.apiKey,
+            user: {
+              id: user.id,
+              name: user.name!,
+              email: user.email!,
+            },
+          },
+        },
+      };
+
+      await fs.promises.writeFile(
+        this.configFilePath,
+        JSON.stringify(config, null, 2),
+        {
+          flag: "w",
+        }
+      );
+
+      this.log(`Wrote api key and user info to ${this.configFilePath}`);
+    } catch (error) {
+      this.error(error);
+    }
   }
 }
