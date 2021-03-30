@@ -33,8 +33,8 @@ USAGE
 * [`lr help [COMMAND]`](#lr-help-command)
 * [`lr init`](#lr-init)
 * [`lr issue:create`](#lr-issuecreate)
-* [`lr issue:info [ISSUEID]`](#lr-issueinfo-issueid)
 * [`lr issue:list`](#lr-issuelist)
+* [`lr issue:show ISSUEID`](#lr-issueshow-issueid)
 * [`lr issue:update ISSUEID`](#lr-issueupdate-issueid)
 * [`lr workspace:add`](#lr-workspaceadd)
 * [`lr workspace:switch`](#lr-workspaceswitch)
@@ -94,17 +94,6 @@ USAGE
 
 _See code: [src/commands/issue/create.ts](https://github.com/egodon/linear-cli/blob/v0.2.0/src/commands/issue/create.ts)_
 
-## `lr issue:info [ISSUEID]`
-
-Show description of issue
-
-```
-USAGE
-  $ lr issue:info [ISSUEID]
-```
-
-_See code: [src/commands/issue/info.ts](https://github.com/egodon/linear-cli/blob/v0.2.0/src/commands/issue/info.ts)_
-
 ## `lr issue:list`
 
 List issues
@@ -115,9 +104,28 @@ USAGE
 
 OPTIONS
   -m, --mine
+  -x, --extended          show extra columns
+  --columns=columns       only show provided columns (comma-separated)
+  --csv                   output is csv format [alias: --output=csv]
+  --filter=filter         filter property by partial string matching, ex: name=foo
+  --no-header             hide table header from output
+  --no-truncate           do not truncate output to fit screen
+  --output=csv|json|yaml  output in a more machine friendly format
+  --sort=sort             property to sort by (prepend '-' for descending)
 ```
 
 _See code: [src/commands/issue/list.ts](https://github.com/egodon/linear-cli/blob/v0.2.0/src/commands/issue/list.ts)_
+
+## `lr issue:show ISSUEID`
+
+Show description of issue
+
+```
+USAGE
+  $ lr issue:show ISSUEID
+```
+
+_See code: [src/commands/issue/show.ts](https://github.com/egodon/linear-cli/blob/v0.2.0/src/commands/issue/show.ts)_
 
 ## `lr issue:update ISSUEID`
 

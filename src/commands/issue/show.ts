@@ -7,7 +7,7 @@ type Response = {
 
 /**
  */
-export default class IssueInfo extends Command {
+export default class IssueShow extends Command {
   static description = 'Show description of issue';
 
   static args = [
@@ -18,7 +18,7 @@ export default class IssueInfo extends Command {
   ];
 
   async showIssueInfo() {
-    const { args } = this.parse(IssueInfo);
+    const { args } = this.parse(IssueShow);
 
     const issue = await this.linear.getIssue(args.issueId);
 
