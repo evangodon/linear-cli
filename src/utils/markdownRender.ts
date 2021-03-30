@@ -16,6 +16,13 @@ marked.setOptions({
   renderer: new TerminalRenderer({
     reflowText: true,
     width: MAX_WIDTH,
+    link: (href: string) => {
+      /* Remove email links */
+      if (href.match(/@/)) {
+        return href.split(' ')[0];
+      }
+      return href;
+    },
     image: (href: string, title: string) => {
       return terminalLink(title, href);
     },
