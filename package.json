@@ -79,6 +79,6 @@
       "init": "./lib/hooks/init/set-global-config"
     }
   },
-  "repository": "egodon/linear-cli",
+  "repository": "evangodon/linear-cli",
   "types": "lib/index.d.ts"
 }
