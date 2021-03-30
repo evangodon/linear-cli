@@ -32,6 +32,7 @@ USAGE
 * [`lr config:show`](#lr-configshow)
 * [`lr help [COMMAND]`](#lr-help-command)
 * [`lr init`](#lr-init)
+* [`lr issue [FILE]`](#lr-issue-file)
 * [`lr issue:create`](#lr-issuecreate)
 * [`lr issue:list`](#lr-issuelist)
 * [`lr issue:show ISSUEID`](#lr-issueshow-issueid)
@@ -82,6 +83,22 @@ USAGE
 ```
 
 _See code: [src/commands/init.ts](https://github.com/egodon/linear-cli/blob/v0.2.0/src/commands/init.ts)_
+
+## `lr issue [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ lr issue [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/issue/index.ts](https://github.com/egodon/linear-cli/blob/v0.2.0/src/commands/issue/index.ts)_
 
 ## `lr issue:create`
 

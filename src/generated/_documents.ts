@@ -296,6 +296,8 @@ export type Cycle = Node & {
   endsAt: Scalars['DateTime'];
   /** The completion time of the cycle. If null, the cycle hasn't been completed. */
   completedAt?: Maybe<Scalars['DateTime']>;
+  /** The time at which the cycle was automatically archived by the auto pruning process. */
+  autoArchivedAt?: Maybe<Scalars['DateTime']>;
   /** The total number of issues in the cycle after each day. */
   issueCountHistory: Array<Scalars['Float']>;
   /** The number of completed issues in the cycle after each day. */
@@ -1132,6 +1134,8 @@ export type Project = Node & {
   completedAt?: Maybe<Scalars['DateTime']>;
   /** The time at which the project was moved into canceled state. */
   canceledAt?: Maybe<Scalars['DateTime']>;
+  /** The time at which the project was automatically archived by the auto pruning process. */
+  autoArchivedAt?: Maybe<Scalars['DateTime']>;
   /** The sort order for the project within its milestone. */
   sortOrder: Scalars['Float'];
   /** The total number of issues in the project after each week. */
@@ -5541,11 +5545,17 @@ export type GetIssueQuery = (
   { __typename?: 'Query' }
   & { issue: (
     { __typename?: 'Issue' }
-    & Pick<Issue, 'trashed' | 'url' | 'identifier' | 'priorityLabel' | 'previousIdentifiers' | 'branchName' | 'estimate' | 'description' | 'title' | 'number' | 'updatedAt' | 'boardOrder' | 'subIssueSortOrder' | 'priority' | 'id'>
+    & Pick<Issue, 'trashed' | 'url' | 'identifier' | 'priorityLabel' | 'previousIdentifiers' | 'branchName' | 'estimate' | 'description' | 'title' | 'number' | 'priority' | 'id'>
     & { cycle?: Maybe<(
       { __typename?: 'Cycle' }
       & Pick<Cycle, 'id'>
-    )>, parent?: Maybe<(
+    )>, labels: (
+      { __typename?: 'IssueLabelConnection' }
+      & { nodes: Array<(
+        { __typename?: 'IssueLabel' }
+        & Pick<IssueLabel, 'name'>
+      )> }
+    ), parent?: Maybe<(
       { __typename?: 'Issue' }
       & Pick<Issue, 'id'>
     )>, project?: Maybe<(
@@ -5553,7 +5563,7 @@ export type GetIssueQuery = (
       & Pick<Project, 'id'>
     )>, team: (
       { __typename?: 'Team' }
-      & Pick<Team, 'id'>
+      & Pick<Team, 'id' | 'name'>
       & { states: (
         { __typename?: 'WorkflowStateConnection' }
         & { nodes: Array<(
@@ -5563,7 +5573,7 @@ export type GetIssueQuery = (
       ) }
     ), assignee?: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id'>
+      & Pick<User, 'id' | 'name'>
     )>, state: (
       { __typename?: 'WorkflowState' }
       & Pick<WorkflowState, 'id' | 'name'>

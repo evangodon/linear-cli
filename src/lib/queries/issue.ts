@@ -16,9 +16,11 @@ export const issueQuery = gql`
       description
       title
       number
-      updatedAt
-      boardOrder
-      subIssueSortOrder
+      labels {
+        nodes {
+          name
+        }
+      }
       parent {
         id
       }
@@ -28,6 +30,7 @@ export const issueQuery = gql`
       }
       team {
         id
+        name
         states {
           nodes {
             id
@@ -38,6 +41,7 @@ export const issueQuery = gql`
       id
       assignee {
         id
+        name
       }
       state {
         id
