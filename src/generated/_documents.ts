@@ -4486,6 +4486,8 @@ export type Mutation = {
   attachmentCreate: AttachmentPayload;
   /** [Alpha] Updates an existing issue attachment. */
   attachmentUpdate: AttachmentPayload;
+  /** Link an existing Zendesk ticket to an issue. */
+  attachmentLinkZendesk: AttachmentPayload;
   /** [Alpha] Archives an issue attachment. */
   attachmentArchive: ArchivePayload;
   /** Finds or creates a new user account by email and sends an email with token. */
@@ -4773,6 +4775,12 @@ export type MutationAttachmentUpdateArgs = {
 };
 
 
+export type MutationAttachmentLinkZendeskArgs = {
+  issueId: Scalars['String'];
+  ticketId: Scalars['String'];
+};
+
+
 export type MutationAttachmentArchiveArgs = {
   id: Scalars['String'];
 };
@@ -5013,6 +5021,7 @@ export type MutationIntegrationResourceArchiveArgs = {
 
 
 export type MutationIssueImportCreateGithubArgs = {
+  id?: Maybe<Scalars['String']>;
   instantProcess?: Maybe<Scalars['Boolean']>;
   githubShouldImportOrgProjects?: Maybe<Scalars['Boolean']>;
   githubRepoOwner: Scalars['String'];
@@ -5023,6 +5032,7 @@ export type MutationIssueImportCreateGithubArgs = {
 
 
 export type MutationIssueImportCreateJiraArgs = {
+  id?: Maybe<Scalars['String']>;
   instantProcess?: Maybe<Scalars['Boolean']>;
   jiraHostname: Scalars['String'];
   jiraEmail: Scalars['String'];
@@ -5033,6 +5043,7 @@ export type MutationIssueImportCreateJiraArgs = {
 
 
 export type MutationIssueImportCreateClubhouseArgs = {
+  id?: Maybe<Scalars['String']>;
   instantProcess?: Maybe<Scalars['Boolean']>;
   clubhouseTeamName: Scalars['String'];
   clubhouseToken: Scalars['String'];
@@ -5041,6 +5052,7 @@ export type MutationIssueImportCreateClubhouseArgs = {
 
 
 export type MutationIssueImportCreateAsanaArgs = {
+  id?: Maybe<Scalars['String']>;
   instantProcess?: Maybe<Scalars['Boolean']>;
   asanaTeamName: Scalars['String'];
   asanaToken: Scalars['String'];
@@ -5553,7 +5565,7 @@ export type GetIssueQuery = (
       { __typename?: 'IssueLabelConnection' }
       & { nodes: Array<(
         { __typename?: 'IssueLabel' }
-        & Pick<IssueLabel, 'name'>
+        & Pick<IssueLabel, 'name' | 'color'>
       )> }
     ), parent?: Maybe<(
       { __typename?: 'Issue' }
@@ -5573,7 +5585,7 @@ export type GetIssueQuery = (
       ) }
     ), assignee?: Maybe<(
       { __typename?: 'User' }
-      & Pick<User, 'id' | 'name'>
+      & Pick<User, 'id' | 'name' | 'displayName'>
     )>, state: (
       { __typename?: 'WorkflowState' }
       & Pick<WorkflowState, 'id' | 'name'>

@@ -5,6 +5,7 @@ import { cli } from 'cli-ux';
 import Command, { flags } from '../../base';
 import { markdownRender } from '../../utils/markdownRender';
 import { GetIssueQuery } from '../../generated/_documents';
+import { renderLabel } from '../../utils/renderLabel';
 
 type Issue = GetIssueQuery['issue'];
 
@@ -21,6 +22,8 @@ export default class IssueIndex extends Command {
   };
 
   renderIssueBox(issue: Issue) {
+    const labelWidth = 12;
+
     const issueProperties: { label?: string; value: string }[] = [
       {
         value: chalk.magenta.bold(issue.identifier),
@@ -45,18 +48,23 @@ export default class IssueIndex extends Command {
       },
       {
         label: 'Assignee',
-        value: issue.assignee?.name ?? 'Unassigned',
+        value: issue.assignee ? `${issue.assignee.displayName}` : 'Unassigned',
       },
       {
         label: 'Labels',
-        value: issue.labels.nodes.map((label) => `${label.name}`).join(' - '),
+        value: issue.labels.nodes
+          .map(
+            (label, idx) =>
+              `${renderLabel(label)}${(idx + 1) % 3 === 0 ? '\n'.padEnd(labelWidth) : ''}`
+          )
+          .join(' '),
       },
     ];
 
     const terminalString = issueProperties
       .map(
         (p) =>
-          (p.label && p.value ? chalk.dim(`${p.label}:`.padEnd(12)) : '') +
+          (p.label && p.value ? chalk.dim(`${p.label}:`.padEnd(labelWidth)) : '') +
           (p.value ? p.value : '')
       )
       .join('\n');

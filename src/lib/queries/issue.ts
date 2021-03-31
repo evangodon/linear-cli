@@ -19,6 +19,7 @@ export const issueQuery = gql`
       labels {
         nodes {
           name
+          color
         }
       }
       parent {
@@ -42,6 +43,7 @@ export const issueQuery = gql`
       assignee {
         id
         name
+        displayName
       }
       state {
         id
