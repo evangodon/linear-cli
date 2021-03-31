@@ -5500,46 +5500,33 @@ export type User_AssignedIssuesQuery = (
     { __typename?: 'User' }
     & { assignedIssues: (
       { __typename?: 'IssueConnection' }
-      & IssueConnectionFragment
+      & { nodes: Array<(
+        { __typename?: 'Issue' }
+        & Pick<Issue, 'trashed' | 'url' | 'identifier' | 'priorityLabel' | 'previousIdentifiers' | 'branchName' | 'estimate' | 'description' | 'title' | 'number' | 'updatedAt' | 'boardOrder' | 'subIssueSortOrder' | 'priority' | 'archivedAt' | 'createdAt' | 'autoArchivedAt' | 'autoClosedAt' | 'canceledAt' | 'completedAt' | 'startedAt' | 'id'>
+        & { parent?: Maybe<(
+          { __typename?: 'Issue' }
+          & Pick<Issue, 'id'>
+        )>, project?: Maybe<(
+          { __typename?: 'Project' }
+          & Pick<Project, 'id'>
+        )>, team: (
+          { __typename?: 'Team' }
+          & Pick<Team, 'id'>
+        ), assignee?: Maybe<(
+          { __typename?: 'User' }
+          & Pick<User, 'id'>
+        )>, creator?: Maybe<(
+          { __typename?: 'User' }
+          & Pick<User, 'id'>
+        )>, state: (
+          { __typename?: 'WorkflowState' }
+          & Pick<WorkflowState, 'id' | 'name' | 'color'>
+        ) }
+      )>, pageInfo: (
+        { __typename?: 'PageInfo' }
+        & PageInfoFragment
+      ) }
     ) }
-  ) }
-);
-
-export type IssueConnectionFragment = (
-  { __typename?: 'IssueConnection' }
-  & { nodes: Array<(
-    { __typename?: 'Issue' }
-    & IssueFragment
-  )>, pageInfo: (
-    { __typename?: 'PageInfo' }
-    & PageInfoFragment
-  ) }
-);
-
-export type IssueFragment = (
-  { __typename?: 'Issue' }
-  & Pick<Issue, 'trashed' | 'url' | 'identifier' | 'priorityLabel' | 'previousIdentifiers' | 'branchName' | 'dueDate' | 'estimate' | 'description' | 'title' | 'number' | 'updatedAt' | 'boardOrder' | 'subIssueSortOrder' | 'priority' | 'archivedAt' | 'createdAt' | 'autoArchivedAt' | 'autoClosedAt' | 'canceledAt' | 'completedAt' | 'startedAt' | 'id'>
-  & { cycle?: Maybe<(
-    { __typename?: 'Cycle' }
-    & Pick<Cycle, 'id'>
-  )>, parent?: Maybe<(
-    { __typename?: 'Issue' }
-    & Pick<Issue, 'id'>
-  )>, project?: Maybe<(
-    { __typename?: 'Project' }
-    & Pick<Project, 'id'>
-  )>, team: (
-    { __typename?: 'Team' }
-    & Pick<Team, 'id'>
-  ), assignee?: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-  )>, creator?: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
-  )>, state: (
-    { __typename?: 'WorkflowState' }
-    & Pick<WorkflowState, 'id' | 'name' | 'color'>
   ) }
 );
 
@@ -5608,5 +5595,43 @@ export type IssuesQuery = (
   & { issues: (
     { __typename?: 'IssueConnection' }
     & IssueConnectionFragment
+  ) }
+);
+
+export type IssueConnectionFragment = (
+  { __typename?: 'IssueConnection' }
+  & { nodes: Array<(
+    { __typename?: 'Issue' }
+    & IssueFragment
+  )>, pageInfo: (
+    { __typename?: 'PageInfo' }
+    & PageInfoFragment
+  ) }
+);
+
+export type IssueFragment = (
+  { __typename?: 'Issue' }
+  & Pick<Issue, 'trashed' | 'url' | 'identifier' | 'priorityLabel' | 'previousIdentifiers' | 'branchName' | 'dueDate' | 'estimate' | 'description' | 'title' | 'number' | 'updatedAt' | 'boardOrder' | 'subIssueSortOrder' | 'priority' | 'archivedAt' | 'createdAt' | 'autoArchivedAt' | 'autoClosedAt' | 'canceledAt' | 'completedAt' | 'startedAt' | 'id'>
+  & { cycle?: Maybe<(
+    { __typename?: 'Cycle' }
+    & Pick<Cycle, 'id'>
+  )>, parent?: Maybe<(
+    { __typename?: 'Issue' }
+    & Pick<Issue, 'id'>
+  )>, project?: Maybe<(
+    { __typename?: 'Project' }
+    & Pick<Project, 'id'>
+  )>, team: (
+    { __typename?: 'Team' }
+    & Pick<Team, 'id'>
+  ), assignee?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  )>, creator?: Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id'>
+  )>, state: (
+    { __typename?: 'WorkflowState' }
+    & Pick<WorkflowState, 'id' | 'name' | 'color' | 'type'>
   ) }
 );

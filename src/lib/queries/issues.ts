@@ -74,6 +74,7 @@ export const issuesQuery = gql`
       id
       name
       color
+      type
     }
   }
   fragment PageInfo on PageInfo {

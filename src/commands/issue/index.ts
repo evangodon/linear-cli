@@ -5,7 +5,7 @@ import { cli } from 'cli-ux';
 import Command, { flags } from '../../base';
 import { markdownRender } from '../../utils/markdownRender';
 import { GetIssueQuery } from '../../generated/_documents';
-import { renderLabel } from '../../utils/renderLabel';
+import { Label } from '../../utils/Label';
 
 type Issue = GetIssueQuery['issue'];
 
@@ -55,7 +55,7 @@ export default class IssueIndex extends Command {
         value: issue.labels.nodes
           .map(
             (label, idx) =>
-              `${renderLabel(label)}${(idx + 1) % 3 === 0 ? '\n'.padEnd(labelWidth) : ''}`
+              `${Label(label)}${(idx + 1) % 3 === 0 ? '\n'.padEnd(labelWidth) : ''}`
           )
           .join(' '),
       },

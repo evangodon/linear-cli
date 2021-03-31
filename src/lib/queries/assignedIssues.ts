@@ -19,70 +19,46 @@ export const assignedIssuesQuery = gql`
         last: $last
         orderBy: $orderBy
       ) {
-        ...IssueConnection
+        nodes {
+          trashed
+          url
+          identifier
+          priorityLabel
+          previousIdentifiers
+          branchName
+          estimate
+          description
+          title
+          number
+          updatedAt
+          boardOrder
+          subIssueSortOrder
+          parent {
+            id
+          }
+          priority
+          project {
+            id
+          }
+          team {
+            id
+          }
+          startedAt
+          id
+          assignee {
+            id
+          }
+          creator {
+            id
+          }
+          state {
+            id
+            name
+            color
+            type
+          }
+        }
       }
     }
-  }
-  fragment IssueConnection on IssueConnection {
-    nodes {
-      ...Issue
-    }
-    pageInfo {
-      ...PageInfo
-    }
-  }
-  fragment Issue on Issue {
-    trashed
-    url
-    identifier
-    priorityLabel
-    previousIdentifiers
-    branchName
-    cycle {
-      id
-    }
-    dueDate
-    estimate
-    description
-    title
-    number
-    updatedAt
-    boardOrder
-    subIssueSortOrder
-    parent {
-      id
-    }
-    priority
-    project {
-      id
-    }
-    team {
-      id
-    }
-    archivedAt
-    createdAt
-    autoArchivedAt
-    autoClosedAt
-    canceledAt
-    completedAt
-    startedAt
-    id
-    assignee {
-      id
-    }
-    creator {
-      id
-    }
-    state {
-      id
-      name
-      color
-    }
-  }
-  fragment PageInfo on PageInfo {
-    startCursor
-    endCursor
-    hasPreviousPage
-    hasNextPage
   }
 `;

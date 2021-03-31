@@ -1,14 +1,15 @@
 import chalk from 'chalk';
 import { cli, Table } from 'cli-ux';
 import sw from 'string-width';
-import { IssueFragment } from '../generated/_documents';
+import { Issue as IssueType } from '../generated/_documents';
+import { Status } from './Status';
 
 type Options = {
   log: (msg: string) => void;
   flags?: Table.table.Options;
 };
 
-type Issue = Pick<IssueFragment, 'identifier' | 'title' | 'state'>;
+type Issue = Pick<IssueType, 'identifier' | 'title' | 'state'>;
 
 export const createIssuesTable = (issues: Issue[], { log, flags }: Options) => {
   /* Colorize header with custom logger since cli-ux doesn't support it. */
@@ -39,7 +40,7 @@ export const createIssuesTable = (issues: Issue[], { log, flags }: Options) => {
       },
       state: {
         header: 'Status',
-        get: (issue) => `${chalk.hex(issue.state.color)('○')} ${issue.state.name}`,
+        get: (issue) => `${Status(issue.state)}`,
       },
     },
     {
