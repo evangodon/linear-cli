@@ -2594,6 +2594,28 @@ export type InvitePagePayload = {
   success: Scalars['Boolean'];
 };
 
+export type IssueDescriptionHistory = {
+  __typename?: 'IssueDescriptionHistory';
+  /** The UUID of the change. */
+  id: Scalars['String'];
+  /** The date when the description was updated. */
+  updatedAt: Scalars['DateTime'];
+  /** The description data of the issue as a JSON serialized string. */
+  descriptionData: Scalars['String'];
+  /** The ID of the author of the change. */
+  actorId?: Maybe<Scalars['String']>;
+  /** The type of the revision, whether it was the creation or update of the issue. */
+  type: Scalars['String'];
+};
+
+export type IssueDescriptionHistoryPayload = {
+  __typename?: 'IssueDescriptionHistoryPayload';
+  /** The issue that was created or updated. */
+  history?: Maybe<Array<IssueDescriptionHistory>>;
+  /** Whether the operation was successful. */
+  success: Scalars['Boolean'];
+};
+
 export type IssueImportPayload = {
   __typename?: 'IssueImportPayload';
   /** The identifier of the last sync operation. */
@@ -3943,6 +3965,8 @@ export type Query = {
   integrationResource: IntegrationResource;
   /** Retrieves information for the public invite page. */
   inviteInfo: InvitePagePayload;
+  /** [Internal] The history of issue descriptions. */
+  issueDescriptionHistory: IssueDescriptionHistoryPayload;
   /** Fetches the GitHub token, completing the OAuth flow. */
   issueImportFinishGithubOAuth: GithubOAuthTokenPayload;
   /** All issue labels. */
@@ -4214,6 +4238,11 @@ export type QueryIntegrationResourceArgs = {
 export type QueryInviteInfoArgs = {
   teamHash?: Maybe<Scalars['String']>;
   userHash: Scalars['String'];
+};
+
+
+export type QueryIssueDescriptionHistoryArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -5500,39 +5529,9 @@ export type User_AssignedIssuesQuery = (
     { __typename?: 'User' }
     & { assignedIssues: (
       { __typename?: 'IssueConnection' }
-      & { nodes: Array<(
-        { __typename?: 'Issue' }
-        & Pick<Issue, 'trashed' | 'url' | 'identifier' | 'priorityLabel' | 'previousIdentifiers' | 'branchName' | 'estimate' | 'description' | 'title' | 'number' | 'updatedAt' | 'boardOrder' | 'subIssueSortOrder' | 'priority' | 'archivedAt' | 'createdAt' | 'autoArchivedAt' | 'autoClosedAt' | 'canceledAt' | 'completedAt' | 'startedAt' | 'id'>
-        & { parent?: Maybe<(
-          { __typename?: 'Issue' }
-          & Pick<Issue, 'id'>
-        )>, project?: Maybe<(
-          { __typename?: 'Project' }
-          & Pick<Project, 'id'>
-        )>, team: (
-          { __typename?: 'Team' }
-          & Pick<Team, 'id'>
-        ), assignee?: Maybe<(
-          { __typename?: 'User' }
-          & Pick<User, 'id'>
-        )>, creator?: Maybe<(
-          { __typename?: 'User' }
-          & Pick<User, 'id'>
-        )>, state: (
-          { __typename?: 'WorkflowState' }
-          & Pick<WorkflowState, 'id' | 'name' | 'color'>
-        ) }
-      )>, pageInfo: (
-        { __typename?: 'PageInfo' }
-        & PageInfoFragment
-      ) }
+      & IssueConnectionFragment
     ) }
   ) }
-);
-
-export type PageInfoFragment = (
-  { __typename?: 'PageInfo' }
-  & Pick<PageInfo, 'startCursor' | 'endCursor' | 'hasPreviousPage' | 'hasNextPage'>
 );
 
 export type GetIssueQueryVariables = Exact<{
@@ -5580,33 +5579,12 @@ export type GetIssueQuery = (
   ) }
 );
 
-export type IssuesQueryVariables = Exact<{
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  includeArchived?: Maybe<Scalars['Boolean']>;
-  last?: Maybe<Scalars['Int']>;
-  orderBy?: Maybe<PaginationOrderBy>;
-}>;
-
-
-export type IssuesQuery = (
-  { __typename?: 'Query' }
-  & { issues: (
-    { __typename?: 'IssueConnection' }
-    & IssueConnectionFragment
-  ) }
-);
-
 export type IssueConnectionFragment = (
   { __typename?: 'IssueConnection' }
   & { nodes: Array<(
     { __typename?: 'Issue' }
     & IssueFragment
-  )>, pageInfo: (
-    { __typename?: 'PageInfo' }
-    & PageInfoFragment
-  ) }
+  )> }
 );
 
 export type IssueFragment = (
@@ -5633,5 +5611,23 @@ export type IssueFragment = (
   )>, state: (
     { __typename?: 'WorkflowState' }
     & Pick<WorkflowState, 'id' | 'name' | 'color' | 'type'>
+  ) }
+);
+
+export type IssuesQueryVariables = Exact<{
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  includeArchived?: Maybe<Scalars['Boolean']>;
+  last?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<PaginationOrderBy>;
+}>;
+
+
+export type IssuesQuery = (
+  { __typename?: 'Query' }
+  & { issues: (
+    { __typename?: 'IssueConnection' }
+    & IssueConnectionFragment
   ) }
 );

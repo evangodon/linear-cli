@@ -1,3 +1,5 @@
+import { IssueConnectionFragment } from './issueFragment';
+
 const gql = String.raw;
 
 export const issuesQuery = gql`
@@ -20,67 +22,5 @@ export const issuesQuery = gql`
       ...IssueConnection
     }
   }
-  fragment IssueConnection on IssueConnection {
-    nodes {
-      ...Issue
-    }
-    pageInfo {
-      ...PageInfo
-    }
-  }
-  fragment Issue on Issue {
-    trashed
-    url
-    identifier
-    priorityLabel
-    previousIdentifiers
-    branchName
-    cycle {
-      id
-    }
-    dueDate
-    estimate
-    description
-    title
-    number
-    updatedAt
-    boardOrder
-    subIssueSortOrder
-    parent {
-      id
-    }
-    priority
-    project {
-      id
-    }
-    team {
-      id
-    }
-    archivedAt
-    createdAt
-    autoArchivedAt
-    autoClosedAt
-    canceledAt
-    completedAt
-    startedAt
-    id
-    assignee {
-      id
-    }
-    creator {
-      id
-    }
-    state {
-      id
-      name
-      color
-      type
-    }
-  }
-  fragment PageInfo on PageInfo {
-    startCursor
-    endCursor
-    hasPreviousPage
-    hasNextPage
-  }
+  ${IssueConnectionFragment}
 `;

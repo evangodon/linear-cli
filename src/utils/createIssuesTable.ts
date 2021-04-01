@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import { cli, Table } from 'cli-ux';
 import sw from 'string-width';
-import { Issue as IssueType } from '../generated/_documents';
+import { IssueFragment } from '../generated/_documents';
 import { Status } from './Status';
 
 type Options = {
@@ -9,7 +9,7 @@ type Options = {
   flags?: Table.table.Options;
 };
 
-type Issue = Pick<IssueType, 'identifier' | 'title' | 'state'>;
+type Issue = Pick<IssueFragment, 'identifier' | 'title' | 'state'>;
 
 export const createIssuesTable = (issues: Issue[], { log, flags }: Options) => {
   /* Colorize header with custom logger since cli-ux doesn't support it. */

@@ -1,3 +1,5 @@
+import { IssueConnectionFragment } from './issueFragment';
+
 const gql = String.raw;
 
 export const assignedIssuesQuery = gql`
@@ -19,46 +21,9 @@ export const assignedIssuesQuery = gql`
         last: $last
         orderBy: $orderBy
       ) {
-        nodes {
-          trashed
-          url
-          identifier
-          priorityLabel
-          previousIdentifiers
-          branchName
-          estimate
-          description
-          title
-          number
-          updatedAt
-          boardOrder
-          subIssueSortOrder
-          parent {
-            id
-          }
-          priority
-          project {
-            id
-          }
-          team {
-            id
-          }
-          startedAt
-          id
-          assignee {
-            id
-          }
-          creator {
-            id
-          }
-          state {
-            id
-            name
-            color
-            type
-          }
-        }
+        ...IssueConnection
       }
     }
   }
+  ${IssueConnectionFragment}
 `;
