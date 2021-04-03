@@ -36,7 +36,7 @@ marked.setOptions({
           .slice(1)
           .map((item, index) => `${index + 1}.${item}\n`)
           .join('')
-          .replace(/•/g, '\n\t•');
+          .replace(/•/g, '\n  •');
       } else {
         body = body.replace(/•/g, '\n•');
       }

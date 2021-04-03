@@ -74,8 +74,9 @@ export default class IssueIndex extends Command {
   }
 
   renderIssueDescription(issue: Issue) {
+    const markdown = `${issue.identifier}\n # ${issue.title}\n${issue.description ?? ''}`;
     this.log('');
-    this.log(markdownRender(`# ${issue.title}\n${issue.description ?? ''}`));
+    this.log(boxen(markdownRender(markdown), { padding: 1, borderStyle: 'round' }));
   }
 
   async run() {
