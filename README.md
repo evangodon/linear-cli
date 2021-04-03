@@ -19,7 +19,7 @@ $ npm install -g @evangodon/lr
 $ lr COMMAND
 running command...
 $ lr (-v|--version|version)
-@evangodon/lr/0.4.0 linux-x64 node-v15.6.0
+@evangodon/lr/0.5.0 linux-x64 node-v15.6.0
 $ lr --help [COMMAND]
 USAGE
   $ lr COMMAND
@@ -35,7 +35,7 @@ USAGE
 * [`lr issue ISSUEID`](#lr-issue-issueid)
 * [`lr issue:create`](#lr-issuecreate)
 * [`lr issue:list`](#lr-issuelist)
-* [`lr issue:update ISSUEID`](#lr-issueupdate-issueid)
+* [`lr issue:update ISSUEID [PROPERTYTOMODIFY]`](#lr-issueupdate-issueid-propertytomodify)
 * [`lr workspace:add`](#lr-workspaceadd)
 * [`lr workspace:switch`](#lr-workspaceswitch)
 
@@ -46,7 +46,7 @@ USAGE
   $ lr config:delete
 ```
 
-_See code: [src/commands/config/delete.ts](https://github.com/evangodon/linear-cli/blob/v0.4.0/src/commands/config/delete.ts)_
+_See code: [src/commands/config/delete.ts](https://github.com/evangodon/linear-cli/blob/v0.5.0/src/commands/config/delete.ts)_
 
 ## `lr config:show`
 
@@ -55,7 +55,7 @@ USAGE
   $ lr config:show
 ```
 
-_See code: [src/commands/config/show.ts](https://github.com/evangodon/linear-cli/blob/v0.4.0/src/commands/config/show.ts)_
+_See code: [src/commands/config/show.ts](https://github.com/evangodon/linear-cli/blob/v0.5.0/src/commands/config/show.ts)_
 
 ## `lr help [COMMAND]`
 
@@ -76,12 +76,14 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2
 
 ## `lr init`
 
+Setup the Linear cli
+
 ```
 USAGE
   $ lr init
 ```
 
-_See code: [src/commands/init.ts](https://github.com/evangodon/linear-cli/blob/v0.4.0/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/evangodon/linear-cli/blob/v0.5.0/src/commands/init.ts)_
 
 ## `lr issue ISSUEID`
 
@@ -100,7 +102,7 @@ ALIASES
   $ lr issue:show
 ```
 
-_See code: [src/commands/issue/index.ts](https://github.com/evangodon/linear-cli/blob/v0.4.0/src/commands/issue/index.ts)_
+_See code: [src/commands/issue/index.ts](https://github.com/evangodon/linear-cli/blob/v0.5.0/src/commands/issue/index.ts)_
 
 ## `lr issue:create`
 
@@ -111,7 +113,7 @@ USAGE
   $ lr issue:create
 ```
 
-_See code: [src/commands/issue/create.ts](https://github.com/evangodon/linear-cli/blob/v0.4.0/src/commands/issue/create.ts)_
+_See code: [src/commands/issue/create.ts](https://github.com/evangodon/linear-cli/blob/v0.5.0/src/commands/issue/create.ts)_
 
 ## `lr issue:list`
 
@@ -133,21 +135,26 @@ OPTIONS
   --sort=sort             property to sort by (prepend '-' for descending)
 ```
 
-_See code: [src/commands/issue/list.ts](https://github.com/evangodon/linear-cli/blob/v0.4.0/src/commands/issue/list.ts)_
+_See code: [src/commands/issue/list.ts](https://github.com/evangodon/linear-cli/blob/v0.5.0/src/commands/issue/list.ts)_
 
-## `lr issue:update ISSUEID`
+## `lr issue:update ISSUEID [PROPERTYTOMODIFY]`
 
 Update an issue
 
 ```
 USAGE
-  $ lr issue:update ISSUEID
+  $ lr issue:update ISSUEID [PROPERTYTOMODIFY]
 
-OPTIONS
-  -s, --status  Update issue status
+ARGUMENTS
+  ISSUEID
+  PROPERTYTOMODIFY  (title|description|status) Property to update
+
+ALIASES
+  $ lr update
+  $ lr u
 ```
 
-_See code: [src/commands/issue/update.ts](https://github.com/evangodon/linear-cli/blob/v0.4.0/src/commands/issue/update.ts)_
+_See code: [src/commands/issue/update.ts](https://github.com/evangodon/linear-cli/blob/v0.5.0/src/commands/issue/update.ts)_
 
 ## `lr workspace:add`
 
@@ -158,7 +165,7 @@ USAGE
   $ lr workspace:add
 ```
 
-_See code: [src/commands/workspace/add.ts](https://github.com/evangodon/linear-cli/blob/v0.4.0/src/commands/workspace/add.ts)_
+_See code: [src/commands/workspace/add.ts](https://github.com/evangodon/linear-cli/blob/v0.5.0/src/commands/workspace/add.ts)_
 
 ## `lr workspace:switch`
 
@@ -169,5 +176,5 @@ USAGE
   $ lr workspace:switch
 ```
 
-_See code: [src/commands/workspace/switch.ts](https://github.com/evangodon/linear-cli/blob/v0.4.0/src/commands/workspace/switch.ts)_
+_See code: [src/commands/workspace/switch.ts](https://github.com/evangodon/linear-cli/blob/v0.5.0/src/commands/workspace/switch.ts)_
 <!-- commandsstop -->
