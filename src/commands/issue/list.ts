@@ -1,7 +1,7 @@
 import { flags } from '@oclif/command';
 import { cli } from 'cli-ux';
 import Command from '../../base';
-import { createIssuesTable } from '../../utils/createIssuesTable';
+import { render } from '../../utils';
 
 export default class IssueList extends Command {
   static description = 'List issues';
@@ -16,7 +16,7 @@ export default class IssueList extends Command {
     const issues = await this.linear.getIssues();
 
     this.log('');
-    createIssuesTable(issues, { log: this.log, flags });
+    render.IssuesTable(issues, { log: this.log, flags });
   }
 
   async listMyIssues() {
@@ -28,7 +28,7 @@ export default class IssueList extends Command {
     }
 
     this.log('');
-    createIssuesTable(issues, { log: this.log, flags });
+    render.IssuesTable(issues, { log: this.log, flags });
   }
 
   async run() {

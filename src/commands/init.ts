@@ -17,6 +17,8 @@ type PromptResponse = {
  * @TODO: split out run() into multiple functions
  */
 export default class Init extends Command {
+  static description = 'Setup the Linear cli';
+
   configFilePath = `${this.config.configDir}/config.json`;
 
   async promptForKey(): Promise<PromptResponse> {

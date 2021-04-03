@@ -3,9 +3,9 @@ import chalk from 'chalk';
 import wrapAnsi from 'wrap-ansi';
 import { cli } from 'cli-ux';
 import Command, { flags } from '../../base';
-import { markdownRender } from '../../utils/markdownRender';
+import { render } from '../../utils';
 import { GetIssueQuery } from '../../generated/_documents';
-import { Label } from '../../utils/Label';
+import { render as r } from '../../utils';
 
 type Issue = GetIssueQuery['issue'];
 
@@ -40,7 +40,7 @@ export default class IssueIndex extends Command {
       },
       {
         label: 'Status',
-        value: issue.state.name,
+        value: render.Status(issue.state),
       },
       {
         label: 'Priority',
@@ -55,7 +55,7 @@ export default class IssueIndex extends Command {
         value: issue.labels.nodes
           .map(
             (label, idx) =>
-              `${Label(label)}${(idx + 1) % 3 === 0 ? '\n'.padEnd(labelWidth) : ''}`
+              `${r.Label(label)}${(idx + 1) % 3 === 0 ? '\n'.padEnd(labelWidth) : ''}`
           )
           .join(' '),
       },
@@ -76,7 +76,7 @@ export default class IssueIndex extends Command {
   renderIssueDescription(issue: Issue) {
     const markdown = `${issue.identifier}\n # ${issue.title}\n${issue.description ?? ''}`;
     this.log('');
-    this.log(boxen(markdownRender(markdown), { padding: 1, borderStyle: 'round' }));
+    this.log(boxen(render.Markdown(markdown), { padding: 1, borderStyle: 'round' }));
   }
 
   async run() {

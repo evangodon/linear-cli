@@ -5566,7 +5566,7 @@ export type GetIssueQuery = (
         { __typename?: 'WorkflowStateConnection' }
         & { nodes: Array<(
           { __typename?: 'WorkflowState' }
-          & Pick<WorkflowState, 'id' | 'name'>
+          & Pick<WorkflowState, 'id' | 'name' | 'type' | 'color'>
         )> }
       ) }
     ), assignee?: Maybe<(
@@ -5574,7 +5574,7 @@ export type GetIssueQuery = (
       & Pick<User, 'id' | 'name' | 'displayName'>
     )>, state: (
       { __typename?: 'WorkflowState' }
-      & Pick<WorkflowState, 'id' | 'name'>
+      & Pick<WorkflowState, 'id' | 'name' | 'type' | 'color'>
     ) }
   ) }
 );

@@ -3,9 +3,12 @@ import { WorkflowState } from '../generated/_documents';
 
 type Status = Pick<WorkflowState, 'name' | 'color' | 'type'>;
 
-const char = {
-  complete: '✓',
-  incomplete: '○',
+const char: { [key: string]: string } = {
+  backlog: '◌',
+  unstarted: '○',
+  started: '◑',
+  completed: '✓',
+  canceled: '⍉',
 };
 
 /**
@@ -15,9 +18,7 @@ const char = {
  * @returns {string} -  status
  */
 export const Status = (state: Status) => {
-  const box = chalk.hex(state.color)(
-    state.type === 'completed' ? char.complete : char.incomplete
-  );
+  const box = chalk.hex(state.color)(char[state.type]);
 
   return `${box} ${state.name}`;
 };

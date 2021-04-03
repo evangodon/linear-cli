@@ -48,4 +48,4 @@ marked.setOptions({
   smartLists: true,
 });
 
-export { marked as markdownRender };
+export { marked as Markdown };

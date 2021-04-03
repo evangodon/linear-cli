@@ -36,6 +36,8 @@ export const issueQuery = gql`
           nodes {
             id
             name
+            type
+            color
           }
         }
       }
@@ -48,6 +50,8 @@ export const issueQuery = gql`
       state {
         id
         name
+        type
+        color
       }
     }
   }

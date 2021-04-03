@@ -11,7 +11,7 @@ type Options = {
 
 type Issue = Pick<IssueFragment, 'identifier' | 'title' | 'state'>;
 
-export const createIssuesTable = (issues: Issue[], { log, flags }: Options) => {
+export const IssuesTable = (issues: Issue[], { log, flags }: Options) => {
   /* Colorize header with custom logger since cli-ux doesn't support it. */
   function printTable(row: string) {
     const ANSI_BOLD = '\x1B[1m';
@@ -19,7 +19,7 @@ export const createIssuesTable = (issues: Issue[], { log, flags }: Options) => {
     if (row.startsWith(ANSI_BOLD)) {
       const headerColor = chalk.magenta;
       log(headerColor(row));
-      log(headerColor('-'.padEnd(sw(row), '-')));
+      log(headerColor('─'.padEnd(sw(row), '─')));
       return;
     }
     log(row);
