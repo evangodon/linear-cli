@@ -29,9 +29,6 @@ export const teamsQuery = gql`
     description
     name
     key
-    archivedAt
-    createdAt
-    timezone
     id
   }
 `;

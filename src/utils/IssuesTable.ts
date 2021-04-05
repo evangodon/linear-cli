@@ -25,28 +25,32 @@ export const IssuesTable = (issues: Issue[], { log, flags }: Options) => {
     log(row);
   }
 
-  cli.table(
-    issues,
-    {
-      identifier: {
-        header: 'ID',
-        minWidth: 8,
-        get: (issue) => issue.identifier,
+  try {
+    cli.table(
+      issues,
+      {
+        identifier: {
+          header: 'ID',
+          minWidth: 8,
+          get: (issue) => issue.identifier,
+        },
+        title: {
+          header: 'Title',
+          minWidth: 70,
+          get: (issue) => issue.title,
+        },
+        state: {
+          header: 'Status',
+          get: (issue) => `${Status(issue.state)}`,
+        },
       },
-      title: {
-        header: 'Title',
-        minWidth: 12,
-        get: (issue) => issue.title,
-      },
-      state: {
-        header: 'Status',
-        get: (issue) => `${Status(issue.state)}`,
-      },
-    },
-    {
-      printLine: printTable,
-      sort: 'ID',
-      ...flags,
-    }
-  );
+      {
+        printLine: printTable,
+        sort: 'ID',
+        ...flags,
+      }
+    );
+  } catch (error) {
+    log(`${chalk.red('Error')}: ${error.message}`);
+  }
 };

@@ -10,20 +10,11 @@ export const IssueConnectionFragment = gql`
     trashed
     url
     identifier
-    priorityLabel
-    previousIdentifiers
-    branchName
-    cycle {
-      id
-    }
-    dueDate
     estimate
     description
     title
     number
     updatedAt
-    boardOrder
-    subIssueSortOrder
     parent {
       id
     }
@@ -33,14 +24,16 @@ export const IssueConnectionFragment = gql`
     }
     team {
       id
+      states {
+        nodes {
+          id
+          name
+          type
+          color
+          position
+        }
+      }
     }
-    archivedAt
-    createdAt
-    autoArchivedAt
-    autoClosedAt
-    canceledAt
-    completedAt
-    startedAt
     id
     assignee {
       id

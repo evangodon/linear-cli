@@ -5566,7 +5566,7 @@ export type GetIssueQuery = (
         { __typename?: 'WorkflowStateConnection' }
         & { nodes: Array<(
           { __typename?: 'WorkflowState' }
-          & Pick<WorkflowState, 'id' | 'name' | 'type' | 'color'>
+          & Pick<WorkflowState, 'id' | 'name' | 'type' | 'color' | 'position'>
         )> }
       ) }
     ), assignee?: Maybe<(
@@ -5589,11 +5589,8 @@ export type IssueConnectionFragment = (
 
 export type IssueFragment = (
   { __typename?: 'Issue' }
-  & Pick<Issue, 'trashed' | 'url' | 'identifier' | 'priorityLabel' | 'previousIdentifiers' | 'branchName' | 'dueDate' | 'estimate' | 'description' | 'title' | 'number' | 'updatedAt' | 'boardOrder' | 'subIssueSortOrder' | 'priority' | 'archivedAt' | 'createdAt' | 'autoArchivedAt' | 'autoClosedAt' | 'canceledAt' | 'completedAt' | 'startedAt' | 'id'>
-  & { cycle?: Maybe<(
-    { __typename?: 'Cycle' }
-    & Pick<Cycle, 'id'>
-  )>, parent?: Maybe<(
+  & Pick<Issue, 'trashed' | 'url' | 'identifier' | 'estimate' | 'description' | 'title' | 'number' | 'updatedAt' | 'priority' | 'id'>
+  & { parent?: Maybe<(
     { __typename?: 'Issue' }
     & Pick<Issue, 'id'>
   )>, project?: Maybe<(
@@ -5602,6 +5599,13 @@ export type IssueFragment = (
   )>, team: (
     { __typename?: 'Team' }
     & Pick<Team, 'id'>
+    & { states: (
+      { __typename?: 'WorkflowStateConnection' }
+      & { nodes: Array<(
+        { __typename?: 'WorkflowState' }
+        & Pick<WorkflowState, 'id' | 'name' | 'type' | 'color' | 'position'>
+      )> }
+    ) }
   ), assignee?: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id'>
@@ -5660,5 +5664,5 @@ export type TeamConnectionFragment = (
 
 export type TeamFragment = (
   { __typename?: 'Team' }
-  & Pick<Team, 'description' | 'name' | 'key' | 'archivedAt' | 'createdAt' | 'timezone' | 'id'>
+  & Pick<Team, 'description' | 'name' | 'key' | 'id'>
 );

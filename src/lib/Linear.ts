@@ -57,9 +57,9 @@ export class Linear extends LinearClient {
     return issues;
   }
 
-  async getMyAssignedIssues() {
+  async getMyAssignedIssues({ disableSpinner }?: { disableSpinner: boolean }) {
     let issues: User_AssignedIssuesQuery['user']['assignedIssues']['nodes'] = [];
-    const spinner = ora().start();
+    const spinner = ora({ isEnabled: !disableSpinner }).start();
 
     try {
       const { data } = await this.client.rawRequest<

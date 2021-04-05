@@ -29,17 +29,25 @@ export default abstract class extends Command {
       const { workspaces, activeWorkspace } = config;
 
       this.configData = config;
+      const currentUser = workspaces[activeWorkspace].user;
+
       this.linear = new Linear({
         apiKey: workspaces[activeWorkspace].apiKey,
-        currentUser: workspaces[activeWorkspace].user,
+        currentUser,
       });
+      this.user = currentUser;
     } catch (error) {
       /* Config folder doesn't exist */
       if (error.code === 'ENOENT') {
         await this.promptForInit();
       }
 
-      /*  Error when parsing config file or invalid config file */
+      /*  Invalid JSON in config file */
+      if (String(error).includes('SyntaxError')) {
+        this.error(`Invalid json in config file \n${error}`);
+      }
+
+      /*  Invalid config file */
       this.error(error);
     }
   }

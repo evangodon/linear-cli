@@ -38,6 +38,7 @@ export const issueQuery = gql`
             name
             type
             color
+            position
           }
         }
       }
