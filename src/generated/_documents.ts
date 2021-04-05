@@ -5631,3 +5631,34 @@ export type IssuesQuery = (
     & IssueConnectionFragment
   ) }
 );
+
+export type TeamsQueryVariables = Exact<{
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  includeArchived?: Maybe<Scalars['Boolean']>;
+  last?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<PaginationOrderBy>;
+}>;
+
+
+export type TeamsQuery = (
+  { __typename?: 'Query' }
+  & { teams: (
+    { __typename?: 'TeamConnection' }
+    & TeamConnectionFragment
+  ) }
+);
+
+export type TeamConnectionFragment = (
+  { __typename?: 'TeamConnection' }
+  & { nodes: Array<(
+    { __typename?: 'Team' }
+    & TeamFragment
+  )> }
+);
+
+export type TeamFragment = (
+  { __typename?: 'Team' }
+  & Pick<Team, 'description' | 'name' | 'key' | 'archivedAt' | 'createdAt' | 'timezone' | 'id'>
+);

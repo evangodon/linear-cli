@@ -25,6 +25,7 @@ export default abstract class extends Command {
 
       const configUnknown: unknown = JSON.parse(configJSON);
       const config = Config.parse(configUnknown);
+
       const { workspaces, activeWorkspace } = config;
 
       this.configData = config;
@@ -38,8 +39,7 @@ export default abstract class extends Command {
         await this.promptForInit();
       }
 
-      /*  Error when parsing config file or
-          invalid config file */
+      /*  Error when parsing config file or invalid config file */
       this.error(error);
     }
   }

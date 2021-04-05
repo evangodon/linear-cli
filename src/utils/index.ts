@@ -1,7 +1,7 @@
 import { Label } from './Label';
 import { Status } from './Status';
-import { Markdown } from './markdownRender';
-import { IssuesTable } from './createIssuesTable';
+import { Markdown } from './Markdown';
+import { IssuesTable } from './IssuesTable';
 
 export const render = {
   Label,

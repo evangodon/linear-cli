@@ -1,4 +1,4 @@
-import { cli } from 'cli-ux';
+import chalk from 'chalk';
 import * as inquirer from 'inquirer';
 import Command from '../../base';
 import { render } from '../../utils';
@@ -47,7 +47,10 @@ export default class IssueUpdate extends Command {
         name: 'property',
         message: `What do you want to update`,
         type: 'list',
-        choices: properties,
+        choices: properties.map((property) => ({
+          name: property[0].toUpperCase() + property.slice(1),
+          value: property,
+        })),
       },
     ]);
 
@@ -72,7 +75,7 @@ export default class IssueUpdate extends Command {
     await this.linear.issueUpdate(issueId, { title });
 
     this.log('');
-    this.log(`Issue ${issueId} has been updated with new title \`${title}\``);
+    this.log(`Issue ${chalk.magenta(issueId)} has been updated with title \`${title}\``);
   }
 
   /**
@@ -97,9 +100,7 @@ export default class IssueUpdate extends Command {
 
     await this.linear.issueUpdate(issueId, { description });
     this.log('');
-    this.log(
-      `The description of issue ${issue.identifier} has been successfully updated`
-    );
+    this.log(`The description of issue ${issue.identifier} has been updated`);
   }
 
   /**
@@ -109,30 +110,34 @@ export default class IssueUpdate extends Command {
     const {
       args: { issueId },
     } = this.parse<any, Args>(IssueUpdate);
-    cli.action.start('Getting issue...');
     const issue = await this.linear.getIssue(issueId);
-    cli.action.stop();
-    const possibleStates = issue.team.states.nodes;
 
-    const response = await inquirer.prompt<{ stateName: string }>([
+    const workflowStates = issue.team.states.nodes;
+
+    const { stateName } = await inquirer.prompt<{ stateName: typeof workflowStates[0] }>([
       {
         name: 'stateName',
-        message: `Choose a state (current: ${issue.state.name})`,
+        message: `Choose a state (current: ${render.Status(issue.state)})`,
         type: 'list',
-        choices: possibleStates,
+        choices: workflowStates
+          .filter((state) => state.id !== issue.state.id)
+          .map((state) => ({
+            name: render.Status(state),
+            value: state,
+          })),
       },
     ]);
 
-    const newState = possibleStates.find((state) => state.name === response.stateName);
+    const newState = workflowStates.find((state) => state.id === stateName.id);
 
     if (!newState) {
-      throw new Error('Did not find that state.');
+      this.error('Did not find that state.');
     }
 
     await this.linear.issueUpdate(issueId, { stateId: newState.id });
 
     this.log(
-      `\nUpdated status of issue ${issue.identifier} to ${render.Status(newState)}`
+      `\nUpdated status of issue ${chalk.magenta(issue.identifier)} to ${newState.name}`
     );
   }
 

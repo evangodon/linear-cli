@@ -1,10 +1,13 @@
 import { LinearClient } from '@linear/sdk';
 import { cli } from 'cli-ux';
+import ora from 'ora';
 import { issuesQuery } from './queries/issues';
 import { assignedIssuesQuery } from './queries/assignedIssues';
 import { issueQuery } from './queries/issue';
 import { handleError } from './handleError';
 import { User } from './configSchema';
+import { teamsQuery } from './queries/teams';
+import { TeamsQuery, TeamsQueryVariables } from '../generated/_documents';
 import {
   IssuesQuery,
   IssuesQueryVariables,
@@ -33,7 +36,7 @@ export class Linear extends LinearClient {
 
   async getIssues() {
     let issues: IssuesQuery['issues']['nodes'] = [];
-    cli.action.start('Fetching your assigned issues...');
+    const spinner = ora().start();
 
     try {
       const { data } = await this.client.rawRequest<IssuesQuery, IssuesQueryVariables>(
@@ -48,7 +51,7 @@ export class Linear extends LinearClient {
     } catch (error) {
       handleError(error);
     } finally {
-      cli.action.stop();
+      spinner.stop();
     }
 
     return issues;
@@ -56,7 +59,7 @@ export class Linear extends LinearClient {
 
   async getMyAssignedIssues() {
     let issues: User_AssignedIssuesQuery['user']['assignedIssues']['nodes'] = [];
-    cli.action.start('Fetching your assigned issues...');
+    const spinner = ora().start();
 
     try {
       const { data } = await this.client.rawRequest<
@@ -75,7 +78,7 @@ export class Linear extends LinearClient {
     } catch (error) {
       handleError(error);
     } finally {
-      cli.action.stop();
+      spinner.stop();
     }
 
     return issues;
@@ -83,6 +86,8 @@ export class Linear extends LinearClient {
 
   async getIssue(issueId: string) {
     let issue: GetIssueQuery['issue'] = (null as unknown) as GetIssueQuery['issue'];
+
+    const spinner = ora().start();
 
     try {
       const { data } = await this.client.rawRequest<
@@ -99,8 +104,26 @@ export class Linear extends LinearClient {
       issue = data.issue;
     } catch (error) {
       handleError(error);
+    } finally {
+      spinner.stop();
     }
 
     return issue;
+  }
+
+  async getTeams() {
+    const spinner = ora().start();
+
+    const { data } = await this.client
+      .rawRequest<TeamsQuery, TeamsQueryVariables>(teamsQuery)
+      .catch((error) => handleError(error));
+
+    spinner.stop();
+
+    if (!data) {
+      throw new Error('No data returned from Linear');
+    }
+
+    return data.teams.nodes;
   }
 }
