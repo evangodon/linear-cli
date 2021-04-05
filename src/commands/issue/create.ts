@@ -20,7 +20,7 @@ export default class IssueCreate extends Command {
   static flags = {
     copy: flags.boolean({
       char: 'c',
-      description: 'Copy issue url to clipboard after create',
+      description: 'Copy issue url to clipboard after creating',
     }),
   };
 
