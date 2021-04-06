@@ -1,4 +1,4 @@
-linear-cli
+Linear CLI
 ==========
 
 An unoffical CLI for [Linear](https://linear.app/)
@@ -7,6 +7,7 @@ An unoffical CLI for [Linear](https://linear.app/)
 [![Version](https://img.shields.io/npm/v/linear-cli.svg)](https://npmjs.org/package/linear-cli)
 [![Downloads/week](https://img.shields.io/npm/dw/linear-cli.svg)](https://npmjs.org/package/linear-cli)
 [![License](https://img.shields.io/npm/l/linear-cli.svg)](https://github.com/egodon/linear-cli/blob/master/package.json)
+![screenshot of linear list](src/assets/readme-banner.png)
 
 <!-- toc -->
 * [Usage](#usage)
@@ -28,17 +29,20 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
-* [`lr config:delete`](#lr-configdelete)
-* [`lr config:show`](#lr-configshow)
-* [`lr help [COMMAND]`](#lr-help-command)
-* [`lr init`](#lr-init)
-* [`lr issue ISSUEID`](#lr-issue-issueid)
-* [`lr issue:create`](#lr-issuecreate)
-* [`lr issue:list`](#lr-issuelist)
-* [`lr issue:start ISSUEID`](#lr-issuestart-issueid)
-* [`lr issue:update ISSUEID [PROPERTYTOMODIFY]`](#lr-issueupdate-issueid-propertytomodify)
-* [`lr workspace:add`](#lr-workspaceadd)
-* [`lr workspace:switch`](#lr-workspaceswitch)
+- [Linear CLI](#linear-cli)
+- [Usage](#usage)
+- [Commands](#commands)
+  - [`lr config:delete`](#lr-configdelete)
+  - [`lr config:show`](#lr-configshow)
+  - [`lr help [COMMAND]`](#lr-help-command)
+  - [`lr init`](#lr-init)
+  - [`lr issue ISSUEID`](#lr-issue-issueid)
+  - [`lr issue:create`](#lr-issuecreate)
+  - [`lr issue:list`](#lr-issuelist)
+  - [`lr issue:start ISSUEID`](#lr-issuestart-issueid)
+  - [`lr issue:update ISSUEID [PROPERTYTOMODIFY]`](#lr-issueupdate-issueid-propertytomodify)
+  - [`lr workspace:add`](#lr-workspaceadd)
+  - [`lr workspace:switch`](#lr-workspaceswitch)
 
 ## `lr config:delete`
 
