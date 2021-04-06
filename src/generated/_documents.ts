@@ -5608,7 +5608,7 @@ export type IssueFragment = (
     ) }
   ), assignee?: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id'>
+    & Pick<User, 'id' | 'displayName'>
   )>, creator?: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id'>

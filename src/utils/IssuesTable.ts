@@ -9,7 +9,7 @@ type Options = {
   flags?: Table.table.Options;
 };
 
-type Issue = Pick<IssueFragment, 'identifier' | 'title' | 'state'>;
+type Issue = Pick<IssueFragment, 'identifier' | 'title' | 'state' | 'assignee'>;
 
 export const IssuesTable = (issues: Issue[], { log, flags }: Options) => {
   /* Colorize header with custom logger since cli-ux doesn't support it. */
@@ -38,6 +38,12 @@ export const IssuesTable = (issues: Issue[], { log, flags }: Options) => {
           header: 'Title',
           minWidth: 70,
           get: (issue) => issue.title,
+        },
+        assignee: {
+          minWidth: 16,
+          header: 'Assignee',
+          get: (issue) => issue.assignee?.displayName ?? chalk.dim('Unassigned'),
+          extended: true,
         },
         state: {
           header: 'Status',

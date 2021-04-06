@@ -1,5 +1,4 @@
 import { LinearClient } from '@linear/sdk';
-import { cli } from 'cli-ux';
 import ora from 'ora';
 import { issuesQuery } from './queries/issues';
 import { assignedIssuesQuery } from './queries/assignedIssues';
@@ -40,7 +39,8 @@ export class Linear extends LinearClient {
 
     try {
       const { data } = await this.client.rawRequest<IssuesQuery, IssuesQueryVariables>(
-        issuesQuery
+        issuesQuery,
+        { first: 100 }
       );
 
       if (!data) {

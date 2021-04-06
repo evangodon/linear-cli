@@ -3,6 +3,9 @@ import inquirer from 'inquirer';
 import ora from 'ora';
 import Command, { flags } from '../../base';
 
+/**
+ * @TODO: improve display of  spinner
+ */
 export default class IssueStart extends Command {
   static description = 'Change status of issue to "In progress" and assign to yourself.';
 

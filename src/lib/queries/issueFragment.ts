@@ -37,6 +37,7 @@ export const IssueConnectionFragment = gql`
     id
     assignee {
       id
+      displayName
     }
     creator {
       id
