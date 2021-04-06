@@ -1,48 +1,45 @@
-Linear CLI
-==========
+# Linear CLI
 
-An unoffical CLI for [Linear](https://linear.app/)
+A CLI for [Linear](https://linear.app/)
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/linear-cli.svg)](https://npmjs.org/package/linear-cli)
-[![Downloads/week](https://img.shields.io/npm/dw/linear-cli.svg)](https://npmjs.org/package/linear-cli)
+[![Version](https://img.shields.io/npm/v/@evangodon/lr.svg)](https://npmjs.org/package/@evangodon/lr)
+[![Downloads/week](https://img.shields.io/npm/dw/@evangodon/lr.svg)](https://npmjs.org/package/@evangodon/lr)
 [![License](https://img.shields.io/npm/l/linear-cli.svg)](https://github.com/egodon/linear-cli/blob/master/package.json)
 ![screenshot of linear list](src/assets/readme-banner.png)
 
 <!-- toc -->
-* [Usage](#usage)
-* [Commands](#commands)
-<!-- tocstop -->
-# Usage
-<!-- usage -->
-```sh-session
-$ npm install -g @evangodon/lr
-$ lr COMMAND
-running command...
-$ lr (-v|--version|version)
-@evangodon/lr/0.7.0 linux-x64 node-v15.6.0
-$ lr --help [COMMAND]
-USAGE
-  $ lr COMMAND
-...
-```
-<!-- usagestop -->
-# Commands
-<!-- commands -->
-- [Linear CLI](#linear-cli)
-- [Usage](#usage)
+
+- [Installation](#installation)
 - [Commands](#commands)
-  - [`lr config:delete`](#lr-configdelete)
-  - [`lr config:show`](#lr-configshow)
-  - [`lr help [COMMAND]`](#lr-help-command)
-  - [`lr init`](#lr-init)
-  - [`lr issue ISSUEID`](#lr-issue-issueid)
-  - [`lr issue:create`](#lr-issuecreate)
-  - [`lr issue:list`](#lr-issuelist)
-  - [`lr issue:start ISSUEID`](#lr-issuestart-issueid)
-  - [`lr issue:update ISSUEID [PROPERTYTOMODIFY]`](#lr-issueupdate-issueid-propertytomodify)
-  - [`lr workspace:add`](#lr-workspaceadd)
-  - [`lr workspace:switch`](#lr-workspaceswitch)
+  <!-- tocstop -->
+
+# Install
+
+```
+  $ npm install -g @evangodon/lr
+  # or
+  $ yarn global add @evangodon/lr
+
+  # and then setup your personal api key
+  $ lr init
+```
+
+# Commands
+
+<!-- commands -->
+
+- [`lr config:delete`](#lr-configdelete)
+- [`lr config:show`](#lr-configshow)
+- [`lr help [COMMAND]`](#lr-help-command)
+- [`lr init`](#lr-init)
+- [`lr issue ISSUEID`](#lr-issue-issueid)
+- [`lr issue:create`](#lr-issuecreate)
+- [`lr issue:list`](#lr-issuelist)
+- [`lr issue:start ISSUEID`](#lr-issuestart-issueid)
+- [`lr issue:update ISSUEID [PROPERTYTOMODIFY]`](#lr-issueupdate-issueid-propertytomodify)
+- [`lr workspace:add`](#lr-workspaceadd)
+- [`lr workspace:switch`](#lr-workspaceswitch)
 
 ## `lr config:delete`
 
@@ -211,4 +208,5 @@ USAGE
 ```
 
 _See code: [src/commands/workspace/switch.ts](https://github.com/evangodon/linear-cli/blob/v0.7.0/src/commands/workspace/switch.ts)_
+
 <!-- commandsstop -->
