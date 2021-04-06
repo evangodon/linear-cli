@@ -1,7 +1,7 @@
 {
   "name": "@evangodon/lr",
   "description": "A CLI for Linear",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "author": "Evan Godon @egodon",
   "bin": {
     "linear": "bin/run",
