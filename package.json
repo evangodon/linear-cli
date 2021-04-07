@@ -87,9 +87,6 @@
       "workspace": {
         "description": "Add or switch to a new workspace"
       }
-    },
-    "hooks": {
-      "init": "./lib/hooks/init/set-global-config"
     }
   },
   "repository": "evangodon/linear-cli",
