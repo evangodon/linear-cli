@@ -35,7 +35,7 @@ export class Linear extends LinearClient {
 
   async getIssues() {
     let issues: IssuesQuery['issues']['nodes'] = [];
-    const spinner = ora().start();
+    const spinner = ora('Loading issues').start();
 
     try {
       const { data } = await this.client.rawRequest<IssuesQuery, IssuesQueryVariables>(

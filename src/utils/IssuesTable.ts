@@ -11,6 +11,9 @@ type Options = {
 
 type Issue = Pick<IssueFragment, 'identifier' | 'title' | 'state' | 'assignee'>;
 
+/**
+ * @TODO: Place divider character between columns
+ */
 export const IssuesTable = (issues: Issue[], { log, flags }: Options) => {
   /* Colorize header with custom logger since cli-ux doesn't support it. */
   function printTable(row: string) {
@@ -34,6 +37,11 @@ export const IssuesTable = (issues: Issue[], { log, flags }: Options) => {
           minWidth: 8,
           get: (issue) => issue.identifier,
         },
+        state: {
+          minWidth: 16,
+          header: 'Status',
+          get: (issue) => `${Status(issue.state)}`,
+        },
         title: {
           header: 'Title',
           minWidth: 70,
@@ -44,10 +52,6 @@ export const IssuesTable = (issues: Issue[], { log, flags }: Options) => {
           header: 'Assignee',
           get: (issue) => issue.assignee?.displayName ?? chalk.dim('Unassigned'),
           extended: true,
-        },
-        state: {
-          header: 'Status',
-          get: (issue) => `${Status(issue.state)}`,
         },
       },
       {
