@@ -1,4 +1,4 @@
-import { LinearClient } from '@linear/sdk';
+import { LinearClient, LinearDocument } from '@linear/sdk';
 import ora from 'ora';
 import { issuesQuery } from './queries/issues';
 import { assignedIssuesQuery } from './queries/assignedIssues';
@@ -40,7 +40,7 @@ export class Linear extends LinearClient {
     try {
       const { data } = await this.client.rawRequest<IssuesQuery, IssuesQueryVariables>(
         issuesQuery,
-        { first: 100 }
+        { first: 100, orderBy: LinearDocument.PaginationOrderBy.UpdatedAt }
       );
 
       if (!data) {
@@ -68,6 +68,7 @@ export class Linear extends LinearClient {
       >(assignedIssuesQuery, {
         id: this.currentUser.id,
         first: 20,
+        orderBy: LinearDocument.PaginationOrderBy.UpdatedAt,
       });
 
       if (!data) {
