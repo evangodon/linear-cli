@@ -26,26 +26,14 @@ marked.setOptions({
     image: (href: string, title: string) => {
       return terminalLink(title, href);
     },
-    list: (body: string, ordered: boolean) => {
-      body = body.replace(/\s+/g, ' ');
-      body = body.replace(/\*/g, `\n•`);
-
-      if (ordered) {
-        body = body
-          .split('\n•')
-          .slice(1)
-          .map((item, index) => `${index + 1}.${item}\n`)
-          .join('')
-          .replace(/•/g, '\n  •');
-      } else {
-        body = body.replace(/•/g, '\n•');
-      }
-
-      return wrapAnsi(body.replace(/\*/g, '•'), MAX_WIDTH, { trim: false });
-    },
   }),
   mangle: false,
   smartLists: true,
 });
 
-export { marked as Markdown };
+export const Markdown = (markdown: string) => {
+  markdown = marked(markdown).replace(/(\n\s*)(\*)/g, (_, p1) => `${p1}  •`);
+  markdown = wrapAnsi(markdown, 90);
+
+  return markdown;
+};
