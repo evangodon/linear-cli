@@ -110,7 +110,9 @@ export default class IssueUpdate extends Command {
     const {
       args: { issueId },
     } = this.parse<any, Args>(IssueUpdate);
-    const issue = await this.linear.getIssue(issueId);
+    const issue = await this.linear.getIssueWorkflowStates(issueId);
+
+    console.log(issue);
 
     const workflowStates = issue.team.states.nodes;
 

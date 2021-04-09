@@ -6,7 +6,7 @@ import { render } from '../../utils';
 export default class IssueList extends Command {
   static description = 'List issues';
 
-  static aliases = ['list', 'l'];
+  static aliases = ['list', 'ls', 'l'];
 
   static flags = {
     ...cli.table.flags(),

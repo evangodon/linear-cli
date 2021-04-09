@@ -6,7 +6,13 @@ import { issueQuery } from './queries/issue';
 import { handleError } from './handleError';
 import { User } from './configSchema';
 import { teamsQuery } from './queries/teams';
-import { TeamsQuery, TeamsQueryVariables } from '../generated/_documents';
+import {
+  TeamsQuery,
+  TeamsQueryVariables,
+  GetIssueWorkflowStatesQuery,
+  GetIssueWorkflowStatesQueryVariables,
+} from '../generated/_documents';
+import { issueWorkflowStatesQuery } from './queries/issueWorflowStates';
 import {
   IssuesQuery,
   IssuesQueryVariables,
@@ -40,7 +46,7 @@ export class Linear extends LinearClient {
     try {
       const { data } = await this.client.rawRequest<IssuesQuery, IssuesQueryVariables>(
         issuesQuery,
-        { first: 100, orderBy: LinearDocument.PaginationOrderBy.UpdatedAt }
+        { first: 30, orderBy: LinearDocument.PaginationOrderBy.UpdatedAt }
       );
 
       if (!data) {
@@ -126,5 +132,32 @@ export class Linear extends LinearClient {
     }
 
     return data.teams.nodes;
+  }
+
+  async getIssueWorkflowStates(issueId: string) {
+    let issue: GetIssueWorkflowStatesQuery['issue'] = (null as unknown) as GetIssueWorkflowStatesQuery['issue'];
+
+    const spinner = ora().start();
+
+    try {
+      const { data } = await this.client.rawRequest<
+        GetIssueWorkflowStatesQuery,
+        GetIssueWorkflowStatesQueryVariables
+      >(issueWorkflowStatesQuery, {
+        id: issueId,
+      });
+
+      if (!data) {
+        throw new Error('No data returned from Linear');
+      }
+
+      issue = data.issue;
+    } catch (error) {
+      handleError(error);
+    } finally {
+      spinner.stop();
+    }
+
+    return issue;
   }
 }

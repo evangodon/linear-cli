@@ -7,13 +7,9 @@ export const IssueConnectionFragment = gql`
     }
   }
   fragment Issue on Issue {
-    trashed
     url
     identifier
-    estimate
-    description
     title
-    number
     updatedAt
     parent {
       id
@@ -21,18 +17,10 @@ export const IssueConnectionFragment = gql`
     priority
     project {
       id
+      name
     }
     team {
       id
-      states {
-        nodes {
-          id
-          name
-          type
-          color
-          position
-        }
-      }
     }
     id
     assignee {
