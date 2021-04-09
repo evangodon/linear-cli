@@ -5,6 +5,7 @@ import Command, { flags } from '../../base';
 
 /**
  * @TODO: improve display of  spinner
+ * @TODO: Fix the stop-others flag
  */
 export default class IssueStart extends Command {
   static description = 'Change status of issue to "In progress" and assign to yourself.';
@@ -17,6 +18,7 @@ export default class IssueStart extends Command {
     'stop-others': flags.boolean({
       char: 's',
       description: 'Stop all other issues assigned to you',
+      hidden: true,
     }),
   };
 
@@ -62,6 +64,7 @@ export default class IssueStart extends Command {
       }' and is assigned to you.`
     );
 
+    /*
     if (flags['stop-others']) {
       this.log('');
       this.log('Stopping your other issues...');
@@ -83,5 +86,6 @@ export default class IssueStart extends Command {
 
       this.log('All your other issues are no longer in progress.');
     }
+    */
   }
 }
