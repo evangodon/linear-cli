@@ -6,7 +6,7 @@ A CLI for [Linear](https://linear.app/)
 [![Version](https://img.shields.io/npm/v/@evangodon/lr.svg)](https://npmjs.org/package/@evangodon/lr)
 [![Downloads/week](https://img.shields.io/npm/dw/@evangodon/lr.svg)](https://npmjs.org/package/@evangodon/lr)
 [![License](https://img.shields.io/npm/l/linear-cli.svg)](https://github.com/egodon/linear-cli/blob/master/package.json)
-G
+
 
 <!-- toc -->
 * [Linear CLI](#linear-cli)
