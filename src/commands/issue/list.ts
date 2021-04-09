@@ -27,6 +27,7 @@ export default class IssueList extends Command {
 
     if (issues.length === 0) {
       this.log("You currently don't have any issues assigned.");
+      this.exit();
     }
 
     this.log('');
