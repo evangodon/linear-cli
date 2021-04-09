@@ -4697,6 +4697,8 @@ export type Mutation = {
   projectUpdate: ProjectPayload;
   /** Archives a project. */
   projectArchive: ArchivePayload;
+  /** Unarchives a project. */
+  projectUnarchive: ArchivePayload;
   /** Creates a push subscription. */
   pushSubscriptionCreate: PushSubscriptionPayload;
   /** Deletes a push subscription. */
@@ -5295,6 +5297,11 @@ export type MutationProjectArchiveArgs = {
 };
 
 
+export type MutationProjectUnarchiveArgs = {
+  id: Scalars['String'];
+};
+
+
 export type MutationPushSubscriptionCreateArgs = {
   input: PushSubscriptionCreateInput;
 };
@@ -5615,6 +5622,36 @@ export type IssueFragment = (
   )>, state: (
     { __typename?: 'WorkflowState' }
     & Pick<WorkflowState, 'id' | 'name' | 'color' | 'type'>
+  ) }
+);
+
+export type GetIssueWorkflowStatesQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetIssueWorkflowStatesQuery = (
+  { __typename?: 'Query' }
+  & { issue: (
+    { __typename?: 'Issue' }
+    & Pick<Issue, 'identifier' | 'id'>
+    & { team: (
+      { __typename?: 'Team' }
+      & Pick<Team, 'id' | 'name'>
+      & { states: (
+        { __typename?: 'WorkflowStateConnection' }
+        & { nodes: Array<(
+          { __typename?: 'WorkflowState' }
+          & Pick<WorkflowState, 'id' | 'name' | 'type' | 'color' | 'position'>
+        )> }
+      ) }
+    ), assignee?: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'name' | 'displayName'>
+    )>, state: (
+      { __typename?: 'WorkflowState' }
+      & Pick<WorkflowState, 'id' | 'name' | 'type' | 'color'>
+    ) }
   ) }
 );
 

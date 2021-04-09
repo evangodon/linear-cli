@@ -7,7 +7,6 @@ export const IssueConnectionFragment = gql`
     }
   }
   fragment Issue on Issue {
-    trashed
     url
     identifier
     estimate
@@ -24,15 +23,6 @@ export const IssueConnectionFragment = gql`
     }
     team {
       id
-      states {
-        nodes {
-          id
-          name
-          type
-          color
-          position
-        }
-      }
     }
     id
     assignee {
