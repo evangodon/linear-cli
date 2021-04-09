@@ -5596,23 +5596,16 @@ export type IssueConnectionFragment = (
 
 export type IssueFragment = (
   { __typename?: 'Issue' }
-  & Pick<Issue, 'trashed' | 'url' | 'identifier' | 'estimate' | 'description' | 'title' | 'number' | 'updatedAt' | 'priority' | 'id'>
+  & Pick<Issue, 'url' | 'identifier' | 'title' | 'updatedAt' | 'priority' | 'id'>
   & { parent?: Maybe<(
     { __typename?: 'Issue' }
     & Pick<Issue, 'id'>
   )>, project?: Maybe<(
     { __typename?: 'Project' }
-    & Pick<Project, 'id'>
+    & Pick<Project, 'id' | 'name'>
   )>, team: (
     { __typename?: 'Team' }
     & Pick<Team, 'id'>
-    & { states: (
-      { __typename?: 'WorkflowStateConnection' }
-      & { nodes: Array<(
-        { __typename?: 'WorkflowState' }
-        & Pick<WorkflowState, 'id' | 'name' | 'type' | 'color' | 'position'>
-      )> }
-    ) }
   ), assignee?: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'displayName'>
