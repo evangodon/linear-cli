@@ -1,23 +1,31 @@
+import { OutputFlags } from '@oclif/parser/lib';
 import chalk from 'chalk';
-import { cli, Table } from 'cli-ux';
+import { cli } from 'cli-ux';
 import sw from 'string-width';
 import { IssueFragment } from '../generated/_documents';
 import { Status } from './Status';
+import IssuesList from '../commands/issue/list';
 
 type Options = {
-  log: (msg: string) => void;
-  flags?: Table.table.Options;
+  flags: OutputFlags<typeof IssuesList.flags>;
 };
 
-type Issue = Pick<
+export type TableIssue = Pick<
   IssueFragment,
-  'identifier' | 'title' | 'state' | 'assignee' | 'project'
+  'identifier' | 'title' | 'state' | 'assignee' | 'project' | 'team'
 >;
 
 /**
  * @TODO: Place divider character between columns
  */
-export const IssuesTable = (issues: Issue[], { log, flags }: Options) => {
+export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
+  const { log } = global;
+
+  if (issues.length === 0) {
+    log("You currently don't have any issues assigned.");
+    process.exit();
+  }
+
   /* Colorize header with custom logger since cli-ux doesn't support it. */
   function printTable(row: string) {
     const ANSI_BOLD = '\x1B[1m';
@@ -31,6 +39,11 @@ export const IssuesTable = (issues: Issue[], { log, flags }: Options) => {
     log(row);
   }
 
+  issues =
+    flags.mine && flags.team
+      ? issues.filter((issue) => issue.team.key === flags.team.toUpperCase())
+      : issues;
+
   const longestLengthOf = {
     identifier: 0,
     title: 0,
@@ -38,6 +51,7 @@ export const IssuesTable = (issues: Issue[], { log, flags }: Options) => {
     assignee: 0,
   };
 
+  /* Get longest string length for each column */
   for (const issue of issues) {
     const { identifier, title, state, assignee } = longestLengthOf;
     longestLengthOf.identifier =
@@ -54,7 +68,17 @@ export const IssuesTable = (issues: Issue[], { log, flags }: Options) => {
         : assignee;
   }
 
+  const team =
+    flags.all || (flags.mine && !flags.team) ? 'All' : String(flags.team).toUpperCase();
+
   try {
+    global.log(
+      chalk.dim(
+        `Team: ${team} | Sort: ${flags.sort} ${
+          flags.filter ? `| Filter: ${flags.filter}` : ''
+        }\n`
+      )
+    );
     cli.table(
       issues,
       {
@@ -76,7 +100,7 @@ export const IssuesTable = (issues: Issue[], { log, flags }: Options) => {
         assignee: {
           minWidth: longestLengthOf.assignee + 4,
           header: 'Assignee',
-          get: (issue) => issue.assignee?.displayName ?? chalk.dim('Unassigned'),
+          get: (issue) => issue.assignee?.displayName ?? chalk.dim('—'),
           extended: true,
         },
         project: {
@@ -87,7 +111,6 @@ export const IssuesTable = (issues: Issue[], { log, flags }: Options) => {
       },
       {
         printLine: printTable,
-        sort: 'ID',
         ...flags,
       }
     );

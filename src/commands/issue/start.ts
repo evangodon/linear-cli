@@ -1,6 +1,5 @@
 import chalk from 'chalk';
 import inquirer from 'inquirer';
-import ora from 'ora';
 import Command, { flags } from '../../base';
 
 /**
@@ -23,7 +22,7 @@ export default class IssueStart extends Command {
   };
 
   async run() {
-    const { args, flags } = this.parse(IssueStart);
+    const { args } = this.parse(IssueStart);
 
     const currentIssue = await this.linear.getIssue(args.issueId);
 

@@ -8,6 +8,7 @@ const User = z.object({
 
 const Workplace = z.object({
   apiKey: z.string(),
+  defaultTeam: z.string(),
   user: User,
 });
 
@@ -24,4 +25,4 @@ export const Config = z
 
 export type Config = z.infer<typeof Config>;
 export type User = z.infer<typeof User>;
-export type Workplace = z.infer<typeof Workplace>;
+export type Workspace = z.infer<typeof Workplace>;

@@ -13,6 +13,7 @@ import {
   GetIssueWorkflowStatesQueryVariables,
 } from '../generated/_documents';
 import { issueWorkflowStatesQuery } from './queries/issueWorflowStates';
+import { teamIssuesQuery } from './queries/teamIssues';
 import {
   IssuesQuery,
   IssuesQueryVariables,
@@ -20,6 +21,8 @@ import {
   User_AssignedIssuesQueryVariables,
   GetIssueQuery,
   GetIssueQueryVariables,
+  TeamIssuesQuery,
+  TeamIssuesQueryVariables,
 } from '../generated/_documents';
 
 type UserInfo = {
@@ -39,6 +42,7 @@ export class Linear extends LinearClient {
     this.currentUser = currentUser;
   }
 
+  /** Get issues from all teams */
   async getIssues() {
     let issues: IssuesQuery['issues']['nodes'] = [];
     const spinner = ora('Loading issues').start();
@@ -46,7 +50,7 @@ export class Linear extends LinearClient {
     try {
       const { data } = await this.client.rawRequest<IssuesQuery, IssuesQueryVariables>(
         issuesQuery,
-        { first: 30, orderBy: LinearDocument.PaginationOrderBy.UpdatedAt }
+        { first: 50, orderBy: LinearDocument.PaginationOrderBy.CreatedAt }
       );
 
       if (!data) {
@@ -54,6 +58,34 @@ export class Linear extends LinearClient {
       }
 
       issues = data.issues.nodes;
+    } catch (error) {
+      handleError(error);
+    } finally {
+      spinner.stop();
+    }
+
+    return issues;
+  }
+
+  /** Get team issues */
+  async getTeamIssues({ teamId, first = 35 }: { teamId: string; first?: number }) {
+    let issues: TeamIssuesQuery['team']['issues']['nodes'] = [];
+    const spinner = ora('Loading issues').start();
+
+    try {
+      const { data } = await this.client.rawRequest<
+        TeamIssuesQuery,
+        TeamIssuesQueryVariables
+      >(teamIssuesQuery, {
+        teamId,
+        first,
+      });
+
+      if (!data) {
+        throw new Error('No data returned from Linear');
+      }
+
+      issues = data.team.issues.nodes;
     } catch (error) {
       handleError(error);
     } finally {

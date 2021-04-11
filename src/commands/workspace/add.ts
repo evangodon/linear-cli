@@ -2,7 +2,7 @@ import { LinearClient } from '@linear/sdk';
 import fs from 'fs';
 import * as inquirer from 'inquirer';
 import Command from '../../base';
-import { Workplace, Config } from '../../lib/configSchema';
+import { Workspace, Config } from '../../lib/configSchema';
 
 type PromptResponse = {
   apiKey: string;
@@ -36,8 +36,30 @@ export default class WorkspaceAdd extends Command {
       throw new Error('Failed to get user id');
     }
 
-    const newWorkplace: Workplace = {
+    const teamConnection = await user.teams();
+
+    if (!teamConnection) {
+      this.error('Failed to get your teams');
+    }
+
+    const teams = teamConnection.nodes?.map((team) => ({
+      id: team.id,
+      name: team.name,
+      value: team.key,
+    }));
+
+    const { defaultTeam } = await inquirer.prompt<{ defaultTeam: string }>([
+      {
+        name: 'defaultTeam',
+        message: 'Select your default team',
+        type: 'list',
+        choices: teams,
+      },
+    ]);
+
+    const newWorkplace: Workspace = {
       apiKey: response.apiKey,
+      defaultTeam,
       user: {
         id: user.id,
         name: user.name!,

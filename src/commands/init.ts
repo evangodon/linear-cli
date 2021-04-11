@@ -10,11 +10,17 @@ type PromptResponse = {
   label: string;
 };
 
+type RequiredConfigData = {
+  apiKey: string;
+  workspaceLabel: string;
+  user: User;
+  defaultTeam: string;
+};
+
 /**
  * Write Linear api key and user info to config file
  *
  * @TODO: check if config file exists before running
- * @TODO: split out run() into multiple functions
  */
 export default class Init extends Command {
   static description = 'Setup the Linear cli';
@@ -34,27 +40,53 @@ export default class Init extends Command {
     ]);
   }
 
-  async validateApiKey(apiKey: string): Promise<User> {
+  async getWorkspaceInfo(apiKey: string): Promise<{ user: User; defaultTeam: string }> {
     const linearClient = new LinearClient({ apiKey });
 
     const user = await linearClient.viewer;
 
+    /* If no user, probably means key is invalid */
     if (!user) {
-      throw new Error('invalid api key');
+      this.error('Invalid api key');
     }
 
-    if (!user.id) {
-      throw new Error('Failed to get user id');
+    const teamConnection = await user.teams();
+
+    if (!teamConnection) {
+      this.error('Failed to get your teams');
     }
+
+    const teams = teamConnection.nodes?.map((team) => ({
+      id: team.id,
+      name: team.name,
+      value: team.key,
+    }));
+
+    const { defaultTeam } = await inquirer.prompt<{ defaultTeam: string }>([
+      {
+        name: 'defaultTeam',
+        message: 'Select your default team',
+        type: 'list',
+        choices: teams,
+      },
+    ]);
 
     return {
-      id: user.id,
-      name: user.name!,
-      email: user.email!,
+      user: {
+        id: user.id!,
+        name: user.name!,
+        email: user.email!,
+      },
+      defaultTeam,
     };
   }
 
-  async writeConfigFile(response: PromptResponse, user: User) {
+  async writeConfigFile({
+    apiKey,
+    workspaceLabel,
+    user,
+    defaultTeam,
+  }: RequiredConfigData) {
     const { configDir } = this.config;
     try {
       if (!fs.existsSync(configDir)) {
@@ -62,10 +94,11 @@ export default class Init extends Command {
       }
 
       const config: Config = {
-        activeWorkspace: response.label,
+        activeWorkspace: workspaceLabel,
         workspaces: {
-          [response.label]: {
-            apiKey: response.apiKey,
+          [workspaceLabel]: {
+            apiKey,
+            defaultTeam,
             user,
           },
         },
@@ -83,7 +116,7 @@ export default class Init extends Command {
 
   async run() {
     this.log('');
-    this.log(`We'll need your personal Linear api key.`);
+    this.log(`You'll need to create a personal Linear api key.`);
     this.log(
       `You can create one here ${chalk.magenta(
         'https://linear.app/joinlane/settings/api'
@@ -92,8 +125,13 @@ export default class Init extends Command {
 
     const response = await this.promptForKey();
 
-    const user = await this.validateApiKey(response.apiKey);
+    const { user, defaultTeam } = await this.getWorkspaceInfo(response.apiKey);
 
-    await this.writeConfigFile(response, user);
+    await this.writeConfigFile({
+      apiKey: response.apiKey,
+      workspaceLabel: response.label,
+      user,
+      defaultTeam,
+    });
   }
 }

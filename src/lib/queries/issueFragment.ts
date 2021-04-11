@@ -10,6 +10,7 @@ export const IssueConnectionFragment = gql`
     url
     identifier
     title
+    createdAt
     updatedAt
     parent {
       id
@@ -21,14 +22,12 @@ export const IssueConnectionFragment = gql`
     }
     team {
       id
+      key
     }
     id
     assignee {
       id
       displayName
-    }
-    creator {
-      id
     }
     state {
       id

@@ -2837,6 +2837,12 @@ export type PushSubscriptionPayload = {
   success: Scalars['Boolean'];
 };
 
+export type PushSubscriptionTestPayload = {
+  __typename?: 'PushSubscriptionTestPayload';
+  /** Whether the operation was successful. */
+  success: Scalars['Boolean'];
+};
+
 export type ReactionPayload = {
   __typename?: 'ReactionPayload';
   /** The identifier of the last sync operation. */
@@ -4014,7 +4020,7 @@ export type Query = {
   /** One specific project. */
   project: Project;
   /** Sends a test push message. */
-  pushSubscriptionTest: PushSubscriptionPayload;
+  pushSubscriptionTest: PushSubscriptionTestPayload;
   /** All comment emoji reactions. */
   reactions: ReactionConnection;
   /** A specific reaction. */
@@ -4517,8 +4523,13 @@ export type Mutation = {
   attachmentUpdate: AttachmentPayload;
   /** Link an existing Zendesk ticket to an issue. */
   attachmentLinkZendesk: AttachmentPayload;
-  /** [Alpha] Archives an issue attachment. */
+  /**
+   * [DEPRECATED] Archives an issue attachment.
+   * @deprecated This mutation is deprecated, please use `attachmentDelete` instead
+   */
   attachmentArchive: ArchivePayload;
+  /** [Alpha] Deletes an issue attachment. */
+  attachmentDelete: ArchivePayload;
   /** Finds or creates a new user account by email and sends an email with token. */
   emailUserAccountAuthChallenge: EmailUserAccountAuthChallengeResponse;
   /** Authenticates a user account via email and authentication token. */
@@ -4813,6 +4824,11 @@ export type MutationAttachmentLinkZendeskArgs = {
 
 
 export type MutationAttachmentArchiveArgs = {
+  id: Scalars['String'];
+};
+
+
+export type MutationAttachmentDeleteArgs = {
   id: Scalars['String'];
 };
 
@@ -5596,7 +5612,7 @@ export type IssueConnectionFragment = (
 
 export type IssueFragment = (
   { __typename?: 'Issue' }
-  & Pick<Issue, 'url' | 'identifier' | 'title' | 'updatedAt' | 'priority' | 'id'>
+  & Pick<Issue, 'url' | 'identifier' | 'title' | 'createdAt' | 'updatedAt' | 'priority' | 'id'>
   & { parent?: Maybe<(
     { __typename?: 'Issue' }
     & Pick<Issue, 'id'>
@@ -5605,13 +5621,10 @@ export type IssueFragment = (
     & Pick<Project, 'id' | 'name'>
   )>, team: (
     { __typename?: 'Team' }
-    & Pick<Team, 'id'>
+    & Pick<Team, 'id' | 'key'>
   ), assignee?: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'displayName'>
-  )>, creator?: Maybe<(
-    { __typename?: 'User' }
-    & Pick<User, 'id'>
   )>, state: (
     { __typename?: 'WorkflowState' }
     & Pick<WorkflowState, 'id' | 'name' | 'color' | 'type'>
@@ -5663,6 +5676,24 @@ export type IssuesQuery = (
   & { issues: (
     { __typename?: 'IssueConnection' }
     & IssueConnectionFragment
+  ) }
+);
+
+export type TeamIssuesQueryVariables = Exact<{
+  teamId: Scalars['String'];
+  first: Scalars['Int'];
+}>;
+
+
+export type TeamIssuesQuery = (
+  { __typename?: 'Query' }
+  & { team: (
+    { __typename?: 'Team' }
+    & Pick<Team, 'name'>
+    & { issues: (
+      { __typename?: 'IssueConnection' }
+      & IssueConnectionFragment
+    ) }
   ) }
 );
 

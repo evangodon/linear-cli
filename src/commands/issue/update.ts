@@ -112,8 +112,6 @@ export default class IssueUpdate extends Command {
     } = this.parse<any, Args>(IssueUpdate);
     const issue = await this.linear.getIssueWorkflowStates(issueId);
 
-    console.log(issue);
-
     const workflowStates = issue.team.states.nodes;
 
     const { stateName } = await inquirer.prompt<{ stateName: typeof workflowStates[0] }>([
@@ -127,6 +125,7 @@ export default class IssueUpdate extends Command {
             name: render.Status(state),
             value: state,
           })),
+        pageSize: 10,
       },
     ]);
 

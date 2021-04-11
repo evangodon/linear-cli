@@ -7,6 +7,10 @@
     "no-process-exit": 0,
     "unicorn/no-hex-escape": 0,
     "new-cap": 0,
-    "valid-jsdoc": 0
+    "valid-jsdoc": 0,
+    "unicorn/no-abusive-eslint-disable": 0,
+    "no-dupe-else-if": 0,
+    "no-import-assign": 0,
+    "no-setter-return": 0
   }
 }
