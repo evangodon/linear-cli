@@ -34,6 +34,6 @@ export default class WorkspaceSwitch extends Command {
     });
 
     this.log('');
-    this.log(`Switched to ${chalk.magentaBright(response.workspace)} workspace`);
+    this.log(`Switched to ${chalk.magenta(response.workspace)} workspace`);
   }
 }

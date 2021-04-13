@@ -74,7 +74,7 @@ export default abstract class extends Command {
   async promptForInit() {
     this.log(`No config found`);
     this.log(
-      `\nLooks like ${chalk.magentaBright(this.config.bin)} hasn't been initialized yet!`
+      `\nLooks like ${chalk.magenta(this.config.bin)} hasn't been initialized yet!`
     );
 
     const response = await inquirer.prompt<{ runInit: boolean }>([
