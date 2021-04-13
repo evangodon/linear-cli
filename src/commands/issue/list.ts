@@ -4,8 +4,8 @@ import Command from '../../base';
 import { render } from '../../utils';
 import { TableIssue } from '../../utils/IssuesTable';
 
-const tableColumns: (keyof TableIssue | 'status')[] = [
-  'identifier',
+const tableColumns: (keyof TableIssue | 'status' | 'ID')[] = [
+  'ID',
   'status',
   'title',
   'assignee',
