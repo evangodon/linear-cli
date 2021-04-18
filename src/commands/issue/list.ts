@@ -75,7 +75,7 @@ export default class IssueList extends Command {
   async listIssuesWithStatus() {
     const { flags } = this.parse(IssueList);
 
-    const cache = this.cache.read();
+    const cache = await this.cache.read();
 
     const teamId = flags.team ?? global.currentWorkspace.defaultTeam;
 

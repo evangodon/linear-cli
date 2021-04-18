@@ -12,17 +12,36 @@ type Params = {
 };
 
 export class Cache {
+  config: IConfig;
+
+  configData: Config;
+
   linear: Linear;
 
   cachePath: string;
 
   constructor({ config, configData, linear }: Params) {
+    this.config = config;
     this.linear = linear;
+    this.configData = configData;
     this.cachePath = `${config.cacheDir}/${configData.activeWorkspace}.json`;
   }
 
-  read(): CacheData {
+  makeCachePath(workspace: string) {
+    return `${this.config.cacheDir}/${workspace}.json`;
+  }
+
+  exists(workspace: string = this.configData.activeWorkspace) {
+    const path = this.makeCachePath(workspace);
+    return fs.existsSync(path);
+  }
+
+  async read(): Promise<CacheData> {
     let cache: CacheData = {};
+
+    if (!this.exists()) {
+      await this.refresh();
+    }
 
     try {
       const cacheJson = fs.readFileSync(this.cachePath, {

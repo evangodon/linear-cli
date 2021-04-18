@@ -9,7 +9,7 @@ export default class CacheShow extends Command {
 
   async run() {
     const { flags } = this.parse(CacheShow);
-    const cache = this.cache.read();
+    const cache = await this.cache.read();
 
     if (flags.pretty) {
       this.log(JSON.stringify(cache, null, 2));

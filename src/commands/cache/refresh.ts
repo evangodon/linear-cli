@@ -5,5 +5,7 @@ export default class CacheRefresh extends Command {
 
   async run() {
     await this.cache.refresh();
+
+    this.log('Cache refreshed');
   }
 }

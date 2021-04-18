@@ -75,8 +75,6 @@ export default class WorkspaceAdd extends Command {
       },
     };
 
-    Config.parse(newConfig);
-
     await fs.promises.writeFile(this.configFilePath, JSON.stringify(newConfig, null, 2), {
       flag: 'w',
     });

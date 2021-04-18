@@ -20,7 +20,11 @@ export default class WorkspaceSwitch extends Command {
         name: 'workspace',
         message: 'Select workspace',
         type: 'list',
-        choices: Object.keys(this.configData.workspaces),
+        choices: Object.keys(this.configData.workspaces).map((workspace) =>
+          workspace === this.configData.activeWorkspace
+            ? `${workspace} (current)`
+            : workspace
+        ),
       },
     ]);
 

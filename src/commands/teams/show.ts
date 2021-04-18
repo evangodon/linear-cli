@@ -1,4 +1,5 @@
 import { cli } from 'cli-ux';
+import ora from 'ora';
 import { TeamConnection } from '@linear/sdk';
 import Command, { flags } from '../../base';
 
@@ -16,6 +17,7 @@ export default class TeamsShow extends Command {
 
   async run() {
     const { flags } = this.parse(TeamsShow);
+    const spinner = ora('Loading issues').start();
 
     let data: TeamConnection | undefined;
 
@@ -25,6 +27,8 @@ export default class TeamsShow extends Command {
     } else {
       data = await this.linear.teams();
     }
+
+    spinner.stop();
 
     if (!data || !data.nodes) {
       this.error('Failed to fetch teams');
