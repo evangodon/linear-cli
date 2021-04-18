@@ -11,6 +11,7 @@
     "unicorn/no-abusive-eslint-disable": 0,
     "no-dupe-else-if": 0,
     "no-import-assign": 0,
-    "no-setter-return": 0
+    "no-setter-return": 0,
+    "complexity": 0
   }
 }

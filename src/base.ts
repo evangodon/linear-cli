@@ -5,8 +5,8 @@ import chalk from 'chalk';
 import { Linear } from './lib/Linear';
 import Init from './commands/init';
 import { Config, User } from './lib/configSchema';
-
 import type { Workspace } from './lib/configSchema';
+import { Cache } from './lib/Cache';
 
 declare global {
   namespace NodeJS {
@@ -29,6 +29,8 @@ export default abstract class extends Command {
 
   configData: Config = (null as unknown) as Config;
 
+  cache: Cache = (null as unknown) as Cache;
+
   async init() {
     const configFilePath = `${this.config.configDir}/config.json`;
 
@@ -38,16 +40,21 @@ export default abstract class extends Command {
       });
 
       const configUnknown: unknown = JSON.parse(configJSON);
-      const config = Config.parse(configUnknown);
+      const configData = Config.parse(configUnknown);
 
-      const { workspaces, activeWorkspace } = config;
+      const { workspaces, activeWorkspace } = configData;
 
-      this.configData = config;
+      this.configData = configData;
       const currentUser = workspaces[activeWorkspace].user;
 
       this.linear = new Linear({
         apiKey: workspaces[activeWorkspace].apiKey,
         currentUser,
+      });
+      this.cache = new Cache({
+        config: this.config,
+        configData,
+        linear: this.linear,
       });
       this.user = currentUser;
       this.currentWorkspace = workspaces[activeWorkspace];

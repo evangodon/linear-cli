@@ -4,6 +4,8 @@ import * as inquirer from 'inquirer';
 import fs from 'fs';
 import Command from '@oclif/command';
 import { Config, User } from '../lib/configSchema';
+import CacheRefresh from './cache/refresh';
+import boxen from 'boxen';
 
 type PromptResponse = {
   apiKey: string;
@@ -35,22 +37,27 @@ export default class Init extends Command {
       },
       {
         name: 'label',
-        message: 'Create a label for this key (e.g. "Work", "Home")',
+        message: 'Create a label for this key (e.g. "Work")',
       },
     ]);
   }
 
   async getWorkspaceInfo(apiKey: string): Promise<{ user: User; defaultTeam: string }> {
     const linearClient = new LinearClient({ apiKey });
+    let user;
 
-    const user = await linearClient.viewer;
+    try {
+      user = await linearClient.viewer;
+    } catch (error) {
+      this.error('Invalid api key');
+    }
 
     /* If no user, probably means key is invalid */
     if (!user) {
       this.error('Invalid api key');
     }
 
-    const teamConnection = await user.teams();
+    const teamConnection = await linearClient.teams();
 
     if (!teamConnection) {
       this.error('Failed to get your teams');
@@ -133,5 +140,11 @@ export default class Init extends Command {
       user,
       defaultTeam,
     });
+
+    await CacheRefresh.run();
+
+    this.log(
+      boxen('🚀 Linear CLI setup successful', { padding: 1, borderStyle: 'round' })
+    );
   }
 }

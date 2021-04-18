@@ -1,29 +1,19 @@
-import { flags } from '@oclif/command';
+import fs from 'fs';
 import { cli } from 'cli-ux';
-import Command from '../../base';
+import Command, { flags } from '../../base';
 import { render } from '../../utils';
-import { TableIssue } from '../../utils/IssuesTable';
-
-const tableColumns: (keyof TableIssue | 'status' | 'ID')[] = [
-  'ID',
-  'status',
-  'title',
-  'assignee',
-  'project',
-];
+import { CacheSchema } from '../../lib/cacheSchema';
+import { Cache } from '../../lib/Cache';
 
 export const tableFlags = {
   ...cli.table.flags(),
   sort: flags.string({
-    char: 's',
     description: "property to sort by (prepend '-' for descending)",
     default: '-status',
-    options: tableColumns,
   }),
   columns: flags.string({
     exclusive: ['extended'],
     description: 'only show provided columns (comma-separated)',
-    options: tableColumns,
   }),
 };
 
@@ -38,8 +28,18 @@ export default class IssueList extends Command {
     team: flags.string({
       char: 't',
       description: 'List issues from another team',
+      exclusive: ['all'],
+    }),
+    status: flags.string({
+      char: 's',
+      description: 'Only list issues with provided status',
+      exclusive: ['all'],
     }),
     all: flags.boolean({ char: 'a', description: 'List issues from all teams' }),
+    uncompleted: flags.boolean({
+      char: 'u',
+      description: 'Only show uncompleted issues',
+    }),
   };
 
   async listAllTeamIssues() {
@@ -72,8 +72,46 @@ export default class IssueList extends Command {
     });
   }
 
+  async listIssuesWithStatus() {
+    const { flags } = this.parse(IssueList);
+
+    const cache = this.cache.read();
+
+    const teamId = flags.team ?? global.currentWorkspace.defaultTeam;
+
+    const team = cache[teamId.toUpperCase()];
+
+    if (!team) {
+      this.log(`Did not find team with key ${teamId}`);
+      return;
+    }
+
+    const match = team.states.find((state) =>
+      state.name.toLowerCase().includes(String(flags.status).toLowerCase())
+    );
+
+    if (!match) {
+      this.log(`Did not find any status with string "${flags.status}"`);
+      return;
+    }
+
+    const issues = await this.linear.query.statusIssues(match?.id);
+
+    render.IssuesTable(issues, {
+      flags: {
+        ...flags,
+        team: teamId,
+      },
+    });
+  }
+
   async run() {
     const { flags } = this.parse(IssueList);
+
+    if (flags.status) {
+      this.listIssuesWithStatus();
+      return;
+    }
 
     if (flags.mine) {
       await this.listMyIssues();

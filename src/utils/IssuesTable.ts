@@ -5,6 +5,7 @@ import sw from 'string-width';
 import { IssueFragment } from '../generated/_documents';
 import { Status } from './Status';
 import IssuesList from '../commands/issue/list';
+import { render } from '.';
 
 type Options = {
   flags: OutputFlags<typeof IssuesList.flags>;
@@ -22,7 +23,7 @@ export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
   const { log } = global;
 
   if (issues.length === 0) {
-    log("You currently don't have any issues assigned.");
+    log('No issues to show');
     process.exit();
   }
 
@@ -30,20 +31,40 @@ export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
   function printTable(row: string) {
     const ANSI_BOLD = '\x1B[1m';
 
+    /* For header */
     if (row.startsWith(ANSI_BOLD)) {
       const headerColor = chalk.magenta;
       log(headerColor(row));
       log(headerColor('─'.padEnd(sw(row), '─')));
       return;
     }
+
     log(row);
   }
 
+  /* Filters */
   issues =
     flags.mine && flags.team
       ? issues.filter((issue) => issue.team.key === flags.team.toUpperCase())
       : issues;
 
+  issues =
+    flags.mine && flags.status
+      ? issues.filter((issue) => issue.assignee?.id === global.user.id)
+      : issues;
+
+  issues = flags.uncompleted
+    ? issues.filter(
+        (issue) => issue.state.type !== 'completed' && issue.state.type !== 'canceled'
+      )
+    : issues;
+
+  issues = issues.map((issue) => ({
+    ...issue,
+    title: issue.title.length > 100 ? `${issue.title.slice(0, 100)}...` : issue.title,
+  }));
+
+  /* Get longest string length for each column */
   const longestLengthOf = {
     identifier: 0,
     title: 0,
@@ -51,7 +72,6 @@ export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
     assignee: 0,
   };
 
-  /* Get longest string length for each column */
   for (const issue of issues) {
     const { identifier, title, state, assignee } = longestLengthOf;
     longestLengthOf.identifier =
@@ -71,14 +91,16 @@ export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
   const team =
     flags.all || (flags.mine && !flags.team) ? 'All' : String(flags.team).toUpperCase();
 
+  const optionsHeader = [
+    `Team: ${team}`,
+    flags.status && `Status: ${render.Status(issues[0].state)}`,
+    !flags.status && `Sort: ${flags.sort}`,
+    flags.filter && `Filter: ${flags.filter}`,
+  ].filter(Boolean);
+
   try {
-    global.log(
-      chalk.dim(
-        `Team: ${team} | Sort: ${flags.sort} ${
-          flags.filter ? `| Filter: ${flags.filter}` : ''
-        }\n`
-      )
-    );
+    global.log(chalk.dim(optionsHeader.join(' | ')));
+    global.log('');
     cli.table(
       issues,
       {

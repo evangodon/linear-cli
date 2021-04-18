@@ -28,6 +28,7 @@ A CLI for [Linear](https://linear.app/)
 # Commands
 
 <!-- commands -->
+* [`lr cache:refresh [FILE]`](#lr-cacherefresh-file)
 * [`lr config:delete`](#lr-configdelete)
 * [`lr config:show`](#lr-configshow)
 * [`lr help [COMMAND]`](#lr-help-command)
@@ -39,6 +40,22 @@ A CLI for [Linear](https://linear.app/)
 * [`lr issue:update ISSUEID [PROPERTYTOMODIFY]`](#lr-issueupdate-issueid-propertytomodify)
 * [`lr workspace:add`](#lr-workspaceadd)
 * [`lr workspace:switch`](#lr-workspaceswitch)
+
+## `lr cache:refresh [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ lr cache:refresh [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/cache/refresh.ts](https://github.com/evangodon/linear-cli/blob/v0.9.2/src/commands/cache/refresh.ts)_
 
 ## `lr config:delete`
 
