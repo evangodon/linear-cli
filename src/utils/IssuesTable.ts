@@ -7,17 +7,23 @@ import { Status } from './Status';
 import IssuesList from '../commands/issue/list';
 import { render } from '.';
 
+const priorityLevel: { [key: number]: string } = {
+  1: `${chalk.red('!!!')} Urgent`,
+  2: `▣▣▣ High`,
+  3: `▣▣▢ Medium`,
+  4: `▣▢▢ Low`,
+};
+
 type Options = {
   flags: OutputFlags<typeof IssuesList.flags>;
 };
 
 export type TableIssue = Pick<
   IssueFragment,
-  'identifier' | 'title' | 'state' | 'assignee' | 'project' | 'team'
+  'identifier' | 'title' | 'state' | 'assignee' | 'priority' | 'team'
 >;
 
 /**
- * @TODO: Place divider character between columns
  */
 export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
   const { log } = global;
@@ -98,6 +104,19 @@ export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
     flags.filter && `Filter: ${flags.filter}`,
   ].filter(Boolean);
 
+  /* Custom sorting */
+  if (flags.sort.includes('priority')) {
+    issues = issues.sort((i1, i2) =>
+      i1.priority > i2.priority || i1.priority === 0 ? 1 : -1
+    );
+
+    if (flags.sort.startsWith('-')) {
+      issues = issues.reverse();
+    }
+
+    delete flags.sort;
+  }
+
   try {
     global.log(chalk.dim(optionsHeader.join(' | ')));
     global.log('');
@@ -120,14 +139,15 @@ export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
           get: (issue) => issue.title,
         },
         assignee: {
-          minWidth: longestLengthOf.assignee + 4,
+          minWidth: Math.max(longestLengthOf.assignee + 4, 'assignee'.length + 4),
           header: 'Assignee',
           get: (issue) => issue.assignee?.displayName ?? chalk.dim('—'),
           extended: true,
         },
-        project: {
-          header: 'Project',
-          get: (issue) => (issue.project ? issue.project.name : ''),
+        priority: {
+          header: 'priority',
+          get: (issue) =>
+            issue.priority ? priorityLevel[issue.priority] : chalk.dim('—'),
           extended: true,
         },
       },
