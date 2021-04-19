@@ -159,6 +159,7 @@ export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
         labels: {
           header: 'Labels',
           get: (issue) => issue.labels.nodes.map((label) => Label(label)).join(' '),
+          extended: true,
         },
       },
       {
