@@ -1,9 +1,6 @@
-import fs from 'fs';
 import { cli } from 'cli-ux';
 import Command, { flags } from '../../base';
 import { render } from '../../utils';
-import { CacheSchema } from '../../lib/cacheSchema';
-import { Cache } from '../../lib/Cache';
 
 export const tableFlags = {
   ...cli.table.flags(),
