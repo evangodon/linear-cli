@@ -39,6 +39,7 @@ export default class IssueList extends Command {
     uncompleted: flags.boolean({
       char: 'u',
       description: 'Only show uncompleted issues',
+      exclusive: ['status'],
     }),
   };
 

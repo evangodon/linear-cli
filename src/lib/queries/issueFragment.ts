@@ -16,6 +16,7 @@ export const IssueConnectionFragment = gql`
       id
     }
     priority
+    priorityLabel
     project {
       id
       name
@@ -34,6 +35,13 @@ export const IssueConnectionFragment = gql`
       name
       color
       type
+    }
+    labels {
+      nodes {
+        id
+        name
+        color
+      }
     }
   }
 `;

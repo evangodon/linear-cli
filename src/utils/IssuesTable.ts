@@ -9,9 +9,9 @@ import { render } from '.';
 
 const priorityLevel: { [key: number]: string } = {
   1: `${chalk.red('!!!')} Urgent`,
-  2: `▣▣▣ High`,
-  3: `▣▣▢ Medium`,
-  4: `▣▢▢ Low`,
+  2: `■■■ High`,
+  3: `■■☐ Medium`,
+  4: `■☐☐ Low`,
 };
 
 type Options = {
@@ -20,7 +20,7 @@ type Options = {
 
 export type TableIssue = Pick<
   IssueFragment,
-  'identifier' | 'title' | 'state' | 'assignee' | 'priority' | 'team'
+  'identifier' | 'title' | 'state' | 'assignee' | 'priority' | 'team' | 'labels'
 >;
 
 /**
@@ -65,9 +65,13 @@ export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
       )
     : issues;
 
+  const MAX_TITLE_LENGTH = 80;
   issues = issues.map((issue) => ({
     ...issue,
-    title: issue.title.length > 100 ? `${issue.title.slice(0, 100)}...` : issue.title,
+    title:
+      issue.title.length > MAX_TITLE_LENGTH
+        ? `${issue.title.slice(0, MAX_TITLE_LENGTH)}...`
+        : issue.title,
   }));
 
   /* Get longest string length for each column */
@@ -102,13 +106,14 @@ export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
     flags.status && `Status: ${render.Status(issues[0].state)}`,
     !flags.status && `Sort: ${flags.sort}`,
     flags.filter && `Filter: ${flags.filter}`,
+    flags.uncompleted && 'Uncompleted only',
   ].filter(Boolean);
 
   /* Custom sorting */
   if (flags.sort.includes('priority')) {
-    issues = issues.sort((i1, i2) =>
-      i1.priority > i2.priority || i1.priority === 0 ? 1 : -1
-    );
+    issues = issues
+      .sort((i1, i2) => i1.priority - i2.priority)
+      .sort((_i1, i2) => (i2.priority === 0 ? -1 : 1));
 
     if (flags.sort.startsWith('-')) {
       issues = issues.reverse();
@@ -145,10 +150,16 @@ export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
           extended: true,
         },
         priority: {
-          header: 'priority',
+          header: 'Priority',
+          minWidth: 12,
           get: (issue) =>
             issue.priority ? priorityLevel[issue.priority] : chalk.dim('—'),
           extended: true,
+        },
+        labels: {
+          header: 'Labels',
+          get: (issue) =>
+            issue.labels.nodes.map((label) => render.Label(label)).join(' '),
         },
       },
       {

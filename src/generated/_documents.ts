@@ -5634,7 +5634,7 @@ export type IssueConnectionFragment = (
 
 export type IssueFragment = (
   { __typename?: 'Issue' }
-  & Pick<Issue, 'url' | 'identifier' | 'title' | 'createdAt' | 'updatedAt' | 'priority' | 'id'>
+  & Pick<Issue, 'url' | 'identifier' | 'title' | 'createdAt' | 'updatedAt' | 'priority' | 'priorityLabel' | 'id'>
   & { parent?: Maybe<(
     { __typename?: 'Issue' }
     & Pick<Issue, 'id'>
@@ -5650,6 +5650,12 @@ export type IssueFragment = (
   )>, state: (
     { __typename?: 'WorkflowState' }
     & Pick<WorkflowState, 'id' | 'name' | 'color' | 'type'>
+  ), labels: (
+    { __typename?: 'IssueLabelConnection' }
+    & { nodes: Array<(
+      { __typename?: 'IssueLabel' }
+      & Pick<IssueLabel, 'id' | 'name' | 'color'>
+    )> }
   ) }
 );
 
