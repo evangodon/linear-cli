@@ -1,6 +1,13 @@
 {
-  "extends": ["oclif", "oclif-typescript", "prettier"],
+  "extends": [
+    "oclif",
+    "oclif-typescript",
+    "prettier",
+    "plugin:import/errors",
+    "plugin:import/typescript"
+  ],
   "rules": {
+    "import/no-cycle": 1,
     "no-warning-comments": 0,
     "unicorn/filename-case": 0,
     "unicorn/no-process-exit": 0,

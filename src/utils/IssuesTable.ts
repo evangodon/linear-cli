@@ -4,8 +4,8 @@ import { cli } from 'cli-ux';
 import sw from 'string-width';
 import { IssueFragment } from '../generated/_documents';
 import { Status } from './Status';
+import { Label } from './Label';
 import IssuesList from '../commands/issue/list';
-import { render } from '.';
 
 const priorityLevel: { [key: number]: string } = {
   1: `${chalk.red('!!!')} Urgent`,
@@ -103,7 +103,7 @@ export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
 
   const optionsHeader = [
     `Team: ${team}`,
-    flags.status && `Status: ${render.Status(issues[0].state)}`,
+    flags.status && `Status: ${Status(issues[0].state)}`,
     !flags.status && `Sort: ${flags.sort}`,
     flags.filter && `Filter: ${flags.filter}`,
     flags.uncompleted && 'Uncompleted only',
@@ -158,8 +158,7 @@ export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
         },
         labels: {
           header: 'Labels',
-          get: (issue) =>
-            issue.labels.nodes.map((label) => render.Label(label)).join(' '),
+          get: (issue) => issue.labels.nodes.map((label) => Label(label)).join(' '),
         },
       },
       {

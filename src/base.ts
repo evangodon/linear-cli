@@ -1,9 +1,7 @@
 import Command, { flags } from '@oclif/command';
-import inquirer from 'inquirer';
 import fs from 'fs';
 import chalk from 'chalk';
 import { Linear } from './lib/Linear';
-import Init from './commands/init';
 import { Config, User, Workspace } from './lib/configSchema';
 import { Cache } from './lib/Cache';
 
@@ -83,19 +81,7 @@ export default abstract class extends Command {
       `\nLooks like ${chalk.magenta(this.config.bin)} hasn't been initialized yet!`
     );
 
-    const response = await inquirer.prompt<{ runInit: boolean }>([
-      {
-        name: 'runInit',
-        message: 'Run init command?',
-        type: 'confirm',
-      },
-    ]);
-
-    if (response.runInit) {
-      await Init.run();
-    } else {
-      process.exit(0);
-    }
+    this.log(`You need to run "${this.config.name} init" first`);
   }
 }
 
