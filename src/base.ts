@@ -4,8 +4,7 @@ import fs from 'fs';
 import chalk from 'chalk';
 import { Linear } from './lib/Linear';
 import Init from './commands/init';
-import { Config, User } from './lib/configSchema';
-import type { Workspace } from './lib/configSchema';
+import { Config, User, Workspace } from './lib/configSchema';
 import { Cache } from './lib/Cache';
 
 declare global {

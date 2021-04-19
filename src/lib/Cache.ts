@@ -1,7 +1,6 @@
 import fs from 'fs';
 import { IConfig } from '@oclif/config';
-import { CacheSchema } from './cacheSchema';
-import type { CacheData } from './cacheSchema';
+import { CacheSchema, CacheData } from './cacheSchema';
 import { Config } from './configSchema';
 import { Linear } from './Linear';
 
