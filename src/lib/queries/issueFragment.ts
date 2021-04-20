@@ -19,7 +19,6 @@ export const IssueConnectionFragment = gql`
     priorityLabel
     project {
       id
-      name
     }
     team {
       id

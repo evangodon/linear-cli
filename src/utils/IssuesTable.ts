@@ -105,7 +105,7 @@ export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
     flags.status && `Status: ${Status(issues[0].state)}`,
     !flags.status && `Sort: ${flags.sort}`,
     flags.filter && `Filter: ${flags.filter}`,
-    flags.uncompleted && 'Uncompleted only',
+    flags.uncompleted && 'Uncompleted issues',
   ].filter(Boolean);
 
   /* Custom sorting */

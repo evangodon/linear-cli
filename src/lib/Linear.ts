@@ -80,7 +80,7 @@ export class Linear extends LinearClient {
   }
 
   /** Get team issues */
-  async getTeamIssues({ teamId, first = 35 }: { teamId: string; first?: number }) {
+  async getTeamIssues({ teamId, first = 20 }: { teamId: string; first?: number }) {
     let issues: TeamIssuesQuery['team']['issues']['nodes'] = [];
     const spinner = ora('Loading issues').start();
 
@@ -118,7 +118,7 @@ export class Linear extends LinearClient {
         User_AssignedIssuesQueryVariables
       >(assignedIssuesQuery, {
         id: this.currentUser.id,
-        first: 35,
+        first: 20,
         orderBy: LinearDocument.PaginationOrderBy.UpdatedAt,
       });
 

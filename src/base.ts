@@ -81,7 +81,7 @@ export default abstract class extends Command {
       `\nLooks like ${chalk.magenta(this.config.bin)} hasn't been initialized yet!`
     );
 
-    this.log(`You need to run "${this.config.name} init" first`);
+    this.log(`You need to run "lr init" first`);
   }
 }
 
