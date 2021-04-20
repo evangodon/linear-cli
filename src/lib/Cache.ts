@@ -36,7 +36,7 @@ export class Cache {
   }
 
   async read(): Promise<CacheData> {
-    let cache: CacheData = {};
+    let cache: CacheData = { teams: {}, date: '' };
 
     if (!this.exists()) {
       await this.refresh();
@@ -60,13 +60,16 @@ export class Cache {
   async refresh() {
     const data = await this.linear.getTeamWorkflowStates();
 
-    const cache: CacheData = data.teams.nodes.reduce((acc: CacheData, currentTeam) => {
-      acc[currentTeam.key] = {
-        states: currentTeam.states.nodes.map((state) => state),
-      };
+    const cache: CacheData = data.teams.nodes.reduce(
+      (acc: CacheData, currentTeam) => {
+        acc.teams[currentTeam.key] = {
+          states: currentTeam.states.nodes.map((state) => state),
+        };
 
-      return acc;
-    }, {});
+        return acc;
+      },
+      { date: new Date().toString(), teams: {} }
+    );
 
     try {
       await fs.promises.writeFile(this.cachePath, JSON.stringify(cache, null, 2), {

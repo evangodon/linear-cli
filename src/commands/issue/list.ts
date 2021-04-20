@@ -1,4 +1,5 @@
 import { OutputFlags } from '@oclif/parser/lib';
+import chalk from 'chalk';
 import { cli } from 'cli-ux';
 import Command, { flags } from '../../base';
 import { render } from '../../utils';
@@ -78,10 +79,11 @@ export default class IssueList extends Command {
 
     const teamId = flags.team ?? global.currentWorkspace.defaultTeam;
 
-    const team = cache[teamId.toUpperCase()];
+    const team = cache.teams[teamId.toUpperCase()];
 
     if (!team) {
       this.log(`Did not find team with key ${teamId}`);
+      this.log(`You can try refreshing the cache with ${chalk.blue('lr cache:refresh')}`);
       return;
     }
 
@@ -90,7 +92,12 @@ export default class IssueList extends Command {
     );
 
     if (!match) {
-      this.log(`Did not find any status with string "${flags.status}"`);
+      this.log(`Did not find any status with string "${flags.status}"\n`);
+      this.log(
+        `Statuses for team ${teamId} found in cache:\n-`,
+        team.states.map((state) => state.name).join('\n- ')
+      );
+      this.log(`You can try refreshing the cache with ${chalk.blue('lr cache:refresh')}`);
       return;
     }
 
