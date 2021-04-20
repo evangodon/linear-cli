@@ -1,3 +1,4 @@
+import { OutputFlags } from '@oclif/parser/lib';
 import { cli } from 'cli-ux';
 import Command, { flags } from '../../base';
 import { render } from '../../utils';
@@ -124,3 +125,5 @@ export default class IssueList extends Command {
     this.listTeamIssues();
   }
 }
+
+export type ListFlags = OutputFlags<typeof IssueList.flags>;

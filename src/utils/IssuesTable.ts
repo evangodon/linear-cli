@@ -1,11 +1,10 @@
-import { OutputFlags } from '@oclif/parser/lib';
 import chalk from 'chalk';
 import { cli } from 'cli-ux';
 import sw from 'string-width';
 import { IssueFragment } from '../generated/_documents';
 import { Status } from './Status';
 import { Label } from './Label';
-import IssuesList from '../commands/issue/list';
+import type { ListFlags } from '../commands/issue/list';
 
 const priorityLevel: { [key: number]: string } = {
   1: `${chalk.red('!!!')} Urgent`,
@@ -15,7 +14,7 @@ const priorityLevel: { [key: number]: string } = {
 };
 
 type Options = {
-  flags: OutputFlags<typeof IssuesList.flags>;
+  flags: ListFlags;
 };
 
 export type TableIssue = Pick<
@@ -27,11 +26,6 @@ export type TableIssue = Pick<
  */
 export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
   const { log } = global;
-
-  if (issues.length === 0) {
-    log('No issues to show');
-    process.exit();
-  }
 
   /* Colorize header with custom logger since cli-ux doesn't support it. */
   function printTable(row: string) {
@@ -100,6 +94,11 @@ export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
 
   const team =
     flags.all || (flags.mine && !flags.team) ? 'All' : String(flags.team).toUpperCase();
+
+  if (issues.length === 0) {
+    log('No issues to show');
+    process.exit();
+  }
 
   const optionsHeader = [
     `Team: ${team}`,
