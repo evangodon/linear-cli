@@ -2,10 +2,12 @@ import { Label } from './Label';
 import { Status } from './Status';
 import { Markdown } from './Markdown';
 import { IssuesTable } from './IssuesTable';
+import { Priority } from './Priority';
 
 export const render = {
-  Label,
-  Status,
-  Markdown,
   IssuesTable,
+  Label,
+  Markdown,
+  Priority,
+  Status,
 };

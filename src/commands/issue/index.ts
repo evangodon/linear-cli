@@ -48,7 +48,7 @@ export default class IssueIndex extends Command {
       },
       {
         label: 'Priority',
-        value: issue.priorityLabel,
+        value: render.Priority(issue.priority),
       },
       {
         label: 'Assignee',
@@ -80,8 +80,6 @@ export default class IssueIndex extends Command {
       updatedAt = dayjs(issue.history.nodes[0].createdAt).fromNow();
     }
 
-    console.log(JSON.stringify(issue.history));
-
     const issueRender = issueProperties
       .map(
         (p) =>
@@ -89,7 +87,7 @@ export default class IssueIndex extends Command {
           (p.value ? p.value : '')
       )
       .join('\n')
-      .concat('\n---\n')
+      .concat(dim('\n---\n'))
       .concat(dim(`\n${'Created:'.padEnd(labelWidth)}${createdAt} by ${reset(creator)}`))
       .concat(
         hasBeenUpdated

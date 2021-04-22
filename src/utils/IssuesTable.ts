@@ -4,14 +4,8 @@ import sw from 'string-width';
 import { IssueFragment } from '../generated/_documents';
 import { Status } from './Status';
 import { Label } from './Label';
+import { Priority } from './Priority';
 import type { ListFlags } from '../commands/issue/list';
-
-const priorityLevel: { [key: number]: string } = {
-  1: `${chalk.red('!!!')} Urgent`,
-  2: `■■■ High`,
-  3: `■■☐ Medium`,
-  4: `■☐☐ Low`,
-};
 
 type Options = {
   flags: ListFlags;
@@ -151,8 +145,7 @@ export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
         priority: {
           header: 'Priority',
           minWidth: 12,
-          get: (issue) =>
-            issue.priority ? priorityLevel[issue.priority] : chalk.dim('—'),
+          get: (issue) => Priority(issue.priority),
           extended: true,
         },
         labels: {

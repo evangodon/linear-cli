@@ -1,4 +1,6 @@
-# Linear CLI
+Linear CLI
+
+---
 
 A CLI for [Linear](https://linear.app/)
 
@@ -7,11 +9,10 @@ A CLI for [Linear](https://linear.app/)
 [![Downloads/week](https://img.shields.io/npm/dw/@evangodon/lr.svg)](https://npmjs.org/package/@evangodon/lr)
 [![License](https://img.shields.io/npm/l/linear-cli.svg)](https://github.com/egodon/linear-cli/blob/master/package.json)
 
-
 <!-- toc -->
-* [Linear CLI](#linear-cli)
-* [Install](#install)
-* [Commands](#commands)
+
+- [Install](#install)
+- [Commands](#commands)
 <!-- tocstop -->
 
 # Install
@@ -28,20 +29,21 @@ A CLI for [Linear](https://linear.app/)
 # Commands
 
 <!-- commands -->
-* [`lr cache:refresh`](#lr-cacherefresh)
-* [`lr cache:show`](#lr-cacheshow)
-* [`lr config:delete`](#lr-configdelete)
-* [`lr config:show`](#lr-configshow)
-* [`lr help [COMMAND]`](#lr-help-command)
-* [`lr init`](#lr-init)
-* [`lr issue ISSUEID`](#lr-issue-issueid)
-* [`lr issue:create`](#lr-issuecreate)
-* [`lr issue:list`](#lr-issuelist)
-* [`lr issue:start ISSUEID`](#lr-issuestart-issueid)
-* [`lr issue:update ISSUEID [PROPERTYTOMODIFY]`](#lr-issueupdate-issueid-propertytomodify)
-* [`lr teams:show`](#lr-teamsshow)
-* [`lr workspace:add`](#lr-workspaceadd)
-* [`lr workspace:switch`](#lr-workspaceswitch)
+
+- [`lr cache:refresh`](#lr-cacherefresh)
+- [`lr cache:show`](#lr-cacheshow)
+- [`lr config:delete`](#lr-configdelete)
+- [`lr config:show`](#lr-configshow)
+- [`lr help [COMMAND]`](#lr-help-command)
+- [`lr init`](#lr-init)
+- [`lr issue ISSUEID`](#lr-issue-issueid)
+- [`lr issue:create`](#lr-issuecreate)
+- [`lr issue:list`](#lr-issuelist)
+- [`lr issue:start ISSUEID`](#lr-issuestart-issueid)
+- [`lr issue:update ISSUEID [PROPERTYTOMODIFY]`](#lr-issueupdate-issueid-propertytomodify)
+- [`lr teams:show`](#lr-teamsshow)
+- [`lr workspace:add`](#lr-workspaceadd)
+- [`lr workspace:switch`](#lr-workspaceswitch)
 
 ## `lr cache:refresh`
 
@@ -251,4 +253,5 @@ USAGE
 ```
 
 _See code: [src/commands/workspace/switch.ts](https://github.com/evangodon/linear-cli/blob/v0.10.5/src/commands/workspace/switch.ts)_
+
 <!-- commandsstop -->
