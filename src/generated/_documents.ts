@@ -1177,6 +1177,8 @@ export type Issue = Node & {
   project?: Maybe<Project>;
   /** Suggested branch name for the issue. */
   branchName: Scalars['String'];
+  /** Returns the number of Attachment resources which are created by customer support ticketing systems (e.g. Zendesk). */
+  customerTicketCount: Scalars['Int'];
   /** Users who are subscribed to the issue. */
   subscribers: UserConnection;
   /** The user who created the issue. */
@@ -1735,6 +1737,8 @@ export type IssueUpdateInput = {
   documentVersion?: Maybe<Scalars['Int']>;
   /** The date at which the issue is due. */
   dueDate?: Maybe<Scalars['TimelessDateScalar']>;
+  /** [Deprecated] Wether the issue has been trashed. */
+  trashed?: Maybe<Scalars['Boolean']>;
 };
 
 
@@ -2982,6 +2986,8 @@ export type OauthClient = Node & {
   clientSecret: Scalars['String'];
   /** List of allowed redirect URIs for the application. */
   redirectUris: Array<Scalars['String']>;
+  /** Whether the OAuth application is publicly visible, or only visible to the creating workspace. */
+  publicEnabled: Scalars['Boolean'];
 };
 
 export type OauthClientCreateInput = {
@@ -3024,6 +3030,8 @@ export type OauthClientUpdateInput = {
   redirectUris?: Maybe<Array<Scalars['String']>>;
   /** URL for the app icon. */
   imageUrl?: Maybe<Scalars['String']>;
+  /** Whether the OAuth application should be publicly visible, or only visible to the creating workspace. */
+  publicEnabled?: Maybe<Scalars['Boolean']>;
 };
 
 export type OauthTokenRevokePayload = {
@@ -4402,6 +4410,8 @@ export type Subscription = Node & {
   canceledAt?: Maybe<Scalars['DateTime']>;
   /** The subscription type of a pending change. Null if no change pending. */
   pendingChangeType?: Maybe<Scalars['String']>;
+  /** The date the subscription will be billed next. */
+  nextBillingAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type SubscriptionPayload = {
@@ -5588,8 +5598,21 @@ export type GetIssueQuery = (
   { __typename?: 'Query' }
   & { issue: (
     { __typename?: 'Issue' }
-    & Pick<Issue, 'trashed' | 'url' | 'identifier' | 'priorityLabel' | 'previousIdentifiers' | 'branchName' | 'estimate' | 'description' | 'title' | 'number' | 'priority' | 'id'>
-    & { cycle?: Maybe<(
+    & Pick<Issue, 'trashed' | 'url' | 'identifier' | 'createdAt' | 'priorityLabel' | 'previousIdentifiers' | 'branchName' | 'estimate' | 'description' | 'title' | 'number' | 'priority' | 'id'>
+    & { history: (
+      { __typename?: 'IssueHistoryConnection' }
+      & { nodes: Array<(
+        { __typename?: 'IssueHistory' }
+        & Pick<IssueHistory, 'createdAt'>
+        & { actor?: Maybe<(
+          { __typename?: 'User' }
+          & Pick<User, 'displayName'>
+        )> }
+      )> }
+    ), creator?: Maybe<(
+      { __typename?: 'User' }
+      & Pick<User, 'id' | 'displayName'>
+    )>, cycle?: Maybe<(
       { __typename?: 'Cycle' }
       & Pick<Cycle, 'id'>
     )>, labels: (
@@ -5640,7 +5663,7 @@ export type IssueFragment = (
     & Pick<Issue, 'id'>
   )>, project?: Maybe<(
     { __typename?: 'Project' }
-    & Pick<Project, 'id' | 'name'>
+    & Pick<Project, 'id'>
   )>, team: (
     { __typename?: 'Team' }
     & Pick<Team, 'id' | 'key'>

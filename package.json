@@ -28,6 +28,7 @@
     "chalk": "^4.1.0",
     "cli-ux": "^5.5.1",
     "clipboardy": "^2.3.0",
+    "dayjs": "^1.10.4",
     "graphql": "^15.5.0",
     "inquirer": "^8.0.0",
     "marked": "^2.0.1",

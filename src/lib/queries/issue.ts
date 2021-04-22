@@ -3,9 +3,22 @@ const gql = String.raw;
 export const issueQuery = gql`
   query getIssue($id: String!) {
     issue(id: $id) {
+      history(first: 1) {
+        nodes {
+          actor {
+            displayName
+          }
+          createdAt
+        }
+      }
       trashed
       url
       identifier
+      createdAt
+      creator {
+        id
+        displayName
+      }
       priorityLabel
       previousIdentifiers
       branchName

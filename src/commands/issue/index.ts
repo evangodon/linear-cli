@@ -2,10 +2,14 @@ import boxen from 'boxen';
 import chalk from 'chalk';
 import wrapAnsi from 'wrap-ansi';
 import { cli } from 'cli-ux';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import Command, { flags } from '../../base';
 import { render } from '../../utils';
 import { GetIssueQuery } from '../../generated/_documents';
 import { render as r } from '../../utils';
+
+dayjs.extend(relativeTime);
 
 type Issue = GetIssueQuery['issue'];
 
@@ -61,16 +65,40 @@ export default class IssueIndex extends Command {
       },
     ];
 
-    const terminalString = issueProperties
+    const dim = chalk.dim;
+    const reset = chalk.reset;
+
+    const creator = issue.creator?.displayName;
+    const createdAt = dayjs(issue.createdAt).fromNow();
+
+    let updatedBy;
+    let updatedAt;
+    const hasBeenUpdated = issue.history.nodes[0];
+
+    if (hasBeenUpdated) {
+      updatedBy = issue.history.nodes[0].actor?.displayName;
+      updatedAt = dayjs(issue.history.nodes[0].createdAt).fromNow();
+    }
+
+    console.log(JSON.stringify(issue.history));
+
+    const issueRender = issueProperties
       .map(
         (p) =>
           (p.label && p.value ? chalk.dim(`${p.label}:`.padEnd(labelWidth)) : '') +
           (p.value ? p.value : '')
       )
-      .join('\n');
+      .join('\n')
+      .concat('\n---\n')
+      .concat(dim(`\n${'Created:'.padEnd(labelWidth)}${createdAt} by ${reset(creator)}`))
+      .concat(
+        hasBeenUpdated
+          ? dim(`\n${'Updated:'.padEnd(labelWidth)}${updatedAt} by ${reset(updatedBy)}`)
+          : ''
+      );
 
     this.log('');
-    this.log(boxen(terminalString, { padding: 1, borderStyle: 'round' }));
+    this.log(boxen(issueRender, { padding: 1, borderStyle: 'round' }));
   }
 
   renderIssueDescription(issue: Issue) {
