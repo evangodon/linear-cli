@@ -1,7 +1,7 @@
 {
   "name": "@evangodon/lr",
   "description": "",
-  "version": "0.10.5",
+  "version": "0.11.0",
   "author": "Evan Godon @egodon",
   "bin": {
     "linear": "bin/run",
