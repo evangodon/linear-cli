@@ -74,15 +74,14 @@ export default class IssueList extends Command {
 
   async listIssuesWithStatus() {
     const { flags } = this.parse(IssueList);
-
     const cache = await this.cache.read();
 
     const teamId = flags.team ?? global.currentWorkspace.defaultTeam;
-
     const team = cache.teams[teamId.toUpperCase()];
 
     if (!team) {
-      this.log(`Did not find team with key ${teamId}`);
+      this.log(`Did not find team with key "${teamId}"`);
+      this.log(`Teams found in cache:\n-`, Object.keys(cache.teams).join('\n- '));
       this.log(`You can try refreshing the cache with ${chalk.blue('lr cache:refresh')}`);
       return;
     }
