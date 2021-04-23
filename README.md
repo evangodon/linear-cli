@@ -1,5 +1,4 @@
 Linear CLI
-
 ---
 
 A CLI for [Linear](https://linear.app/)
