@@ -16,9 +16,18 @@ type Issue = GetIssueQuery['issue'];
 export default class IssueIndex extends Command {
   static description = 'Show issue info';
 
-  static aliases = ['i', 'issue:show'];
+  static aliases = ['i'];
 
-  static args = [{ name: 'issueId', required: true }];
+  static args = [
+    { name: 'issueId', required: true },
+    {
+      name: 'issueIdOptional',
+      hidden: true,
+      description: 'Use this if you to split the issue id into two arguments',
+    },
+  ];
+
+  static examples = ['$ lr issue LIN-14', '$ lr issue LIN 14'];
 
   static flags = {
     description: flags.boolean({ char: 'd', description: 'Show issue description' }),
@@ -115,9 +124,22 @@ export default class IssueIndex extends Command {
     this.log(boxen(render.Markdown(markdown), { padding: 1, borderStyle: 'round' }));
   }
 
+  getIssueId() {
+    const { args } = this.parse<{}, { issueId: string; issueIdOptional?: string }>(
+      IssueIndex
+    );
+
+    if (args.issueIdOptional) {
+      return `${args.issueId}-${args.issueIdOptional}`;
+    }
+
+    return args.issueId;
+  }
+
   async run() {
-    const { args, flags } = this.parse(IssueIndex);
-    const issue = await this.linear.getIssue(args.issueId);
+    const { flags } = this.parse(IssueIndex);
+    const issueId = this.getIssueId();
+    const issue = await this.linear.getIssue(issueId);
 
     if (flags.open) {
       cli.open(issue.url);
