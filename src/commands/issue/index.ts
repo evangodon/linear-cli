@@ -33,10 +33,7 @@ export default class IssueIndex extends Command {
         value: chalk.magenta.bold(issue.identifier),
       },
       {
-        value: wrapAnsi(issue.title, 60),
-      },
-      {
-        value: '', // new line
+        value: wrapAnsi(issue.title, 60) + '\n',
       },
       {
         label: 'Team',
@@ -52,7 +49,11 @@ export default class IssueIndex extends Command {
       },
       {
         label: 'Assignee',
-        value: issue.assignee ? `${issue.assignee.displayName}` : 'Unassigned',
+        value: issue.assignee ? issue.assignee.displayName : 'Unassigned',
+      },
+      {
+        label: 'Project',
+        value: issue.project ? issue.project.name : '',
       },
       {
         label: 'Labels',
@@ -80,18 +81,27 @@ export default class IssueIndex extends Command {
       updatedAt = dayjs(issue.history.nodes[0].createdAt).fromNow();
     }
 
+    const displayCreator = creator ? ` by ${reset(creator)}` : '';
+    const displayUpdateAuthor = updatedBy ? ` by ${reset(updatedBy)}` : '';
+
     const issueRender = issueProperties
       .map(
         (p) =>
-          (p.label && p.value ? chalk.dim(`${p.label}:`.padEnd(labelWidth)) : '') +
+          (p.label && p.value ? dim(`${p.label}:`.padEnd(labelWidth)) : '') +
           (p.value ? p.value : '')
       )
+      .filter(Boolean)
       .join('\n')
-      .concat(dim('\n---\n'))
-      .concat(dim(`\n${'Created:'.padEnd(labelWidth)}${createdAt} by ${reset(creator)}`))
+      .concat(dim('\n\n---\n'))
+      .concat(dim(`\n${'Created:'.padEnd(labelWidth)}${createdAt}${displayCreator}`))
       .concat(
         hasBeenUpdated
-          ? dim(`\n${'Updated:'.padEnd(labelWidth)}${updatedAt} by ${reset(updatedBy)}`)
+          ? dim(`\n${'Updated:'.padEnd(labelWidth)}${updatedAt}${displayUpdateAuthor}`)
+          : ''
+      )
+      .concat(
+        issue.archivedAt
+          ? dim(`\n${'Archived:'.padEnd(labelWidth)}${dayjs(issue.archivedAt).fromNow()}`)
           : ''
       );
 

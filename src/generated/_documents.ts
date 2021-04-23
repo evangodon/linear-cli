@@ -5598,7 +5598,7 @@ export type GetIssueQuery = (
   { __typename?: 'Query' }
   & { issue: (
     { __typename?: 'Issue' }
-    & Pick<Issue, 'trashed' | 'url' | 'identifier' | 'createdAt' | 'priorityLabel' | 'previousIdentifiers' | 'branchName' | 'estimate' | 'description' | 'title' | 'number' | 'priority' | 'id'>
+    & Pick<Issue, 'archivedAt' | 'trashed' | 'url' | 'identifier' | 'createdAt' | 'priorityLabel' | 'previousIdentifiers' | 'branchName' | 'estimate' | 'description' | 'title' | 'number' | 'priority' | 'id'>
     & { history: (
       { __typename?: 'IssueHistoryConnection' }
       & { nodes: Array<(
@@ -5609,7 +5609,10 @@ export type GetIssueQuery = (
           & Pick<User, 'displayName'>
         )> }
       )> }
-    ), creator?: Maybe<(
+    ), project?: Maybe<(
+      { __typename?: 'Project' }
+      & Pick<Project, 'name' | 'id'>
+    )>, creator?: Maybe<(
       { __typename?: 'User' }
       & Pick<User, 'id' | 'displayName'>
     )>, cycle?: Maybe<(
@@ -5624,9 +5627,6 @@ export type GetIssueQuery = (
     ), parent?: Maybe<(
       { __typename?: 'Issue' }
       & Pick<Issue, 'id'>
-    )>, project?: Maybe<(
-      { __typename?: 'Project' }
-      & Pick<Project, 'id'>
     )>, team: (
       { __typename?: 'Team' }
       & Pick<Team, 'id' | 'name'>

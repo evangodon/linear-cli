@@ -11,10 +11,14 @@ export const issueQuery = gql`
           createdAt
         }
       }
+      archivedAt
       trashed
       url
       identifier
       createdAt
+      project {
+        name
+      }
       creator {
         id
         displayName
