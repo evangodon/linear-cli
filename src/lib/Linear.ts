@@ -16,6 +16,7 @@ import { issueWorkflowStatesQuery } from './queries/issueWorflowStates';
 import { teamIssuesQuery } from './queries/teamIssues';
 import { teamWorkflowStatesQuery } from './queries/teamWorkflowStates';
 import { statusIssuesQuery } from './queries/workflowStateIssues';
+import { searchIssuesQuery } from './queries/searchIssues';
 import {
   GetIssueQuery,
   GetIssueQueryVariables,
@@ -29,11 +30,17 @@ import {
   User_AssignedIssuesQueryVariables,
   StatusIssuesQuery,
   StatusIssuesQueryVariables,
+  IssueSearchQuery,
+  IssueSearchQueryVariables,
 } from '../generated/_documents';
 
 type UserInfo = {
   apiKey: string;
   currentUser: User;
+};
+
+type QueryOptions = {
+  noSpinner?: boolean;
 };
 
 /**
@@ -230,7 +237,6 @@ export class Linear extends LinearClient {
 
   /** Get all issues of status */
   async getStatusIssues(statusId: string) {
-    let issues: StatusIssuesQuery['workflowState']['issues']['nodes'] = [];
     const spinner = ora().start();
 
     const { data } = await this.client
@@ -245,8 +251,24 @@ export class Linear extends LinearClient {
       throw new Error('No data returned from Linear');
     }
 
-    issues = data.workflowState.issues.nodes;
+    return data.workflowState.issues.nodes;
+  }
 
-    return issues;
+  /** Search issues  */
+  async searchIssues(queryString: string, { noSpinner = false }: QueryOptions = {}) {
+    const spinner = ora({ isEnabled: !noSpinner }).start();
+    const { data } = await this.client
+      .rawRequest<IssueSearchQuery, IssueSearchQueryVariables>(searchIssuesQuery, {
+        query: queryString,
+      })
+      .catch((error) => handleError(error));
+
+    spinner.stop();
+
+    if (!data) {
+      throw new Error('No data returned from Linear');
+    }
+
+    return data.issueSearch.nodes;
   }
 }

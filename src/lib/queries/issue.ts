@@ -1,5 +1,6 @@
 const gql = String.raw;
 
+// TODO: don't include description by default
 export const issueQuery = gql`
   query getIssue($id: String!) {
     issue(id: $id) {

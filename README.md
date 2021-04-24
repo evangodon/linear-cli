@@ -36,6 +36,7 @@ A CLI for [Linear](https://linear.app/)
 * [`lr issue ISSUEID`](#lr-issue-issueid)
 * [`lr issue:create`](#lr-issuecreate)
 * [`lr issue:list`](#lr-issuelist)
+* [`lr issue:search [FILE]`](#lr-issuesearch-file)
 * [`lr issue:start ISSUEID`](#lr-issuestart-issueid)
 * [`lr issue:update ISSUEID [PROPERTYTOMODIFY]`](#lr-issueupdate-issueid-propertytomodify)
 * [`lr teams:show`](#lr-teamsshow)
@@ -183,6 +184,22 @@ ALIASES
 ```
 
 _See code: [src/commands/issue/list.ts](https://github.com/evangodon/linear-cli/blob/v0.12.0/src/commands/issue/list.ts)_
+
+## `lr issue:search [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ lr issue:search [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/issue/search.ts](https://github.com/evangodon/linear-cli/blob/v0.12.0/src/commands/issue/search.ts)_
 
 ## `lr issue:start ISSUEID`
 

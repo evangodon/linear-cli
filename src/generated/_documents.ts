@@ -5730,6 +5730,28 @@ export type IssuesQuery = (
   ) }
 );
 
+export type IssueSearchQueryVariables = Exact<{
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  includeArchived?: Maybe<Scalars['Boolean']>;
+  last?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<PaginationOrderBy>;
+  query: Scalars['String'];
+}>;
+
+
+export type IssueSearchQuery = (
+  { __typename?: 'Query' }
+  & { issueSearch: (
+    { __typename?: 'IssueConnection' }
+    & { nodes: Array<(
+      { __typename?: 'Issue' }
+      & Pick<Issue, 'id' | 'title' | 'identifier'>
+    )> }
+  ) }
+);
+
 export type TeamIssuesQueryVariables = Exact<{
   teamId: Scalars['String'];
   first: Scalars['Int'];
