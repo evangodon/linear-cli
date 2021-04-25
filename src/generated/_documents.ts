@@ -5591,6 +5591,7 @@ export type User_AssignedIssuesQuery = (
 
 export type GetIssueQueryVariables = Exact<{
   id: Scalars['String'];
+  withComments: Scalars['Boolean'];
 }>;
 
 
@@ -5609,7 +5610,17 @@ export type GetIssueQuery = (
           & Pick<User, 'displayName'>
         )> }
       )> }
-    ), project?: Maybe<(
+    ), comments?: Maybe<(
+      { __typename?: 'CommentConnection' }
+      & { nodes: Array<(
+        { __typename?: 'Comment' }
+        & Pick<Comment, 'body' | 'createdAt'>
+        & { user: (
+          { __typename?: 'User' }
+          & Pick<User, 'displayName'>
+        ) }
+      )> }
+    )>, project?: Maybe<(
       { __typename?: 'Project' }
       & Pick<Project, 'name' | 'id'>
     )>, creator?: Maybe<(

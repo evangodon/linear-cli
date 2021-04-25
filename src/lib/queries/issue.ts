@@ -2,7 +2,7 @@ const gql = String.raw;
 
 // TODO: don't include description by default
 export const issueQuery = gql`
-  query getIssue($id: String!) {
+  query getIssue($id: String!, $withComments: Boolean!) {
     issue(id: $id) {
       history(first: 1) {
         nodes {
@@ -13,6 +13,15 @@ export const issueQuery = gql`
         }
       }
       archivedAt
+      comments @include(if: $withComments) {
+        nodes {
+          user {
+            displayName
+          }
+          body
+          createdAt
+        }
+      }
       trashed
       url
       identifier

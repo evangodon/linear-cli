@@ -144,7 +144,10 @@ export class Linear extends LinearClient {
   }
 
   /** Get one specific issue */
-  async getIssue(issueId: string) {
+  async getIssue(
+    issueId: string,
+    { withComments = false }: { withComments?: boolean } = {}
+  ) {
     let issue: GetIssueQuery['issue'] = (null as unknown) as GetIssueQuery['issue'];
 
     const spinner = ora().start();
@@ -155,6 +158,7 @@ export class Linear extends LinearClient {
         GetIssueQueryVariables
       >(issueQuery, {
         id: issueId,
+        withComments,
       });
 
       if (!data) {

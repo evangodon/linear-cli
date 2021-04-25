@@ -32,7 +32,7 @@ marked.setOptions({
 });
 
 export const Markdown = (markdown: string) => {
-  markdown = marked(markdown).replace(/(\n\s*)(\*)/g, (_, p1) => `${p1}  •`);
+  markdown = marked(markdown).replace(/\*/g, () => `•`);
   markdown = wrapAnsi(markdown, 90);
 
   return markdown;
