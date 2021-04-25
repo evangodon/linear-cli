@@ -1,5 +1,4 @@
-Linear CLI
----
+## Linear CLI
 
 A CLI for [Linear](https://linear.app/)
 
@@ -8,10 +7,13 @@ A CLI for [Linear](https://linear.app/)
 [![Downloads/week](https://img.shields.io/npm/dw/@evangodon/lr.svg)](https://npmjs.org/package/@evangodon/lr)
 [![License](https://img.shields.io/npm/l/linear-cli.svg)](https://github.com/egodon/linear-cli/blob/master/package.json)
 
+<img src="./src/assets/readme-hero.png">
+
 <!-- toc -->
-* [Install](#install)
-* [Commands](#commands)
-<!-- tocstop -->
+
+- [Install](#install)
+- [Commands](#commands)
+  <!-- tocstop -->
 
 # Install
 
@@ -27,21 +29,22 @@ A CLI for [Linear](https://linear.app/)
 # Commands
 
 <!-- commands -->
-* [`lr cache:refresh`](#lr-cacherefresh)
-* [`lr cache:show`](#lr-cacheshow)
-* [`lr config:delete`](#lr-configdelete)
-* [`lr config:show`](#lr-configshow)
-* [`lr help [COMMAND]`](#lr-help-command)
-* [`lr init`](#lr-init)
-* [`lr issue ISSUEID`](#lr-issue-issueid)
-* [`lr issue:create`](#lr-issuecreate)
-* [`lr issue:list`](#lr-issuelist)
-* [`lr issue:search [FILE]`](#lr-issuesearch-file)
-* [`lr issue:start ISSUEID`](#lr-issuestart-issueid)
-* [`lr issue:update ISSUEID [PROPERTYTOMODIFY]`](#lr-issueupdate-issueid-propertytomodify)
-* [`lr teams:show`](#lr-teamsshow)
-* [`lr workspace:add`](#lr-workspaceadd)
-* [`lr workspace:switch`](#lr-workspaceswitch)
+
+- [`lr cache:refresh`](#lr-cacherefresh)
+- [`lr cache:show`](#lr-cacheshow)
+- [`lr config:delete`](#lr-configdelete)
+- [`lr config:show`](#lr-configshow)
+- [`lr help [COMMAND]`](#lr-help-command)
+- [`lr init`](#lr-init)
+- [`lr issue ISSUEID`](#lr-issue-issueid)
+- [`lr issue:create`](#lr-issuecreate)
+- [`lr issue:list`](#lr-issuelist)
+- [`lr issue:search [QUERY]`](#lr-issuesearch-query)
+- [`lr issue:start ISSUEID`](#lr-issuestart-issueid)
+- [`lr issue:update ISSUEID [PROPERTYTOMODIFY]`](#lr-issueupdate-issueid-propertytomodify)
+- [`lr teams:show`](#lr-teamsshow)
+- [`lr workspace:add`](#lr-workspaceadd)
+- [`lr workspace:switch`](#lr-workspaceswitch)
 
 ## `lr cache:refresh`
 
@@ -123,6 +126,7 @@ USAGE
   $ lr issue ISSUEID
 
 OPTIONS
+  -c, --comments     Show issue comments
   -d, --description  Show issue description
   -o, --open         Open issue in web browser
 
@@ -185,18 +189,17 @@ ALIASES
 
 _See code: [src/commands/issue/list.ts](https://github.com/evangodon/linear-cli/blob/v0.12.0/src/commands/issue/list.ts)_
 
-## `lr issue:search [FILE]`
+## `lr issue:search [QUERY]`
 
 describe the command here
 
 ```
 USAGE
-  $ lr issue:search [FILE]
+  $ lr issue:search [QUERY]
 
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+ALIASES
+  $ lr search
+  $ lr s
 ```
 
 _See code: [src/commands/issue/search.ts](https://github.com/evangodon/linear-cli/blob/v0.12.0/src/commands/issue/search.ts)_
@@ -270,4 +273,5 @@ USAGE
 ```
 
 _See code: [src/commands/workspace/switch.ts](https://github.com/evangodon/linear-cli/blob/v0.12.0/src/commands/workspace/switch.ts)_
+
 <!-- commandsstop -->
