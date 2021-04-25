@@ -12,6 +12,8 @@ import wrapAnsi from 'wrap-ansi';
 
 const MAX_WIDTH = 90;
 
+let imageCounter = 1;
+
 marked.setOptions({
   renderer: new TerminalRenderer({
     reflowText: true,
@@ -24,7 +26,14 @@ marked.setOptions({
       return href;
     },
     image: (href: string, title: string) => {
-      return terminalLink(title, href);
+      const linkId = imageCounter++;
+      const mediaType = href.match(/[.png|.jpg]$/) ? 'IMAGE' : 'MEDIA';
+      /* Print at the end */
+      setTimeout(() => {
+        global.log(`[${linkId}] ${terminalLink(title, href)}`);
+      }, 0);
+
+      return `[${mediaType}][${linkId}] ${title}`;
     },
   }),
   mangle: false,
