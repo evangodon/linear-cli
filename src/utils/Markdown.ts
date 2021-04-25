@@ -5,9 +5,6 @@ import wrapAnsi from 'wrap-ansi';
 
 /**
  * Reads markdown and renders it for the terminal
- *
- * @TODO: Fix longs links
- * @TODO: fix child bullet points
  */
 
 const MAX_WIDTH = 90;
