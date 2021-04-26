@@ -27,7 +27,7 @@ marked.setOptions({
       const mediaType = href.match(/[.png|.jpg]$/) ? 'IMAGE' : 'MEDIA';
       /* Print at the end */
       setTimeout(() => {
-        global.log(`[${linkId}] ${terminalLink(title, href)}`);
+        global.log(`\n[${linkId}] ${terminalLink(title, href)}`);
       }, 0);
 
       return `[${mediaType}][${linkId}] ${title}`;

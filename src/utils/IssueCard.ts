@@ -16,6 +16,11 @@ type Issue = GetIssueQuery['issue'];
 export const IssueCard = (issue: Issue) => {
   const labelWidth = 12;
 
+  const assignee =
+    issue.assignee?.id === global.user.id
+      ? `${issue.assignee.displayName} (You)`
+      : issue.assignee?.displayName;
+
   const issueProperties: { label?: string; value: string }[] = [
     {
       value: chalk.magenta.bold(issue.identifier),
@@ -37,7 +42,7 @@ export const IssueCard = (issue: Issue) => {
     },
     {
       label: 'Assignee',
-      value: issue.assignee ? issue.assignee.displayName : 'Unassigned',
+      value: assignee ?? 'Unassigned',
     },
     {
       label: 'Project',
