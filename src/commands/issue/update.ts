@@ -21,11 +21,15 @@ export default class IssueUpdate extends Command {
     {
       name: 'propertyToModify',
       description: 'Property to update',
-      options: (properties as unknown) as string[], // this needs to be type string[]
+      options: (properties as unknown) as string[],
     },
   ];
 
   runUpdateMethod(property: Property) {
+    function throwBadProperty(property: never): never {
+      throw new Error(`Update operation for ${property} not implemented yet`);
+    }
+
     switch (property) {
       case 'title':
         this.updateTitle();
@@ -38,7 +42,7 @@ export default class IssueUpdate extends Command {
         return this.updateDescription();
 
       default:
-        this.error(`Update operation for ${property} not implemented yet`);
+        throwBadProperty(property);
     }
   }
 
