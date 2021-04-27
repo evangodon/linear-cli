@@ -1,11 +1,8 @@
+import * as clipboardy from 'clipboardy';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
 import Command, { flags } from '../../base';
 
-/**
- * @TODO: improve display of  spinner
- * @TODO: Fix the stop-others flag
- */
 export default class IssueStart extends Command {
   static description = 'Change status of issue to "In progress" and assign to yourself.';
 
@@ -14,24 +11,16 @@ export default class IssueStart extends Command {
   static args = [{ name: 'issueId', required: true }];
 
   static flags = {
-    'stop-others': flags.boolean({
-      char: 's',
-      description: 'Stop all other issues assigned to you',
-      hidden: true,
+    'copy-branch': flags.boolean({
+      char: 'c',
+      description: 'copy git branch to clip-board',
     }),
   };
 
   async run() {
-    const { args } = this.parse(IssueStart);
+    const { args, flags } = this.parse(IssueStart);
 
     const currentIssue = await this.linear.getIssue(args.issueId);
-
-    if (currentIssue.state.type === 'started') {
-      this.log('');
-      this.log(`Issue ${chalk.magenta(currentIssue.identifier)} is already in progress.`);
-
-      return;
-    }
 
     if (currentIssue.assignee && currentIssue.assignee.id !== this.user.id) {
       const { confirmAssign } = await inquirer.prompt<{ confirmAssign: boolean }>([
@@ -63,28 +52,13 @@ export default class IssueStart extends Command {
       }' and is assigned to you.`
     );
 
-    /*
-    if (flags['stop-others']) {
-      this.log('');
-      this.log('Stopping your other issues...');
-      const spinner = ora().start();
-      const issues = await this.linear.getMyAssignedIssues({ disableSpinner: true });
-
-      const requests = issues
-        .filter((issue) => issue.state.type === 'started' && issue.id !== currentIssue.id)
-        .map((issue) => {
-          const stoppedState = issue.team.states.nodes
-            .filter((state) => state.type === 'unstarted')
-            .sort((s1, s2) => (s1.position > s2.position ? -1 : 1))[0];
-
-          return this.linear.issueUpdate(issue.id, { stateId: stoppedState.id });
-        });
-
-      await Promise.all(requests);
-      spinner.stop();
-
-      this.log('All your other issues are no longer in progress.');
+    if (flags['copy-branch']) {
+      const gitBranch = `${currentIssue.identifier}/${currentIssue.title.replace(
+        /\s/g,
+        '-'
+      )}`.toLowerCase();
+      clipboardy.writeSync(gitBranch);
+      this.log(`${chalk.blue(gitBranch)} branch copied to clipboard`);
     }
-    */
   }
 }
