@@ -42,6 +42,7 @@ A CLI for [Linear](https://linear.app/)
 * [`lr issue:update ISSUEID [PROPERTYTOMODIFY]`](#lr-issueupdate-issueid-propertytomodify)
 * [`lr teams:show`](#lr-teamsshow)
 * [`lr workspace:add`](#lr-workspaceadd)
+* [`lr workspace:current [FILE]`](#lr-workspacecurrent-file)
 * [`lr workspace:switch`](#lr-workspaceswitch)
 
 ## `lr cache:refresh`
@@ -263,6 +264,22 @@ USAGE
 ```
 
 _See code: [src/commands/workspace/add.ts](https://github.com/evangodon/linear-cli/blob/v0.14.0/src/commands/workspace/add.ts)_
+
+## `lr workspace:current [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ lr workspace:current [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/workspace/current.ts](https://github.com/evangodon/linear-cli/blob/v0.14.0/src/commands/workspace/current.ts)_
 
 ## `lr workspace:switch`
 
