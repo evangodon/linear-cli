@@ -1,6 +1,6 @@
 ## Linear CLI
 
-A CLI for [Linear](https://linear.app/)
+A CLI for [Linear](https://linear.app/) that allows you to quickly view, create and update issues.
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/@evangodon/lr.svg)](https://npmjs.org/package/@evangodon/lr)
@@ -10,8 +10,9 @@ A CLI for [Linear](https://linear.app/)
 <img src="./src/assets/readme-hero.png">
 
 <!-- toc -->
-* [Install](#install)
-* [Commands](#commands)
+
+- [Install](#install)
+- [Commands](#commands)
 <!-- tocstop -->
 
 # Install
@@ -28,22 +29,23 @@ A CLI for [Linear](https://linear.app/)
 # Commands
 
 <!-- commands -->
-* [`lr cache:refresh`](#lr-cacherefresh)
-* [`lr cache:show`](#lr-cacheshow)
-* [`lr config:delete`](#lr-configdelete)
-* [`lr config:show`](#lr-configshow)
-* [`lr help [COMMAND]`](#lr-help-command)
-* [`lr init`](#lr-init)
-* [`lr issue ISSUEID`](#lr-issue-issueid)
-* [`lr issue:create`](#lr-issuecreate)
-* [`lr issue:list`](#lr-issuelist)
-* [`lr issue:search [QUERY]`](#lr-issuesearch-query)
-* [`lr issue:start ISSUEID`](#lr-issuestart-issueid)
-* [`lr issue:update ISSUEID [PROPERTYTOMODIFY]`](#lr-issueupdate-issueid-propertytomodify)
-* [`lr teams:show`](#lr-teamsshow)
-* [`lr workspace:add`](#lr-workspaceadd)
-* [`lr workspace:current [FILE]`](#lr-workspacecurrent-file)
-* [`lr workspace:switch`](#lr-workspaceswitch)
+
+- [`lr cache:refresh`](#lr-cacherefresh)
+- [`lr cache:show`](#lr-cacheshow)
+- [`lr config:delete`](#lr-configdelete)
+- [`lr config:show`](#lr-configshow)
+- [`lr help [COMMAND]`](#lr-help-command)
+- [`lr init`](#lr-init)
+- [`lr issue ISSUEID`](#lr-issue-issueid)
+- [`lr issue:create`](#lr-issuecreate)
+- [`lr issue:list`](#lr-issuelist)
+- [`lr issue:search [QUERY]`](#lr-issuesearch-query)
+- [`lr issue:start ISSUEID`](#lr-issuestart-issueid)
+- [`lr issue:update ISSUEID [PROPERTYTOMODIFY]`](#lr-issueupdate-issueid-propertytomodify)
+- [`lr teams:show`](#lr-teamsshow)
+- [`lr workspace:add`](#lr-workspaceadd)
+- [`lr workspace:current [FILE]`](#lr-workspacecurrent-file)
+- [`lr workspace:switch`](#lr-workspaceswitch)
 
 ## `lr cache:refresh`
 
@@ -291,4 +293,5 @@ USAGE
 ```
 
 _See code: [src/commands/workspace/switch.ts](https://github.com/evangodon/linear-cli/blob/v0.14.0/src/commands/workspace/switch.ts)_
+
 <!-- commandsstop -->
