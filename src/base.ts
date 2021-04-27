@@ -62,7 +62,8 @@ export default abstract class extends Command {
     } catch (error) {
       /* Config folder doesn't exist */
       if (error.code === 'ENOENT') {
-        await this.promptForInit();
+        this.warnToInit();
+        this.exit();
       }
 
       /*  Invalid JSON in config file */
@@ -75,13 +76,11 @@ export default abstract class extends Command {
     }
   }
 
-  async promptForInit() {
+  warnToInit() {
     this.log(`No config found`);
-    this.log(
-      `\nLooks like ${chalk.magenta(this.config.bin)} hasn't been initialized yet!`
-    );
+    this.log(`\nLooks like you haven't initialized the cli yet!`);
 
-    this.log(`You need to run "lr init" first`);
+    this.log(`You need to run ${chalk.blue('lr init')} first to setup your api key.`);
   }
 }
 

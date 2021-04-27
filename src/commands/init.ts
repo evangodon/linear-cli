@@ -1,11 +1,12 @@
 import { LinearClient } from '@linear/sdk';
+import boxen from 'boxen';
+import ora from 'ora';
 import chalk from 'chalk';
 import * as inquirer from 'inquirer';
 import fs from 'fs';
 import Command from '@oclif/command';
 import { Config, User } from '../lib/configSchema';
 import CacheRefresh from './cache/refresh';
-import boxen from 'boxen';
 
 type PromptResponse = {
   apiKey: string;
@@ -46,6 +47,8 @@ export default class Init extends Command {
     const linearClient = new LinearClient({ apiKey });
     let user;
 
+    const spinner = ora('Getting your user info').start();
+
     try {
       user = await linearClient.viewer;
     } catch (error) {
@@ -68,6 +71,8 @@ export default class Init extends Command {
       name: team.name,
       value: team.key,
     }));
+
+    spinner.stop();
 
     const { defaultTeam } = await inquirer.prompt<{ defaultTeam: string }>([
       {
@@ -115,7 +120,9 @@ export default class Init extends Command {
         flag: 'w',
       });
 
+      this.log('');
       this.log(`Wrote api key and user info to ${this.configFilePath}`);
+      this.log('');
     } catch (error) {
       this.error(error);
     }
@@ -144,7 +151,10 @@ export default class Init extends Command {
     await CacheRefresh.run();
 
     this.log(
-      boxen('🚀 Linear CLI setup successful', { padding: 1, borderStyle: 'round' })
+      boxen(`${chalk.green('✓')} Linear CLI setup successful!`, {
+        padding: 1,
+        borderStyle: 'round',
+      })
     );
   }
 }

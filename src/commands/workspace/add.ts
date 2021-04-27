@@ -1,4 +1,5 @@
 import { LinearClient } from '@linear/sdk';
+import chalk from 'chalk';
 import fs from 'fs';
 import * as inquirer from 'inquirer';
 import Command from '../../base';
@@ -21,6 +22,12 @@ export default class WorkspaceAdd extends Command {
       {
         name: 'label',
         message: 'Create a label for this key (e.g. "Work", "Home")',
+        validate: (input: string) => {
+          if (input.trim().length === 0) {
+            return 'The label needs to be at least one character';
+          }
+          return true;
+        },
       },
     ]);
 
@@ -36,7 +43,7 @@ export default class WorkspaceAdd extends Command {
       throw new Error('Failed to get user id');
     }
 
-    const teamConnection = await user.teams();
+    const teamConnection = await linearClient.teams();
 
     if (!teamConnection) {
       this.error('Failed to get your teams');
@@ -79,6 +86,7 @@ export default class WorkspaceAdd extends Command {
       flag: 'w',
     });
 
-    this.log(`Workspace with label ${response.label} added.`);
+    this.log('');
+    this.log(`Workspace with label ${chalk.blue(response.label)} added.`);
   }
 }
