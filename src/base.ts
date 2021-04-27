@@ -82,6 +82,10 @@ export default abstract class extends Command {
 
     this.log(`You need to run ${chalk.blue('lr init')} first to setup your api key.`);
   }
+
+  success(msg: string) {
+    this.log(`${chalk.green('✓')} ${msg}`);
+  }
 }
 
 export { flags };

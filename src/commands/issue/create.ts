@@ -64,7 +64,7 @@ export default class IssueCreate extends Command {
     }
 
     this.log('');
-    this.log(`Issue ${chalk.magenta(newIssue.identifier)} created: ${newIssue.url}`);
+    this.success(`Issue ${chalk.magenta(newIssue.identifier)} created: ${newIssue.url}`);
 
     if (flags.copy) {
       if (!newIssue.url) {

@@ -87,6 +87,6 @@ export default class WorkspaceAdd extends Command {
     });
 
     this.log('');
-    this.log(`Workspace with label ${chalk.blue(response.label)} added.`);
+    this.success(`Workspace with label ${chalk.blue(response.label)} added.`);
   }
 }

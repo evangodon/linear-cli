@@ -38,6 +38,6 @@ export default class WorkspaceSwitch extends Command {
     });
 
     this.log('');
-    this.log(`Switched to ${chalk.magenta(response.workspace)} workspace`);
+    this.success(`Switched to ${chalk.magenta(response.workspace)} workspace`);
   }
 }

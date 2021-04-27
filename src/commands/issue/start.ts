@@ -46,10 +46,10 @@ export default class IssueStart extends Command {
     });
 
     this.log('');
-    this.log(
-      `The state of issue ${chalk.magenta(currentIssue.identifier)} is now '${
+    this.success(
+      `The state of issue ${chalk.magenta(currentIssue.identifier)} is now in the '${
         nextState.name
-      }' and is assigned to you.`
+      }' state and is assigned to you.`
     );
 
     if (flags['copy-branch']) {

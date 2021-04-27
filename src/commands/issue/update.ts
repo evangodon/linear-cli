@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 import * as inquirer from 'inquirer';
+import ora from 'ora';
 import Command from '../../base';
 import { render } from '../../utils';
 
@@ -110,9 +111,13 @@ export default class IssueUpdate extends Command {
     const {
       args: { issueId },
     } = this.parse<any, Args>(IssueUpdate);
+
+    const spinner = ora().start();
     const issue = await this.linear.getIssueWorkflowStates(issueId);
 
     const workflowStates = issue.team.states.nodes;
+
+    spinner.stop();
 
     const { stateName } = await inquirer.prompt<{ stateName: typeof workflowStates[0] }>([
       {
@@ -137,8 +142,9 @@ export default class IssueUpdate extends Command {
 
     await this.linear.issueUpdate(issueId, { stateId: newState.id });
 
-    this.log(
-      `\nUpdated status of issue ${chalk.magenta(issue.identifier)} to ${newState.name}`
+    this.log('');
+    this.success(
+      `Updated status of issue ${chalk.magenta(issue.identifier)} to ${newState.name}`
     );
   }
 
