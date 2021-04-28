@@ -43,6 +43,11 @@ type QueryOptions = {
   noSpinner?: boolean;
 };
 
+type IssueQueryOptions = {
+  withComments?: boolean;
+  historyCount?: number;
+};
+
 /**
  * Custom Linear client
  */
@@ -57,7 +62,8 @@ export class Linear extends LinearClient {
 
   get query() {
     return {
-      statusIssues: async (statusId: string) => this.getStatusIssues(statusId),
+      statusIssues: this.getStatusIssues.bind(this),
+      issue: this.getIssue.bind(this),
     };
   }
 
@@ -146,7 +152,7 @@ export class Linear extends LinearClient {
   /** Get one specific issue */
   async getIssue(
     issueId: string,
-    { withComments = false }: { withComments?: boolean } = {}
+    { withComments = false, historyCount = 1 }: IssueQueryOptions = {}
   ) {
     let issue: GetIssueQuery['issue'] = (null as unknown) as GetIssueQuery['issue'];
 
@@ -159,6 +165,7 @@ export class Linear extends LinearClient {
       >(issueQuery, {
         id: issueId,
         withComments,
+        historyCount,
       });
 
       if (!data) {

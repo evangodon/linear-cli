@@ -5634,6 +5634,7 @@ export type User_AssignedIssuesQuery = (
 export type GetIssueQueryVariables = Exact<{
   id: Scalars['String'];
   withComments: Scalars['Boolean'];
+  historyCount: Scalars['Int'];
 }>;
 
 
@@ -5650,6 +5651,9 @@ export type GetIssueQuery = (
         & { actor?: Maybe<(
           { __typename?: 'User' }
           & Pick<User, 'displayName'>
+        )>, fromState?: Maybe<(
+          { __typename?: 'WorkflowState' }
+          & Pick<WorkflowState, 'id' | 'name'>
         )> }
       )> }
     ), comments?: Maybe<(

@@ -2,14 +2,18 @@ const gql = String.raw;
 
 // TODO: don't include description by default
 export const issueQuery = gql`
-  query getIssue($id: String!, $withComments: Boolean!) {
+  query getIssue($id: String!, $withComments: Boolean!, $historyCount: Int!) {
     issue(id: $id) {
-      history(first: 1) {
+      history(first: $historyCount) {
         nodes {
           actor {
             displayName
           }
           createdAt
+          fromState {
+            id
+            name
+          }
         }
       }
       archivedAt
