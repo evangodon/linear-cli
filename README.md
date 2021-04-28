@@ -3,24 +3,23 @@
 A CLI for [Linear](https://linear.app/) that allows you to quickly view, create and update issues.
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/@evangodon/lr.svg)](https://npmjs.org/package/@evangodon/lr)
-[![Downloads/week](https://img.shields.io/npm/dw/@evangodon/lr.svg)](https://npmjs.org/package/@evangodon/lr)
+[![Version](https://img.shields.io/npm/v/@egcli/lr.svg)](https://npmjs.org/package/@egcli/lr)
+[![Downloads/week](https://img.shields.io/npm/dw/@egcli/lr.svg)](https://npmjs.org/package/@egcli/lr)
 [![License](https://img.shields.io/npm/l/linear-cli.svg)](https://github.com/egodon/linear-cli/blob/master/package.json)
 
 <img src="./src/assets/readme-hero.png">
 
 <!-- toc -->
-
-- [Install](#install)
-- [Commands](#commands)
+* [Install](#install)
+* [Commands](#commands)
 <!-- tocstop -->
 
 # Install
 
 ```
-  $ npm install -g @evangodon/lr
+  $ npm install -g @egcli/lr
   # or
-  $ yarn global add @evangodon/lr
+  $ yarn global add @egcli/lr
 
   # and then setup your personal api key
   $ lr init
@@ -29,23 +28,22 @@ A CLI for [Linear](https://linear.app/) that allows you to quickly view, create 
 # Commands
 
 <!-- commands -->
-
-- [`lr cache:refresh`](#lr-cacherefresh)
-- [`lr cache:show`](#lr-cacheshow)
-- [`lr config:delete`](#lr-configdelete)
-- [`lr config:show`](#lr-configshow)
-- [`lr help [COMMAND]`](#lr-help-command)
-- [`lr init`](#lr-init)
-- [`lr issue ISSUEID`](#lr-issue-issueid)
-- [`lr issue:create`](#lr-issuecreate)
-- [`lr issue:list`](#lr-issuelist)
-- [`lr issue:search [QUERY]`](#lr-issuesearch-query)
-- [`lr issue:start ISSUEID`](#lr-issuestart-issueid)
-- [`lr issue:update ISSUEID [PROPERTYTOMODIFY]`](#lr-issueupdate-issueid-propertytomodify)
-- [`lr teams:show`](#lr-teamsshow)
-- [`lr workspace:add`](#lr-workspaceadd)
-- [`lr workspace:current [FILE]`](#lr-workspacecurrent-file)
-- [`lr workspace:switch`](#lr-workspaceswitch)
+* [`lr cache:refresh`](#lr-cacherefresh)
+* [`lr cache:show`](#lr-cacheshow)
+* [`lr config:delete`](#lr-configdelete)
+* [`lr config:show`](#lr-configshow)
+* [`lr help [COMMAND]`](#lr-help-command)
+* [`lr init`](#lr-init)
+* [`lr issue ISSUEID`](#lr-issue-issueid)
+* [`lr issue:create`](#lr-issuecreate)
+* [`lr issue:list`](#lr-issuelist)
+* [`lr issue:search [QUERY]`](#lr-issuesearch-query)
+* [`lr issue:start ISSUEID`](#lr-issuestart-issueid)
+* [`lr issue:update ISSUEID [PROPERTYTOMODIFY]`](#lr-issueupdate-issueid-propertytomodify)
+* [`lr teams:show`](#lr-teamsshow)
+* [`lr workspace:add`](#lr-workspaceadd)
+* [`lr workspace:current`](#lr-workspacecurrent)
+* [`lr workspace:switch`](#lr-workspaceswitch)
 
 ## `lr cache:refresh`
 
@@ -267,18 +265,13 @@ USAGE
 
 _See code: [src/commands/workspace/add.ts](https://github.com/evangodon/linear-cli/blob/v0.14.0/src/commands/workspace/add.ts)_
 
-## `lr workspace:current [FILE]`
+## `lr workspace:current`
 
-describe the command here
+Print current workspace
 
 ```
 USAGE
-  $ lr workspace:current [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
+  $ lr workspace:current
 ```
 
 _See code: [src/commands/workspace/current.ts](https://github.com/evangodon/linear-cli/blob/v0.14.0/src/commands/workspace/current.ts)_
@@ -293,5 +286,4 @@ USAGE
 ```
 
 _See code: [src/commands/workspace/switch.ts](https://github.com/evangodon/linear-cli/blob/v0.14.0/src/commands/workspace/switch.ts)_
-
 <!-- commandsstop -->
