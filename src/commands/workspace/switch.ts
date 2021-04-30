@@ -22,7 +22,7 @@ export default class WorkspaceSwitch extends Command {
         type: 'list',
         choices: Object.keys(this.configData.workspaces).map((workspace) =>
           workspace === this.configData.activeWorkspace
-            ? `${workspace} (current)`
+            ? { name: `${workspace} (current)`, value: workspace }
             : workspace
         ),
       },

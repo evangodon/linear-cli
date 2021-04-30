@@ -21,7 +21,7 @@ export default class WorkspaceAdd extends Command {
       },
       {
         name: 'label',
-        message: 'Create a label for this key (e.g. "Work", "Home")',
+        message: 'Create a label for this key',
         validate: (input: string) => {
           if (input.trim().length === 0) {
             return 'The label needs to be at least one character';
