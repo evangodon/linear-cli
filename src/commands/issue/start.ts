@@ -2,13 +2,15 @@ import * as clipboardy from 'clipboardy';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
 import Command, { flags } from '../../base';
+import { issueArgs, getIssueId, IssueArgs } from '../../utils/issueId';
+import { GetFlagsType } from '../../base';
 
 export default class IssueStart extends Command {
   static description = 'Change status of issue to "In progress" and assign to yourself.';
 
   static aliases = ['start', 's'];
 
-  static args = [{ name: 'issueId', required: true }];
+  static args = issueArgs;
 
   static flags = {
     'copy-branch': flags.boolean({
@@ -18,9 +20,13 @@ export default class IssueStart extends Command {
   };
 
   async run() {
-    const { args, flags } = this.parse(IssueStart);
+    const { args, flags } = this.parse<GetFlagsType<typeof IssueStart>, IssueArgs>(
+      IssueStart
+    );
 
-    const currentIssue = await this.linear.getIssue(args.issueId);
+    const issueId = getIssueId(args);
+
+    const currentIssue = await this.linear.getIssue(issueId);
 
     if (currentIssue.assignee && currentIssue.assignee.id !== this.user.id) {
       const { confirmAssign } = await inquirer.prompt<{ confirmAssign: boolean }>([

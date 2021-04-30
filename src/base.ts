@@ -1,3 +1,4 @@
+import * as Parser from '@oclif/parser';
 import Command, { flags } from '@oclif/command';
 import fs from 'fs';
 import chalk from 'chalk';
@@ -14,6 +15,8 @@ declare global {
     }
   }
 }
+
+export type GetFlagsType<T> = T extends Parser.Input<infer F> ? F : never;
 
 export default abstract class extends Command {
   configFilePath = `${this.config.configDir}/config.json`;

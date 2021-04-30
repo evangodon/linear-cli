@@ -1,52 +1,53 @@
+import { flags } from '@oclif/command';
 import chalk from 'chalk';
 import * as inquirer from 'inquirer';
 import ora from 'ora';
-import Command from '../../base';
-import { render } from '../../utils';
+import Command, { GetFlagsType } from '../../base';
+import { render } from '../../components';
+import { issueArgs, getIssueId, IssueArgs } from '../../utils/issueId';
 
 const properties = ['title', 'description', 'status'] as const;
 type Property = typeof properties[number];
 
 type Args = { issueId: string } & { propertyToModify: Property };
 
-/**
- */
 export default class IssueUpdate extends Command {
   static description = 'Update an issue';
 
   static aliases = ['update', 'u'];
 
-  static args = [
-    { name: 'issueId', required: true },
-    {
-      name: 'propertyToModify',
-      description: 'Property to update',
-      options: (properties as unknown) as string[],
-    },
-  ];
+  static flags = {
+    property: flags.string({
+      char: 'p',
+      description: 'Property to modify',
+      options: ['title', 'description', 'status'],
+    }),
+  };
 
-  runUpdateMethod(property: Property) {
+  static args = issueArgs;
+
+  runUpdateMethod(issueId: string, property: Property) {
     function throwBadProperty(property: never): never {
       throw new Error(`Update operation for ${property} not implemented yet`);
     }
 
     switch (property) {
       case 'title':
-        this.updateTitle();
+        this.updateTitle(issueId);
         return;
 
       case 'status':
-        return this.updateStatus();
+        return this.updateStatus(issueId);
 
       case 'description':
-        return this.updateDescription();
+        return this.updateDescription(issueId);
 
       default:
         throwBadProperty(property);
     }
   }
 
-  async promptForProperty() {
+  async promptForProperty(issueId: string) {
     const { property } = await inquirer.prompt<{ property: Property }>([
       {
         name: 'property',
@@ -59,16 +60,13 @@ export default class IssueUpdate extends Command {
       },
     ]);
 
-    this.runUpdateMethod(property);
+    this.runUpdateMethod(issueId, property);
   }
 
   /**
    * Update issue title
    */
-  async updateTitle() {
-    const {
-      args: { issueId },
-    } = this.parse<any, Args>(IssueUpdate);
+  async updateTitle(issueId: string) {
     const { title } = await inquirer.prompt<{ title: string }>([
       {
         name: 'title',
@@ -86,11 +84,7 @@ export default class IssueUpdate extends Command {
   /**
    * Update issue description
    */
-  async updateDescription() {
-    const {
-      args: { issueId },
-    } = this.parse<any, Args>(IssueUpdate);
-
+  async updateDescription(issueId: string) {
     const issue = await this.linear.getIssue(issueId);
 
     const { description } = await inquirer.prompt<{ description: string }>([
@@ -111,11 +105,7 @@ export default class IssueUpdate extends Command {
   /**
    * Update issue status
    */
-  async updateStatus() {
-    const {
-      args: { issueId },
-    } = this.parse<any, Args>(IssueUpdate);
-
+  async updateStatus(issueId: string) {
     const spinner = ora().start();
     const issue = await this.linear.getIssueWorkflowStates(issueId);
 
@@ -153,13 +143,17 @@ export default class IssueUpdate extends Command {
   }
 
   async run() {
-    const { args } = this.parse<any, Args>(IssueUpdate);
+    const { args, flags } = this.parse<GetFlagsType<typeof IssueUpdate>, IssueArgs>(
+      IssueUpdate
+    );
 
-    if (!args.propertyToModify) {
-      await this.promptForProperty();
+    const issueId = getIssueId(args);
+
+    if (!flags.property) {
+      await this.promptForProperty(issueId);
       return;
     }
 
-    this.runUpdateMethod(args.propertyToModify);
+    this.runUpdateMethod(issueId, flags.property as Property);
   }
 }

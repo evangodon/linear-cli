@@ -1,7 +1,7 @@
 import { cli } from 'cli-ux';
 import Command from '../../base';
 import inquirer from 'inquirer';
-import { render } from '../../utils';
+import { render } from '../../components';
 import { IssueSearchQuery } from '../../generated/_documents';
 
 inquirer.registerPrompt('autocomplete', require('inquirer-autocomplete-prompt'));

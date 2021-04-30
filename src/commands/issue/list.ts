@@ -2,7 +2,7 @@ import { OutputFlags } from '@oclif/parser/lib';
 import chalk from 'chalk';
 import { cli } from 'cli-ux';
 import Command, { flags } from '../../base';
-import { render } from '../../utils';
+import { render } from '../../components';
 
 export const tableFlags = {
   ...cli.table.flags(),

@@ -2,10 +2,11 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import boxen, { Options } from 'boxen';
 import { cli } from 'cli-ux';
-import Command, { flags } from '../../base';
-import { GetIssueQuery } from '../../generated/_documents';
-import { render } from '../../utils';
 import chalk from 'chalk';
+import Command, { flags, GetFlagsType } from '../../base';
+import { GetIssueQuery } from '../../generated/_documents';
+import { render } from '../../components';
+import { issueArgs, getIssueId, IssueArgs } from '../../utils/issueId';
 
 dayjs.extend(relativeTime);
 
@@ -18,34 +19,19 @@ export default class IssueIndex extends Command {
 
   static aliases = ['i'];
 
-  static args = [
-    { name: 'issueId', required: true },
-    {
-      name: 'issueIdOptional',
-      hidden: true,
-      description: 'Use this if you to split the issue id into two arguments',
-    },
-  ];
+  static args = issueArgs;
 
-  static examples = ['$ lr issue LIN-14', '$ lr issue LIN 14'];
+  static examples = [
+    '$ lr issue LIN-14',
+    '$ lr issue LIN 14',
+    '$ lr issue 14 (looks in default team)',
+  ];
 
   static flags = {
     description: flags.boolean({ char: 'd', description: 'Show issue description' }),
     comments: flags.boolean({ char: 'c', description: 'Show issue comments' }),
     open: flags.boolean({ char: 'o', description: 'Open issue in web browser' }),
   };
-
-  getIssueId() {
-    const { args } = this.parse<{}, { issueId: string; issueIdOptional?: string }>(
-      IssueIndex
-    );
-
-    if (args.issueIdOptional) {
-      return `${args.issueId}-${args.issueIdOptional}`;
-    }
-
-    return args.issueId;
-  }
 
   renderIssueComments(issue: Issue) {
     if (issue.comments?.nodes.length === 0) {
@@ -85,8 +71,10 @@ export default class IssueIndex extends Command {
   }
 
   async run() {
-    const { flags } = this.parse(IssueIndex);
-    const issueId = this.getIssueId();
+    const { flags, args } = this.parse<GetFlagsType<typeof IssueIndex>, IssueArgs>(
+      IssueIndex
+    );
+    const issueId = getIssueId(args);
     const issue = await this.linear.getIssue(issueId, { withComments: flags.comments });
 
     if (flags.open) {
