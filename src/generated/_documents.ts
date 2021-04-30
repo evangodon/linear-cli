@@ -2046,6 +2046,8 @@ export type Mutation = {
   subscriptionUpgrade: SubscriptionPayload;
   /** Archives a subscription. */
   subscriptionArchive: ArchivePayload;
+  /** Deletes a previously used team key. */
+  teamKeyDelete: ArchivePayload;
   /** Creates a new team membership. */
   teamMembershipCreate: TeamMembershipPayload;
   /** Updates a team membership. */
@@ -2686,6 +2688,11 @@ export type MutationSubscriptionArchiveArgs = {
 };
 
 
+export type MutationTeamKeyDeleteArgs = {
+  id: Scalars['String'];
+};
+
+
 export type MutationTeamMembershipCreateArgs = {
   input: TeamMembershipCreateInput;
 };
@@ -3005,6 +3012,8 @@ export type OauthClientCreateInput = {
   redirectUris: Array<Scalars['String']>;
   /** URL for the app icon. */
   imageUrl?: Maybe<Scalars['String']>;
+  /** Whether the OAuth application should be publicly visible, or only visible to the creating workspace. */
+  publicEnabled?: Maybe<Scalars['Boolean']>;
 };
 
 export type OauthClientPayload = {
@@ -3640,6 +3649,8 @@ export type Query = {
   __typename?: 'Query';
   /** [Internal] Fetch data to catch up the client to the state of the world. */
   syncBootstrap: SyncResponse;
+  /** [Internal] Fetches delta sync packets. */
+  syncDelta: SyncDeltaResponse;
   /** [Internal] Fetches the dependencies of a model. */
   dependentModelSync: DependencyResponse;
   /** [Internal] Fetches an archived model. */
@@ -3752,6 +3763,8 @@ export type Query = {
   reactions: ReactionConnection;
   /** A specific reaction. */
   reaction: Reaction;
+  /** [Internal] Search in Linear. This query is for internal purposes only and is subject to change without notice. */
+  search: SearchResultPayload;
   /** The organization's subscription. */
   subscription?: Maybe<Subscription>;
   /** All team memberships. */
@@ -3789,6 +3802,12 @@ export type QuerySyncBootstrapArgs = {
   databaseVersion?: Maybe<Scalars['Int']>;
   sinceSyncId?: Maybe<Scalars['Int']>;
   syncGroups?: Maybe<Array<Scalars['String']>>;
+};
+
+
+export type QuerySyncDeltaArgs = {
+  toSyncId: Scalars['Int'];
+  lastSyncId: Scalars['Int'];
 };
 
 
@@ -4156,6 +4175,11 @@ export type QueryReactionArgs = {
 };
 
 
+export type QuerySearchArgs = {
+  term: Scalars['String'];
+};
+
+
 export type QueryTeamMembershipsArgs = {
   before?: Maybe<Scalars['String']>;
   after?: Maybe<Scalars['String']>;
@@ -4324,6 +4348,14 @@ export type SamlConfigurationInput = {
   allowedDomains?: Maybe<Array<Scalars['String']>>;
 };
 
+export type SearchResultPayload = {
+  __typename?: 'SearchResultPayload';
+  /** Active issue IDs returned matching the search term. */
+  issueIds: Array<Scalars['String']>;
+  /** Archived issues matching the search term along with all their dependencies. */
+  archivePayload: ArchiveResponse;
+};
+
 /** Sentry issue data */
 export type SentryIssuePayload = {
   __typename?: 'SentryIssuePayload';
@@ -4437,6 +4469,15 @@ export type SubscriptionUpdateInput = {
   canceledAt?: Maybe<Scalars['DateTime']>;
   /** The subscription type of a pending change. Null if no change pending. */
   pendingChangeType?: Maybe<Scalars['String']>;
+};
+
+/** Contains a delta sync. */
+export type SyncDeltaResponse = {
+  __typename?: 'SyncDeltaResponse';
+  /** A JSON serialized collection of delta packets. */
+  updates?: Maybe<Scalars['String']>;
+  /** Whether loading the delta was successful. In case it wasn't, the client is instructed to do a full bootstrap. */
+  success: Scalars['Boolean'];
 };
 
 /**
@@ -5209,7 +5250,8 @@ export enum UserFlagType {
   FigmaPromptDismissed = 'figmaPromptDismissed',
   MigrateThemePreference = 'migrateThemePreference',
   ListSelectionTip = 'listSelectionTip',
-  CanPlaySnake = 'canPlaySnake'
+  CanPlaySnake = 'canPlaySnake',
+  ImportBannerDismissed = 'importBannerDismissed'
 }
 
 /** Operations that can be applied to UserFlagType */
