@@ -4,6 +4,7 @@ import inquirer from 'inquirer';
 import Command, { flags } from '../../base';
 import { issueArgs, getIssueId, IssueArgs } from '../../utils/issueId';
 import { GetFlagsType } from '../../base';
+import { render } from '../../components';
 
 export default class IssueStart extends Command {
   static description = 'Change status of issue to "In progress" and assign to yourself.';
@@ -32,7 +33,9 @@ export default class IssueStart extends Command {
       const { confirmAssign } = await inquirer.prompt<{ confirmAssign: boolean }>([
         {
           name: 'confirmAssign',
-          message: `Issue ${currentIssue.identifier} is assigned to ${currentIssue.assignee.displayName}, do you want to assign to yourself?`,
+          message: `Issue ${render.IssueId(currentIssue.identifier)} is assigned to ${
+            currentIssue.assignee.displayName
+          }, do you want to assign to yourself?`,
           type: 'confirm',
         },
       ]);
@@ -53,7 +56,7 @@ export default class IssueStart extends Command {
 
     this.log('');
     this.success(
-      `The state of issue ${chalk.magenta(currentIssue.identifier)} is now in the '${
+      `The state of issue ${render.IssueId(currentIssue.identifier)} is now in the '${
         nextState.name
       }' state and is assigned to you.`
     );
