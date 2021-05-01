@@ -9,12 +9,6 @@ A CLI for [Linear](https://linear.app/) that allows you to quickly view, create 
 
 <img src="./src/assets/readme-hero.png">
 
-<!-- toc -->
-
-- [Install](#install)
-- [Commands](#commands)
-<!-- tocstop -->
-
 # Installation
 
 ###### Install with npm
