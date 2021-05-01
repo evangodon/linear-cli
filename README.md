@@ -10,40 +10,51 @@ A CLI for [Linear](https://linear.app/) that allows you to quickly view, create 
 <img src="./src/assets/readme-hero.png">
 
 <!-- toc -->
-* [Install](#install)
-* [Commands](#commands)
+
+- [Install](#install)
+- [Commands](#commands)
 <!-- tocstop -->
 
-# Install
+# Installation
+
+###### Install with npm
 
 ```
   $ npm install -g @egcli/lr
-  # or
-  $ yarn global add @egcli/lr
+```
 
-  # and then setup your personal api key
+###### Install with yarn
+
+```
+  $ yarn global add @egcli/lr
+```
+
+###### Setup API key
+
+```
   $ lr init
 ```
 
 # Commands
 
 <!-- commands -->
-* [`lr cache:refresh`](#lr-cacherefresh)
-* [`lr cache:show`](#lr-cacheshow)
-* [`lr config:delete`](#lr-configdelete)
-* [`lr config:show`](#lr-configshow)
-* [`lr help [COMMAND]`](#lr-help-command)
-* [`lr init`](#lr-init)
-* [`lr issue ISSUEID`](#lr-issue-issueid)
-* [`lr issue:create`](#lr-issuecreate)
-* [`lr issue:list`](#lr-issuelist)
-* [`lr issue:search [QUERY]`](#lr-issuesearch-query)
-* [`lr issue:start ISSUEID`](#lr-issuestart-issueid)
-* [`lr issue:update ISSUEID`](#lr-issueupdate-issueid)
-* [`lr teams:show`](#lr-teamsshow)
-* [`lr workspace:add`](#lr-workspaceadd)
-* [`lr workspace:current`](#lr-workspacecurrent)
-* [`lr workspace:switch`](#lr-workspaceswitch)
+
+- [`lr cache:refresh`](#lr-cacherefresh)
+- [`lr cache:show`](#lr-cacheshow)
+- [`lr config:delete`](#lr-configdelete)
+- [`lr config:show`](#lr-configshow)
+- [`lr help [COMMAND]`](#lr-help-command)
+- [`lr init`](#lr-init)
+- [`lr issue ISSUEID`](#lr-issue-issueid)
+- [`lr issue:create`](#lr-issuecreate)
+- [`lr issue:list`](#lr-issuelist)
+- [`lr issue:search [QUERY]`](#lr-issuesearch-query)
+- [`lr issue:start ISSUEID`](#lr-issuestart-issueid)
+- [`lr issue:update ISSUEID`](#lr-issueupdate-issueid)
+- [`lr teams:show`](#lr-teamsshow)
+- [`lr workspace:add`](#lr-workspaceadd)
+- [`lr workspace:current`](#lr-workspacecurrent)
+- [`lr workspace:switch`](#lr-workspaceswitch)
 
 ## `lr cache:refresh`
 
@@ -286,4 +297,5 @@ USAGE
 ```
 
 _See code: [src/commands/workspace/switch.ts](https://github.com/evangodon/linear-cli/blob/v0.15.0/src/commands/workspace/switch.ts)_
+
 <!-- commandsstop -->
