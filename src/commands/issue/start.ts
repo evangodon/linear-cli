@@ -56,9 +56,9 @@ export default class IssueStart extends Command {
 
     this.log('');
     this.success(
-      `The state of issue ${render.IssueId(currentIssue.identifier)} is now in the '${
-        nextState.name
-      }' state and is assigned to you.`
+      `The state of issue ${render.IssueId(
+        currentIssue.identifier
+      )} is now in the ${render.Status(nextState)} state and is assigned to you.`
     );
 
     if (flags['copy-branch']) {

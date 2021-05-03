@@ -1,3 +1,5 @@
+import * as inquirer from 'inquirer';
+import ora from 'ora';
 import { flags } from '@oclif/command';
 import { IssueUpdateInput } from '../../generated/_documents';
 import chalk from 'chalk';
@@ -41,29 +43,38 @@ export default class IssueStop extends Command {
       return this.warn(
         `Issue ${render.IssueId(
           issue.identifier
-        )} is not in a started workflow.\nCurrent state is ${chalk.blue(
-          issue.state.name
-        )}`
+        )} is not in a started status.\nCurrent status: ${render.Status(issue.state)}`
       );
     }
 
-    const historyNode = issue.history.nodes.find((node) => Boolean(node.fromState));
-
-    if (!historyNode) {
-      this.error('Could not find previous workflow state');
-    }
-
-    const stateId = historyNode.fromState!.id;
+    const { nextStateId } = await inquirer.prompt<{ nextStateId: string }>([
+      {
+        name: 'nextStateId',
+        message: 'Select which status',
+        type: 'list',
+        choices: issue.team.states.nodes
+          .filter((state) => state.type === 'unstarted')
+          .map((state) => ({ name: render.Status(state), value: state.id })),
+      },
+    ]);
 
     const unassign: IssueUpdateInput = flags.unassign ? { assigneeId: null } : {};
 
-    await this.linear.issueUpdate(issue.id, { stateId, ...unassign });
+    const spinner = ora('Updating issue').start();
+
+    await this.linear.issueUpdate(issue.id, { stateId: nextStateId, ...unassign });
+
+    const nextState = issue.team.states.nodes.find((state) => state.id === nextStateId);
+
+    spinner.stop();
 
     this.log('');
     this.success(
-      `The state of issue ${render.IssueId(issue.identifier)} is now in the '${
-        historyNode?.fromState?.name
-      }' state and is no longer assigned to you.`
+      `The state of issue ${render.IssueId(
+        issue.identifier
+      )} now has status ${render.Status(nextState!)}${
+        flags.unassign ? ' and is no longer assigned to you' : ''
+      }.`
     );
   }
 }
