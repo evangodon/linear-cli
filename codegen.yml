@@ -1,8 +1,7 @@
 overwrite: true
-schema: "https://api.linear.app/graphql"
+schema: 'https://api.linear.app/graphql'
 documents:
-  - "src/lib/queries/*"
-  - "src/lib/mutations/*"
+  - 'src/lib/linear/*'
 
 generates:
   src/generated/_documents.ts:

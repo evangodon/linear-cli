@@ -2,7 +2,7 @@ import * as Parser from '@oclif/parser';
 import Command, { flags } from '@oclif/command';
 import fs from 'fs';
 import chalk from 'chalk';
-import { Linear } from './lib/Linear';
+import { Linear } from './lib/linear/Linear';
 import { Config, User, Workspace } from './lib/configSchema';
 import { Cache } from './lib/Cache';
 

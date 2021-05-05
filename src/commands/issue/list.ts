@@ -44,14 +44,14 @@ export default class IssueList extends Command {
 
   async listAllTeamIssues() {
     const { flags } = this.parse(IssueList);
-    const issues = await this.linear.getIssues();
+    const issues = await this.linear.query.issuesAllTeams();
 
     render.IssuesTable(issues, { flags });
   }
 
   async listMyIssues() {
     const { flags } = this.parse(IssueList);
-    const issues = await this.linear.getMyAssignedIssues();
+    const issues = await this.linear.query.assignedIssues();
 
     render.IssuesTable(issues, { flags });
   }
@@ -59,7 +59,7 @@ export default class IssueList extends Command {
   async listTeamIssues() {
     const { flags } = this.parse(IssueList);
     const teamId = flags.team ?? global.currentWorkspace.defaultTeam;
-    const issues = await this.linear.getTeamIssues({
+    const issues = await this.linear.query.issuesFromTeam({
       teamId,
       first: flags.mine ? 50 : 35,
     });
@@ -100,7 +100,7 @@ export default class IssueList extends Command {
       return;
     }
 
-    const issues = await this.linear.query.statusIssues(match?.id);
+    const issues = await this.linear.query.issuesWithStatus(match?.id);
 
     render.IssuesTable(issues, {
       flags: {

@@ -33,7 +33,7 @@ export default class IssueSearch extends Command {
             return [];
           }
 
-          const issues = await this.linear.searchIssues(input, { noSpinner: true });
+          const issues = await this.linear.query.searchIssues(input, { noSpinner: true });
           return issues?.map((issue) => ({
             name: `${issue.identifier} - ${issue.title}`,
             value: issue,
@@ -42,13 +42,13 @@ export default class IssueSearch extends Command {
       },
     ]);
 
-    const selectedIssue = await this.linear.getIssue(response.issue.id);
+    const selectedIssue = await this.linear.query.issue(response.issue.id);
 
     render.IssueCard(selectedIssue);
   }
 
   async searchWithQuery(query: string) {
-    const issues = await this.linear.searchIssues(query);
+    const issues = await this.linear.query.searchIssues(query);
 
     if (issues.length === 0) {
       this.log('No issues found');

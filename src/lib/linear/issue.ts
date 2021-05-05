@@ -1,6 +1,10 @@
+import { LinearGraphQLClient } from '@linear/sdk';
+import ora from 'ora';
+import { GetIssueQuery, GetIssueQueryVariables } from '../../generated/_documents';
+import { handleError } from '../handleError';
+
 const gql = String.raw;
 
-// TODO: don't include description by default
 export const issueQuery = gql`
   query getIssue($id: String!, $withComments: Boolean!, $historyCount: Int!) {
     issue(id: $id) {
@@ -88,3 +92,33 @@ export const issueQuery = gql`
     }
   }
 `;
+
+type IssueQueryOptions = {
+  withComments?: boolean;
+  historyCount?: number;
+};
+
+/** Get one specific issue */
+export const issue = (client: LinearGraphQLClient) => {
+  return async (
+    issueId: string,
+    { withComments = false, historyCount = 1 }: IssueQueryOptions = {}
+  ) => {
+    const spinner = ora().start();
+
+    const { data } = await client
+      .rawRequest<GetIssueQuery, GetIssueQueryVariables>(issueQuery, {
+        id: issueId,
+        withComments,
+        historyCount,
+      })
+      .catch(handleError)
+      .finally(() => spinner.stop());
+
+    if (!data || !data.issue) {
+      throw new Error('No data returned from Linear');
+    }
+
+    return data.issue;
+  };
+};

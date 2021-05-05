@@ -27,7 +27,7 @@ export default class IssueStart extends Command {
 
     const issueId = getIssueId(args);
 
-    const currentIssue = await this.linear.getIssue(issueId);
+    const currentIssue = await this.linear.query.issue(issueId);
 
     if (currentIssue.assignee && currentIssue.assignee.id !== this.user.id) {
       const { confirmAssign } = await inquirer.prompt<{ confirmAssign: boolean }>([

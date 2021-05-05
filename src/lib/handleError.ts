@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import { InvalidInputLinearError } from '@linear/sdk';
 
 /**
@@ -11,7 +12,7 @@ export const handleError = (error: Error) => {
     process.exit(1);
   }
 
-  process.stderr.write(error.message);
+  process.stderr.write(`\n${chalk.red('Error: ')} ${error.message}`);
 
   process.exit(1);
 };

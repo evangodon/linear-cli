@@ -85,7 +85,7 @@ export default class IssueUpdate extends Command {
    * Update issue description
    */
   async updateDescription(issueId: string) {
-    const issue = await this.linear.getIssue(issueId);
+    const issue = await this.linear.query.issue(issueId);
 
     const { description } = await inquirer.prompt<{ description: string }>([
       {
@@ -107,7 +107,7 @@ export default class IssueUpdate extends Command {
    */
   async updateStatus(issueId: string) {
     const spinner = ora().start();
-    const issue = await this.linear.getIssueWorkflowStates(issueId);
+    const issue = await this.linear.query.issueWorkflowStates(issueId);
 
     const workflowStates = issue.team.states.nodes;
 

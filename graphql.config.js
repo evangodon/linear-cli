@@ -2,7 +2,7 @@ module.exports = {
   projects: {
     app: {
       schema: 'https://api.linear.app/graphql',
-      documents: ['./src/lib/queries/*.ts'],
+      documents: ['./src/lib/linear/*.ts'],
     },
   },
 };

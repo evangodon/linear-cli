@@ -75,7 +75,9 @@ export default class IssueIndex extends Command {
       IssueIndex
     );
     const issueId = getIssueId(args);
-    const issue = await this.linear.getIssue(issueId, { withComments: flags.comments });
+    const issue = await this.linear.query.issue(issueId, {
+      withComments: flags.comments,
+    });
 
     if (flags.open) {
       cli.open(issue.url);

@@ -27,7 +27,7 @@ export default class IssueCreate extends Command {
   async run() {
     const { flags } = this.parse(IssueCreate);
 
-    const teams = await this.linear.getTeams();
+    const teams = await this.linear.query.allTeams();
 
     const { teamId, title, description } = await inquirer.prompt<Response>([
       {

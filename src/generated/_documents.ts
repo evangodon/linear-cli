@@ -1837,6 +1837,8 @@ export type Mutation = {
   attachmentUpdate: AttachmentPayload;
   /** Link an existing Zendesk ticket to an issue. */
   attachmentLinkZendesk: AttachmentPayload;
+  /** Link an existing Front conversation to an issue. */
+  attachmentLinkFront: AttachmentPayload;
   /**
    * [DEPRECATED] Archives an issue attachment.
    * @deprecated This mutation is deprecated, please use `attachmentDelete` instead
@@ -1910,6 +1912,8 @@ export type Mutation = {
   integrationGithubConnect: IntegrationPayload;
   /** Connects the organization with a GitLab Access Token. */
   integrationGitlabConnect: IntegrationPayload;
+  /** Integrates the organization with Intercom. */
+  integrationIntercom: IntegrationPayload;
   /** Integrates the organization with Slack. */
   integrationSlack: IntegrationPayload;
   /** Integrates your personal notifications with Slack. */
@@ -1928,6 +1932,8 @@ export type Mutation = {
   refreshGoogleSheetsData: IntegrationPayload;
   /** Integrates the organization with Sentry. */
   integrationSentryConnect: IntegrationPayload;
+  /** Integrates the organization with Front. */
+  integrationFront: IntegrationPayload;
   /** Integrates the organization with Zendesk. */
   integrationZendesk: IntegrationPayload;
   /** Deletes an integration. */
@@ -2014,6 +2020,8 @@ export type Mutation = {
   organizationDeleteChallenge: OrganizationDeletePayload;
   /** Delete's an organization. Administrator privileges required. */
   organizationDelete: OrganizationDeletePayload;
+  /** Cancels the deletion of an organization. Administrator privileges required. */
+  organizationCancelDelete: OrganizationCancelDeletePayload;
   /** Creates a new project link. */
   projectLinkCreate: ProjectLinkPayload;
   /** Deletes a project link. */
@@ -2138,6 +2146,12 @@ export type MutationAttachmentUpdateArgs = {
 export type MutationAttachmentLinkZendeskArgs = {
   issueId: Scalars['String'];
   ticketId: Scalars['String'];
+};
+
+
+export type MutationAttachmentLinkFrontArgs = {
+  issueId: Scalars['String'];
+  conversationId: Scalars['String'];
 };
 
 
@@ -2310,6 +2324,12 @@ export type MutationIntegrationGitlabConnectArgs = {
 };
 
 
+export type MutationIntegrationIntercomArgs = {
+  redirectUri: Scalars['String'];
+  code: Scalars['String'];
+};
+
+
 export type MutationIntegrationSlackArgs = {
   shouldUseV2Auth?: Maybe<Scalars['Boolean']>;
   redirectUri: Scalars['String'];
@@ -2364,6 +2384,12 @@ export type MutationIntegrationSentryConnectArgs = {
   organizationSlug: Scalars['String'];
   code: Scalars['String'];
   installationId: Scalars['String'];
+};
+
+
+export type MutationIntegrationFrontArgs = {
+  redirectUri: Scalars['String'];
+  code: Scalars['String'];
 };
 
 
@@ -3088,6 +3114,8 @@ export type Organization = Node & {
   samlEnabled: Scalars['Boolean'];
   /** Allowed authentication providers, empty array means all are allowed */
   allowedAuthServices: Array<Scalars['String']>;
+  /** The time at which deletion of the organization was requested. */
+  deletionRequestedAt?: Maybe<Scalars['DateTime']>;
   /** Users associated with the organization. */
   users: UserConnection;
   /** Teams associated with the organization. */
@@ -3146,6 +3174,12 @@ export type OrganizationIntegrationsArgs = {
   last?: Maybe<Scalars['Int']>;
   includeArchived?: Maybe<Scalars['Boolean']>;
   orderBy?: Maybe<PaginationOrderBy>;
+};
+
+export type OrganizationCancelDeletePayload = {
+  __typename?: 'OrganizationCancelDeletePayload';
+  /** Whether the operation was successful. */
+  success: Scalars['Boolean'];
 };
 
 export type OrganizationDeletePayload = {
@@ -5219,6 +5253,8 @@ export type UserAuthorizedApplication = {
   imageUrl?: Maybe<Scalars['String']>;
   /** Whether the user has authorized the application for the given scopes. */
   isAuthorized: Scalars['Boolean'];
+  /** Whether the application was created by Linear */
+  createdByLinear: Scalars['Boolean'];
 };
 
 export type UserConnection = {
@@ -5609,6 +5645,37 @@ export type ZendeskSettings = {
   botUserId: Scalars['String'];
 };
 
+export type TeamsQueryVariables = Exact<{
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  includeArchived?: Maybe<Scalars['Boolean']>;
+  last?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<PaginationOrderBy>;
+}>;
+
+
+export type TeamsQuery = (
+  { __typename?: 'Query' }
+  & { teams: (
+    { __typename?: 'TeamConnection' }
+    & TeamConnectionFragment
+  ) }
+);
+
+export type TeamConnectionFragment = (
+  { __typename?: 'TeamConnection' }
+  & { nodes: Array<(
+    { __typename?: 'Team' }
+    & TeamFragment
+  )> }
+);
+
+export type TeamFragment = (
+  { __typename?: 'Team' }
+  & Pick<Team, 'description' | 'name' | 'key' | 'id'>
+);
+
 export type User_AssignedIssuesQueryVariables = Exact<{
   id: Scalars['String'];
   after?: Maybe<Scalars['String']>;
@@ -5787,6 +5854,40 @@ export type IssuesQuery = (
   ) }
 );
 
+export type TeamIssuesQueryVariables = Exact<{
+  teamId: Scalars['String'];
+  first: Scalars['Int'];
+}>;
+
+
+export type TeamIssuesQuery = (
+  { __typename?: 'Query' }
+  & { team: (
+    { __typename?: 'Team' }
+    & Pick<Team, 'name'>
+    & { issues: (
+      { __typename?: 'IssueConnection' }
+      & IssueConnectionFragment
+    ) }
+  ) }
+);
+
+export type StatusIssuesQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type StatusIssuesQuery = (
+  { __typename?: 'Query' }
+  & { workflowState: (
+    { __typename?: 'WorkflowState' }
+    & { issues: (
+      { __typename?: 'IssueConnection' }
+      & IssueConnectionFragment
+    ) }
+  ) }
+);
+
 export type IssueSearchQueryVariables = Exact<{
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -5809,24 +5910,6 @@ export type IssueSearchQuery = (
   ) }
 );
 
-export type TeamIssuesQueryVariables = Exact<{
-  teamId: Scalars['String'];
-  first: Scalars['Int'];
-}>;
-
-
-export type TeamIssuesQuery = (
-  { __typename?: 'Query' }
-  & { team: (
-    { __typename?: 'Team' }
-    & Pick<Team, 'name'>
-    & { issues: (
-      { __typename?: 'IssueConnection' }
-      & IssueConnectionFragment
-    ) }
-  ) }
-);
-
 export type TeamWorkflowStatesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5845,52 +5928,5 @@ export type TeamWorkflowStatesQuery = (
         )> }
       ) }
     )> }
-  ) }
-);
-
-export type TeamsQueryVariables = Exact<{
-  after?: Maybe<Scalars['String']>;
-  before?: Maybe<Scalars['String']>;
-  first?: Maybe<Scalars['Int']>;
-  includeArchived?: Maybe<Scalars['Boolean']>;
-  last?: Maybe<Scalars['Int']>;
-  orderBy?: Maybe<PaginationOrderBy>;
-}>;
-
-
-export type TeamsQuery = (
-  { __typename?: 'Query' }
-  & { teams: (
-    { __typename?: 'TeamConnection' }
-    & TeamConnectionFragment
-  ) }
-);
-
-export type TeamConnectionFragment = (
-  { __typename?: 'TeamConnection' }
-  & { nodes: Array<(
-    { __typename?: 'Team' }
-    & TeamFragment
-  )> }
-);
-
-export type TeamFragment = (
-  { __typename?: 'Team' }
-  & Pick<Team, 'description' | 'name' | 'key' | 'id'>
-);
-
-export type StatusIssuesQueryVariables = Exact<{
-  id: Scalars['String'];
-}>;
-
-
-export type StatusIssuesQuery = (
-  { __typename?: 'Query' }
-  & { workflowState: (
-    { __typename?: 'WorkflowState' }
-    & { issues: (
-      { __typename?: 'IssueConnection' }
-      & IssueConnectionFragment
-    ) }
   ) }
 );

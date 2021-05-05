@@ -2,7 +2,7 @@ import fs from 'fs';
 import { IConfig } from '@oclif/config';
 import { CacheSchema, CacheData } from './cacheSchema';
 import { Config } from './configSchema';
-import { Linear } from './Linear';
+import { Linear } from './linear/Linear';
 
 type Params = {
   config: IConfig;
@@ -58,7 +58,7 @@ export class Cache {
   }
 
   async refresh() {
-    const data = await this.linear.getTeamWorkflowStates();
+    const data = await this.linear.query.teamWorkflowStates();
 
     const cache: CacheData = data.teams.nodes.reduce(
       (acc: CacheData, currentTeam) => {
