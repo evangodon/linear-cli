@@ -8,7 +8,11 @@
     "strict": true,
     "target": "es2017",
     "esModuleInterop": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "paths": {
+      "queries/*": ["./src/lib/queries/*"],
+      "generated/*": ["./src/generated/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
