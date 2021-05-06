@@ -3,12 +3,12 @@ import ora from 'ora';
 import {
   GetIssueWorkflowStatesQuery,
   GetIssueWorkflowStatesQueryVariables,
-} from '../../generated/_documents';
+} from 'generated/_documents';
 import { handleError } from '../handleError';
 
 const gql = String.raw;
 
-export const issueWorkflowStatesQuery = gql`
+const issueWorkflowStatesQuery = gql`
   query getIssueWorkflowStates($id: String!) {
     issue(id: $id) {
       identifier

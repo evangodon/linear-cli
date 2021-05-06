@@ -1,13 +1,13 @@
 import ora from 'ora';
-import { IssuesQuery, IssuesQueryVariables } from '../../generated/_documents';
-import { handleError } from '../handleError';
 import { LinearDocument, LinearGraphQLClient } from '@linear/sdk';
+import { handleError } from '../handleError';
+import { IssuesQuery, IssuesQueryVariables } from 'generated/_documents';
 
 import { IssueConnectionFragment } from './issueFragment';
 
 const gql = String.raw;
 
-export const issuesQuery = gql`
+const issuesQuery = gql`
   query issues(
     $after: String
     $before: String

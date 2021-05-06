@@ -4,11 +4,11 @@ import { handleError } from '../handleError';
 import {
   TeamWorkflowStatesQuery,
   TeamWorkflowStatesQueryVariables,
-} from '../../generated/_documents';
+} from 'generated/_documents';
 
 const gql = String.raw;
 
-export const teamWorkflowStatesQuery = gql`
+const teamWorkflowStatesQuery = gql`
   query teamWorkflowStates {
     teams {
       nodes {

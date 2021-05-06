@@ -1,13 +1,5 @@
 #!/usr/bin/env node
 
-const tsConfig = require('/home/evan/code/linear-cli/tsconfig.json');
-const tsConfigPaths = require('tsconfig-paths');
-
-tsConfigPaths.register({
-  baseUrl: './',
-  paths: tsConfig.compilerOptions.paths,
-});
-
 require('@oclif/command')
   .run()
   .then(require('@oclif/command/flush'))

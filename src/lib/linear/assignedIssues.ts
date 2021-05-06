@@ -3,14 +3,14 @@ import ora from 'ora';
 import {
   User_AssignedIssuesQuery,
   User_AssignedIssuesQueryVariables,
-} from '../../generated/_documents';
+} from 'generated/_documents';
 
 import { IssueConnectionFragment } from './issueFragment';
 import { handleError } from '../handleError';
 
 const gql = String.raw;
 
-export const assignedIssuesQuery = gql`
+const assignedIssuesQuery = gql`
   query user_assignedIssues(
     $id: String!
     $after: String

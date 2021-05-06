@@ -1,11 +1,11 @@
 import { LinearGraphQLClient } from '@linear/sdk';
 import ora from 'ora';
-import { GetIssueQuery, GetIssueQueryVariables } from '../../generated/_documents';
+import { GetIssueQuery, GetIssueQueryVariables } from 'generated/_documents';
 import { handleError } from '../handleError';
 
 const gql = String.raw;
 
-export const issueQuery = gql`
+const issueQuery = gql`
   query getIssue($id: String!, $withComments: Boolean!, $historyCount: Int!) {
     issue(id: $id) {
       history(first: $historyCount) {

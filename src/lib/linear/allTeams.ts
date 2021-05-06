@@ -1,12 +1,12 @@
 import { LinearGraphQLClient } from '@linear/sdk';
 import ora from 'ora';
 
-import { TeamsQuery, TeamsQueryVariables } from '../../generated/_documents';
+import { TeamsQuery, TeamsQueryVariables } from 'generated/_documents';
 import { handleError } from '../handleError';
 
 const gql = String.raw;
 
-export const teamsQuery = gql`
+const teamsQuery = gql`
   query teams(
     $after: String
     $before: String
