@@ -21,15 +21,15 @@ export type GetFlagsType<T> = T extends Parser.Input<infer F> ? F : never;
 export default abstract class extends Command {
   configFilePath = `${this.config.configDir}/config.json`;
 
-  linear: Linear = (null as unknown) as Linear;
+  linear: Linear = null as unknown as Linear;
 
-  user: User = (null as unknown) as User;
+  user: User = null as unknown as User;
 
-  currentWorkspace: Workspace = (null as unknown) as Workspace;
+  currentWorkspace: Workspace = null as unknown as Workspace;
 
-  configData: Config = (null as unknown) as Config;
+  configData: Config = null as unknown as Config;
 
-  cache: Cache = (null as unknown) as Cache;
+  cache: Cache = null as unknown as Cache;
 
   async init() {
     const configFilePath = `${this.config.configDir}/config.json`;

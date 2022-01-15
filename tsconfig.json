@@ -9,6 +9,7 @@
     "target": "es2017",
     "esModuleInterop": true,
     "strictNullChecks": true,
+    "useUnknownInCatchVariables": false,
     "paths": {
       "generated/*": ["./src/generated/*"]
     }
