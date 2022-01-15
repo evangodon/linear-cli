@@ -1,4 +1,4 @@
-import * as clipboardy from 'clipboardy';
+import clipboardy from 'clipboardy';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
 import Command, { flags } from '../../base';

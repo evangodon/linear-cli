@@ -1,5 +1,5 @@
 import inquirer from 'inquirer';
-import * as clipboardy from 'clipboardy';
+import clipboardy from 'clipboardy';
 import Command, { flags } from '../../base';
 import chalk from 'chalk';
 import ora from 'ora';

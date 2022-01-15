@@ -98,7 +98,6 @@ export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
     `Team: ${team}`,
     flags.status && `Status: ${Status(issues[0].state)}`,
     !flags.status && `Sort: ${flags.sort}`,
-    flags.filter && `Filter: ${flags.filter}`,
     flags.uncompleted && 'Uncompleted issues',
   ].filter(Boolean);
 

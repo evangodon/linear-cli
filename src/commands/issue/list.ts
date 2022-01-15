@@ -5,7 +5,6 @@ import Command, { flags } from '../../base';
 import { render } from '../../components';
 
 export const tableFlags = {
-  ...cli.table.flags(),
   sort: flags.string({
     description: "property to sort by (prepend '-' for descending)",
     default: '-status',

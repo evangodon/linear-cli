@@ -7,13 +7,9 @@ import { Config, User, Workspace } from './lib/configSchema';
 import { Cache } from './lib/Cache';
 
 declare global {
-  namespace NodeJS {
-    interface Global {
-      currentWorkspace: Workspace;
-      user: User;
-      log: (message?: string | undefined, ...args: any[]) => void;
-    }
-  }
+  var currentWorkspace: Workspace;
+  var user: User;
+  var log: (message?: string | undefined, ...args: any[]) => void;
 }
 
 export type GetFlagsType<T> = T extends Parser.Input<infer F> ? F : never;

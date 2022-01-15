@@ -1,4 +1,4 @@
-import marked from 'marked';
+import { marked } from 'marked';
 import TerminalRenderer from 'marked-terminal';
 import terminalLink from 'terminal-link';
 import wrapAnsi from 'wrap-ansi';
