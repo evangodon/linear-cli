@@ -19,20 +19,19 @@ export type TableIssue = Pick<
  */
 export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
   const { log } = global;
+  let rowIndex = 0;
 
   /* Colorize header with custom logger since cli-ux doesn't support it. */
   function printTable(row: string) {
-    const ANSI_BOLD = '\x1B[1m';
-
-    /* For header */
-    if (row.startsWith(ANSI_BOLD)) {
+    if (!flags['no-header'] && rowIndex < 2) {
       const headerColor = chalk.magenta;
       log(headerColor(row));
-      log(headerColor('─'.padEnd(sw(row), '─')));
+      rowIndex++;
       return;
     }
 
     log(row);
+    rowIndex++;
   }
 
   /* Filters */
@@ -114,8 +113,8 @@ export const IssuesTable = (issues: TableIssue[], { flags }: Options) => {
   }
 
   try {
-    global.log(chalk.dim(optionsHeader.join(' | ')));
-    global.log('');
+    log(chalk.dim(optionsHeader.join(' | ')));
+    log('');
     cli.table(
       issues,
       {
