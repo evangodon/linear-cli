@@ -61,7 +61,7 @@ export default class IssueList extends Command {
     const teamId = flags.team ?? global.currentWorkspace.defaultTeam;
     const issues = await this.linear.query.issuesFromTeam({
       teamId,
-      first: flags.mine ? 50 : 35,
+      first: 10,
     });
 
     render.IssuesTable(issues, {

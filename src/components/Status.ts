@@ -4,6 +4,7 @@ import { WorkflowState } from '../generated/_documents';
 type Status = Pick<WorkflowState, 'name' | 'color' | 'type'>;
 
 const char: { [key: string]: string } = {
+  triage: '↔',
   backlog: '◌',
   unstarted: '○',
   started: '◑',
