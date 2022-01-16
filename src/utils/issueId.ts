@@ -1,6 +1,4 @@
-import * as Parser from '@oclif/parser';
-
-export const issueArgs: Parser.args.Input = [
+export const issueArgs = [
   { name: 'issueId', required: true },
   {
     name: 'issueIdOptional',
@@ -11,7 +9,8 @@ export const issueArgs: Parser.args.Input = [
 
 export type IssueArgs = { issueId: string; issueIdOptional?: string };
 
-type GetIssueId = (args: { issueId: string; issueIdOptional?: string }) => string;
+// TODO: remove any below
+type GetIssueId = (args: any | { issueId: string; issueIdOptional?: string }) => string;
 
 export const getIssueId: GetIssueId = (args) => {
   const { issueId, issueIdOptional } = args;

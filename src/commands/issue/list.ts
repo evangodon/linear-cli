@@ -1,15 +1,15 @@
 import { OutputFlags } from '@oclif/parser/lib';
 import chalk from 'chalk';
 import { cli } from 'cli-ux';
-import Command, { flags } from '../../base';
+import Command, { Flags } from '../../base';
 import { render } from '../../components';
 
 export const tableFlags = {
-  sort: flags.string({
+  sort: Flags.string({
     description: "property to sort by (prepend '-' for descending)",
     default: '-status',
   }),
-  columns: flags.string({
+  columns: Flags.string({
     exclusive: ['extended'],
     description: 'only show provided columns (comma-separated)',
   }),
@@ -22,19 +22,19 @@ export default class IssueList extends Command {
 
   static flags = {
     ...tableFlags,
-    mine: flags.boolean({ char: 'm', description: 'Only show issues assigned to me' }),
-    team: flags.string({
+    mine: Flags.boolean({ char: 'm', description: 'Only show issues assigned to me' }),
+    team: Flags.string({
       char: 't',
       description: 'List issues from another team',
       exclusive: ['all'],
     }),
-    status: flags.string({
+    status: Flags.string({
       char: 's',
       description: 'Only list issues with provided status',
       exclusive: ['all'],
     }),
-    all: flags.boolean({ char: 'a', description: 'List issues from all teams' }),
-    uncompleted: flags.boolean({
+    all: Flags.boolean({ char: 'a', description: 'List issues from all teams' }),
+    uncompleted: Flags.boolean({
       char: 'u',
       description: 'Only show uncompleted issues',
       exclusive: ['status'],
@@ -42,21 +42,21 @@ export default class IssueList extends Command {
   };
 
   async listAllTeamIssues() {
-    const { flags } = this.parse(IssueList);
+    const { flags } = await this.parse(IssueList);
     const issues = await this.linear.query.issuesAllTeams();
 
     render.IssuesTable(issues, { flags });
   }
 
   async listMyIssues() {
-    const { flags } = this.parse(IssueList);
+    const { flags } = await this.parse(IssueList);
     const issues = await this.linear.query.assignedIssues();
 
     render.IssuesTable(issues, { flags });
   }
 
   async listTeamIssues() {
-    const { flags } = this.parse(IssueList);
+    const { flags } = await this.parse(IssueList);
     const teamId = flags.team ?? global.currentWorkspace.defaultTeam;
     const issues = await this.linear.query.issuesFromTeam({
       teamId,
@@ -72,7 +72,7 @@ export default class IssueList extends Command {
   }
 
   async listIssuesWithStatus() {
-    const { flags } = this.parse(IssueList);
+    const { flags } = await this.parse(IssueList);
     const cache = await this.cache.read();
 
     const teamId = flags.team ?? global.currentWorkspace.defaultTeam;
@@ -110,7 +110,7 @@ export default class IssueList extends Command {
   }
 
   async run() {
-    const { flags } = this.parse(IssueList);
+    const { flags } = await this.parse(IssueList);
 
     if (flags.status) {
       this.listIssuesWithStatus();
@@ -130,5 +130,3 @@ export default class IssueList extends Command {
     this.listTeamIssues();
   }
 }
-
-export type ListFlags = OutputFlags<typeof IssueList.flags>;

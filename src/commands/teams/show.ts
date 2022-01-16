@@ -1,7 +1,7 @@
 import { cli } from 'cli-ux';
 import ora from 'ora';
 import { TeamConnection } from '@linear/sdk';
-import Command, { flags } from '../../base';
+import Command, { Flags } from '../../base';
 
 type Team = {
   key?: string;
@@ -12,11 +12,11 @@ export default class TeamsShow extends Command {
   static description = 'Show teams in this workspace';
 
   static flags = {
-    mine: flags.boolean({ char: 'm', description: 'Pretty print' }),
+    mine: Flags.boolean({ char: 'm', description: 'Pretty print' }),
   };
 
   async run() {
-    const { flags } = this.parse(TeamsShow);
+    const { flags } = await this.parse(TeamsShow);
     const spinner = ora('Loading issues').start();
 
     let data: TeamConnection | undefined;

@@ -1,3 +1,5 @@
+/// <reference path="../index.d.ts"/>
+
 import { marked } from 'marked';
 import TerminalRenderer from 'marked-terminal';
 import terminalLink from 'terminal-link';

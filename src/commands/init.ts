@@ -1,10 +1,11 @@
+import fs from 'fs';
+
 import { LinearClient } from '@linear/sdk';
 import boxen from 'boxen';
 import ora from 'ora';
 import chalk from 'chalk';
 import * as inquirer from 'inquirer';
-import fs from 'fs';
-import Command from '@oclif/command';
+import { Command } from '@oclif/core';
 import { Config, User } from '../lib/configSchema';
 import CacheRefresh from './cache/refresh';
 

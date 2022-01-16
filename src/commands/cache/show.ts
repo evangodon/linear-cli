@@ -1,14 +1,14 @@
-import Command, { flags } from '../../base';
+import Command, { Flags } from '../../base';
 
 export default class CacheShow extends Command {
   static description = 'Print the cache file';
 
   static flags = {
-    pretty: flags.boolean({ char: 'p', description: 'Pretty print' }),
+    pretty: Flags.boolean({ char: 'p', description: 'Pretty print' }),
   };
 
   async run() {
-    const { flags } = this.parse(CacheShow);
+    const { flags } = await this.parse(CacheShow);
     const cache = await this.cache.read();
 
     if (flags.pretty) {

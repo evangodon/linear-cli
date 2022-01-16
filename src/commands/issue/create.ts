@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
 import clipboardy from 'clipboardy';
-import Command, { flags } from '../../base';
+import Command, { Flags } from '../../base';
 import chalk from 'chalk';
 import ora from 'ora';
 
@@ -18,14 +18,14 @@ export default class IssueCreate extends Command {
   static aliases = ['create', 'c'];
 
   static flags = {
-    copy: flags.boolean({
+    copy: Flags.boolean({
       char: 'c',
       description: 'Copy issue url to clipboard after creating',
     }),
   };
 
   async run() {
-    const { flags } = this.parse(IssueCreate);
+    const { flags } = await this.parse(IssueCreate);
 
     const teams = await this.linear.query.allTeams();
 

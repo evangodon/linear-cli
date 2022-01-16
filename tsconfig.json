@@ -8,12 +8,13 @@
     "strict": true,
     "target": "es2017",
     "esModuleInterop": true,
+    "moduleResolution": "node",
     "strictNullChecks": true,
     "useUnknownInCatchVariables": false,
     "paths": {
       "generated/*": ["./src/generated/*"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "src/index.d.ts"],
   "exclude": ["node_modules"]
 }

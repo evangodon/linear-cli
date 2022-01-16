@@ -1,9 +1,9 @@
 import * as inquirer from 'inquirer';
 import ora from 'ora';
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 import { IssueUpdateInput } from '../../generated/_documents';
 import chalk from 'chalk';
-import Command, { GetFlagsType } from '../../base';
+import Command from '../../base';
 import { render } from '../../components';
 import { issueArgs, getIssueId, IssueArgs } from '../../utils/issueId';
 
@@ -13,15 +13,13 @@ export default class IssueStop extends Command {
   static aliases = ['stop'];
 
   static flags = {
-    unassign: flags.boolean({ char: 'u', description: 'Unassign issue from yourself' }),
+    unassign: Flags.boolean({ char: 'u', description: 'Unassign issue from yourself' }),
   };
 
   static args = issueArgs;
 
   async run() {
-    const { args, flags } = this.parse<GetFlagsType<typeof IssueStop>, IssueArgs>(
-      IssueStop
-    );
+    const { args, flags } = await this.parse(IssueStop);
 
     const issueId = getIssueId(args);
 

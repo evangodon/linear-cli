@@ -1,9 +1,8 @@
 import clipboardy from 'clipboardy';
 import chalk from 'chalk';
 import inquirer from 'inquirer';
-import Command, { flags } from '../../base';
+import Command, { Flags } from '../../base';
 import { issueArgs, getIssueId, IssueArgs } from '../../utils/issueId';
-import { GetFlagsType } from '../../base';
 import { render } from '../../components';
 
 export default class IssueStart extends Command {
@@ -14,16 +13,14 @@ export default class IssueStart extends Command {
   static args = issueArgs;
 
   static flags = {
-    'copy-branch': flags.boolean({
+    'copy-branch': Flags.boolean({
       char: 'c',
       description: 'copy git branch to clip-board',
     }),
   };
 
   async run() {
-    const { args, flags } = this.parse<GetFlagsType<typeof IssueStart>, IssueArgs>(
-      IssueStart
-    );
+    const { args, flags } = await this.parse(IssueStart);
 
     const issueId = getIssueId(args);
 

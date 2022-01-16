@@ -5,10 +5,9 @@ import { IssueFragment } from '../generated/_documents';
 import { Status } from './Status';
 import { Label } from './Label';
 import { Priority } from './Priority';
-import type { ListFlags } from '../commands/issue/list';
 
 type Options = {
-  flags: ListFlags;
+  flags: any;
 };
 
 export type TableIssue = Pick<

@@ -1,5 +1,5 @@
-import fs from "fs";
-import Command from "@oclif/command";
+import fs from 'fs';
+import { Command } from '@oclif/core';
 
 /**
  */

@@ -3,7 +3,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import boxen, { Options } from 'boxen';
 import { cli } from 'cli-ux';
 import chalk from 'chalk';
-import Command, { flags, GetFlagsType } from '../../base';
+import Command, { Flags } from '../../base';
 import { GetIssueQuery } from '../../generated/_documents';
 import { render } from '../../components';
 import { issueArgs, getIssueId, IssueArgs } from '../../utils/issueId';
@@ -28,9 +28,9 @@ export default class IssueIndex extends Command {
   ];
 
   static flags = {
-    description: flags.boolean({ char: 'd', description: 'Show issue description' }),
-    comments: flags.boolean({ char: 'c', description: 'Show issue comments' }),
-    open: flags.boolean({ char: 'o', description: 'Open issue in web browser' }),
+    description: Flags.boolean({ char: 'd', description: 'Show issue description' }),
+    comments: Flags.boolean({ char: 'c', description: 'Show issue comments' }),
+    open: Flags.boolean({ char: 'o', description: 'Open issue in web browser' }),
   };
 
   renderIssueComments(issue: Issue) {
@@ -71,9 +71,8 @@ export default class IssueIndex extends Command {
   }
 
   async run() {
-    const { flags, args } = this.parse<GetFlagsType<typeof IssueIndex>, IssueArgs>(
-      IssueIndex
-    );
+    const { flags, args } = await this.parse(IssueIndex);
+
     const issueId = getIssueId(args);
     const issue = await this.linear.query.issue(issueId, {
       withComments: flags.comments,

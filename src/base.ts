@@ -1,5 +1,4 @@
-import * as Parser from '@oclif/parser';
-import Command, { flags } from '@oclif/command';
+import { Command, Flags } from '@oclif/core';
 import fs from 'fs';
 import chalk from 'chalk';
 import { Linear } from './lib/linear/Linear';
@@ -11,8 +10,6 @@ declare global {
   var user: User;
   var log: (message?: string | undefined, ...args: any[]) => void;
 }
-
-export type GetFlagsType<T> = T extends Parser.Input<infer F> ? F : never;
 
 export default abstract class extends Command {
   configFilePath = `${this.config.configDir}/config.json`;
@@ -55,7 +52,7 @@ export default abstract class extends Command {
       this.user = currentUser;
       this.currentWorkspace = workspaces[activeWorkspace];
 
-      global.log = this.log;
+      global.log = console.log;
       global.user = this.user;
       global.currentWorkspace = this.currentWorkspace;
     } catch (error) {
@@ -87,4 +84,4 @@ export default abstract class extends Command {
   }
 }
 
-export { flags };
+export { Flags };

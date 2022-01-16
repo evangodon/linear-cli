@@ -1,8 +1,8 @@
-import { flags } from '@oclif/command';
+import { Flags } from '@oclif/core';
 import chalk from 'chalk';
 import * as inquirer from 'inquirer';
 import ora from 'ora';
-import Command, { GetFlagsType } from '../../base';
+import Command from '../../base';
 import { render } from '../../components';
 import { issueArgs, getIssueId, IssueArgs } from '../../utils/issueId';
 
@@ -17,7 +17,7 @@ export default class IssueUpdate extends Command {
   static aliases = ['update', 'u'];
 
   static flags = {
-    property: flags.string({
+    property: Flags.string({
       char: 'p',
       description: 'Property to modify',
       options: ['title', 'description', 'status'],
@@ -143,9 +143,7 @@ export default class IssueUpdate extends Command {
   }
 
   async run() {
-    const { args, flags } = this.parse<GetFlagsType<typeof IssueUpdate>, IssueArgs>(
-      IssueUpdate
-    );
+    const { args, flags } = await await this.parse(IssueUpdate);
 
     const issueId = getIssueId(args);
 

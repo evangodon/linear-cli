@@ -75,7 +75,7 @@ export default class IssueSearch extends Command {
   }
 
   async run() {
-    const { args } = this.parse<{}, { query: string }>(IssueSearch);
+    const { args } = await this.parse<{}, { query: string }>(IssueSearch);
 
     if (args.query) {
       await this.searchWithQuery(args.query);
