@@ -32,22 +32,23 @@ A CLI for [Linear](https://linear.app/) that allows you to quickly view, create 
 # Commands
 
 <!-- commands -->
-* [`lr cache:refresh`](#lr-cacherefresh)
-* [`lr cache:show`](#lr-cacheshow)
-* [`lr config:delete`](#lr-configdelete)
-* [`lr config:show`](#lr-configshow)
-* [`lr init`](#lr-init)
-* [`lr issue ISSUEID`](#lr-issue-issueid)
-* [`lr issue:create`](#lr-issuecreate)
-* [`lr issue:list`](#lr-issuelist)
-* [`lr issue:search [QUERY]`](#lr-issuesearch-query)
-* [`lr issue:start ISSUEID`](#lr-issuestart-issueid)
-* [`lr issue:stop ISSUEID`](#lr-issuestop-issueid)
-* [`lr issue:update ISSUEID`](#lr-issueupdate-issueid)
-* [`lr teams:show`](#lr-teamsshow)
-* [`lr workspace:add`](#lr-workspaceadd)
-* [`lr workspace:current`](#lr-workspacecurrent)
-* [`lr workspace:switch`](#lr-workspaceswitch)
+
+- [`lr cache:refresh`](#lr-cacherefresh)
+- [`lr cache:show`](#lr-cacheshow)
+- [`lr config:delete`](#lr-configdelete)
+- [`lr config:show`](#lr-configshow)
+- [`lr init`](#lr-init)
+- [`lr issue ISSUEID`](#lr-issue-issueid)
+- [`lr issue:create`](#lr-issuecreate)
+- [`lr issue:list`](#lr-issuelist)
+- [`lr issue:search [QUERY]`](#lr-issuesearch-query)
+- [`lr issue:start ISSUEID`](#lr-issuestart-issueid)
+- [`lr issue:stop ISSUEID`](#lr-issuestop-issueid)
+- [`lr issue:update ISSUEID`](#lr-issueupdate-issueid)
+- [`lr teams:show`](#lr-teamsshow)
+- [`lr workspace:add`](#lr-workspaceadd)
+- [`lr workspace:current`](#lr-workspacecurrent)
+- [`lr workspace:switch`](#lr-workspaceswitch)
 
 ## `lr cache:refresh`
 
@@ -290,4 +291,20 @@ USAGE
 ```
 
 _See code: [src/commands/workspace/switch.ts](https://github.com/evangodon/linear-cli/blob/v0.17.0/src/commands/workspace/switch.ts)_
+
 <!-- commandsstop -->
+
+# ZSH completions
+
+If you want to add completions for the `lr` command and you're using ZSH you can do the following:
+
+```sh
+# 1. Clone this repository
+> git clone https://github.com/evangodon/linear-cli
+> cd linear-cli
+
+# 2. On Arch Linux you can do
+sudo cp zsh-completions/_lr /usr/share/zsh/site-functions/
+
+# 3. Open a new terminal an enjoy the completions :)
+```
