@@ -8,6 +8,7 @@ A CLI for [Linear](https://linear.app/) that allows you to quickly view, create 
 [![License](https://img.shields.io/npm/l/linear-cli.svg)](https://github.com/egodon/linear-cli/blob/master/package.json)
 
 > **Warning**
+>
 > This CLI is unmaintained and likely has issues
 
 # Installation
