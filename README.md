@@ -7,7 +7,8 @@ A CLI for [Linear](https://linear.app/) that allows you to quickly view, create 
 [![Downloads/week](https://img.shields.io/npm/dw/@egcli/lr.svg)](https://npmjs.org/package/@egcli/lr)
 [![License](https://img.shields.io/npm/l/linear-cli.svg)](https://github.com/egodon/linear-cli/blob/master/package.json)
 
-<img src="./src/assets/readme-hero.png">
+> **Warning**
+> This CLI is unmaintained and likely has issues
 
 # Installation
 
