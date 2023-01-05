@@ -31,6 +31,7 @@ export default class IssueIndex extends Command {
     description: Flags.boolean({ char: 'd', description: 'Show issue description' }),
     comments: Flags.boolean({ char: 'c', description: 'Show issue comments' }),
     open: Flags.boolean({ char: 'o', description: 'Open issue in web browser' }),
+    branch: Flags.boolean({ char: 'b', description: 'Show branch name' }),
   };
 
   renderIssueComments(issue: Issue) {
@@ -70,6 +71,11 @@ export default class IssueIndex extends Command {
     this.log(boxen(render.Markdown(markdown), boxenOptions));
   }
 
+  returnIssueBranch(issue: Issue) {
+    const branchName = issue.branchName;
+    this.log(branchName);
+  }
+
   async run() {
     const { flags, args } = await this.parse(IssueIndex);
 
@@ -90,6 +96,11 @@ export default class IssueIndex extends Command {
 
     if (flags.description) {
       this.renderIssueDescription(issue);
+      return;
+    }
+
+    if (flags.branch) {
+      this.returnIssueBranch(issue);
       return;
     }
 
