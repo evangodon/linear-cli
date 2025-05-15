@@ -134,7 +134,7 @@ export default class Init extends Command {
     this.log(`You'll need to create a personal Linear api key.`);
     this.log(
       `You can create one here ${chalk.magenta(
-        'https://linear.app/joinlane/settings/api'
+        'https://linear.app/settings/api'
       )}.`
     );
 
