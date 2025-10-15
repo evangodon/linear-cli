@@ -1,3 +1,6 @@
+> [!WARNING]
+> **This CLI is unmaintained and should not be used**
+
 ## Linear CLI
 
 A CLI for [Linear](https://linear.app/) that allows you to quickly view, create and update issues.
@@ -7,9 +10,7 @@ A CLI for [Linear](https://linear.app/) that allows you to quickly view, create 
 [![Downloads/week](https://img.shields.io/npm/dw/@egcli/lr.svg)](https://npmjs.org/package/@egcli/lr)
 [![License](https://img.shields.io/npm/l/linear-cli.svg)](https://github.com/egodon/linear-cli/blob/master/package.json)
 
-> **Warning**
->
-> This CLI is unmaintained and likely has issues
+
 
 # Installation
 
