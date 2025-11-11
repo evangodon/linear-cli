@@ -1,0 +1,179 @@
+#compdef lr
+
+_basic=(
+    'help: Display Linear CLI help'
+    'init: Setup Linear CLI'
+)
+
+_issues=(
+    'issue\:create:Create a new issue'
+    'issue\:list:List issues'
+    'issue\:search:Search issues'
+    'issue\:start:Change status of issue to "In Progress" and assign to yourself.'
+    'issue\:stop:Return issue to preview state'
+    'issue\:update:Update and issue'
+)
+
+_cache=(
+    'cache\:refresh:Refresh the cache'
+    'cache\:show:Print the cache file'
+)
+
+_config=(
+    'config\:delete:Delete configuration'
+    'config\:show:Print the config file'
+)
+
+_teams=(
+    'teams\:show:Show teams in this workspace'
+)
+
+_workspace=(
+    'workspace\:add:Add a new workspace'
+    'workspace\:current:Display current workspace'
+    'workspace\:switch:Switch to another workspace'
+)
+
+_basic_commands() {
+    _describe -t _basic 'Generic commands' _basic && ret=0
+    _describe -t _issues 'Issues commands' _issues && ret=0
+    _describe -t _cache 'Cache commands' _cache && ret=0
+    _describe -t _config 'Config commands' _config && ret=0
+    _describe -t _teams 'Teams commands' _teams && ret=0
+    _describe -t _workspace 'Workspace commands' _workspace && ret=0
+}
+
+_statuses() {
+    local status_list=(
+        "Backlog"
+        "Groomed"
+        "Selected for development"
+        "In Progress"
+        "In Review"
+        "Ready for QA"
+        "Done"
+        "Canceled"
+        "Triage"
+    )
+    _describe -t status_list 'list of status' status_list && ret=0
+}
+
+
+_issue_list_commands() {
+    local -a context line state state_descr args tmp suf
+    local -A opt_args
+
+    local _cmp=(
+        {-a,--all}'[Show issues from all teams]'
+        {-m,--mine}'[Show issues assigned to me]'
+        {-s,--status=}'[Show issues with the provided status]:status:_statuses'
+        {-t,--team=}'[Show issues from a specific team]:team'
+        {-u,--uncompleted}'[Show only incompleted issues]'
+        {-x,--extended}'[Show extra columns]'
+        '--columns=[Show only provided columns (comma separatted)]:columns'
+        '--csv[Output in CSV format (equivalent to --output=csv)]'
+        '--filter=[Filter property by partial string matching, ex: name=foo]'
+        '--no-truncate[Do not truncate output to fit screen]'
+        '--output=[Ouput in a machine friendly format]:format:((
+            json
+            csv
+            yaml
+        ))'
+        '--sort=[Sort issues (default: -status)]:column'
+    )
+    _arguments -C -s -S $_cmp && ret=0
+}
+
+_issue_start_commands() {
+    local _cmp=(
+        '-c:Copy git branch to clipboard'
+        '--copy-branch:Copy git branch to clipboard'
+    )
+    _describe -t _cmp 'start options' _cmp && ret=0
+}
+
+_issue_stop_commands() {
+    local _cmp=(
+        '-u:Unassign issue from yourself'
+        '--unassign:Unassign issue from yourself'
+    )
+    _describe -t _cmp 'stop options' _cmp && ret=0
+}
+
+_issue_create_commands() {
+    local _cmp=(
+        '-c:Copy issue URL to clipboard after creation'
+        '--copy:Copy issue URL to clipboard after creation'
+    )
+    _describe -t _cmp 'create options' _cmp && ret=0
+}
+
+_issue_update_commands() {
+    local _cmp=(
+        '-p:Property to modify'
+        '--property:Property to modify:((
+            title
+            description
+            status
+        ))'
+    )
+    _describe -t _cmp 'update options' _cmp && ret=0
+}
+
+
+_lr() {
+    local curcontext=$curcontext ret=1
+    local -a context line state state_descr args tmp suf
+    local -A opt_args
+
+    _arguments \
+        '1: :_basic_commands' \
+        '*:: :->command_args'
+
+    case $state in
+      command_args)
+          case $words[1] in
+              issue\:list)
+                  _arguments \
+                      '1: :_issue_list_commands' \
+                      '*: :_issue_list_commands'
+              ;;
+              issue\:start)
+                  _arguments \
+                      '1:issue id:' \
+                      '*: :_issue_start_commands' \
+              ;;
+              issue\:stop)
+                  _arguments \
+                      '1:issue id:' \
+                      '*: :_issue_stop_commands' \
+              ;;
+              issue\:create)
+                  _arguments \
+                      '1: :_issue_create_commands' \
+              ;;
+              issue\:update) # Improve this completion
+                  _arguments \
+                      '1:issue id:' \
+                      '*: :_issue_update_commands' \
+              ;;
+              help)
+                  _arguments \
+                      '1:command:_lr'
+              ;;
+          *)
+              _default
+          ;;
+            esac
+    esac
+}
+
+_lr "$@"
+
+# Consulted links
+# https://wikimatze.de/writing-zsh-completion-for-padrino/
+# https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org#writing-completion-functions-using-_arguments
+# https://web.archive.org/web/20190411104837/http://www.linux-mag.com/id/1106/
+# https://github.com/wikimatze/padrino-zsh-completion
+# https://zsh.sourceforge.io/Doc/Release/Completion-Widgets.html#Completion-Widgets
+# https://github.com/zsh-users/zsh/blob/master/Etc/completion-style-guide
